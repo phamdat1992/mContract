@@ -1,67 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>'Hello, world!' example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="google" content="notranslate">
+  <title>mContract</title>
+
+  <link rel="stylesheet" href="./asset/css/main.css">
+  <link rel="stylesheet" href="./libs/pdfjs/pdf_viewer.css">
+
+  <script src="./libs/pdfjs/pdf.js"></script>
+  <script src="./libs/pdfjs/pdf_viewer.js"></script>
 </head>
+
 <body>
+  <div id='viewerContainer'>
+    <div id='pdfViewer' class='pdfViewer'></div>
+    <div class='pdfFixedDiv'>
+  	<input type='text' id='pdfInput' placeholder='Go to page'></input>
+  </div>
+  </div>
 
-<h1>'Hello, world!' example</h1>
+  <script>
+  var DEFAULT_URL = './asset/raw/contract-template.pdf';
+  
+  	if (!pdfjsLib.getDocument || !pdfjsViewer.PDFViewer) {
+  alert("Library not imported");
+}
 
-<canvas id="the-canvas" style="border: 1px solid black; direction: ltr;"></canvas>
+pdfjsLib.GlobalWorkerOptions.workerSrc = './libs/pdfjs/pdf.worker.js';
+var container = document.getElementById('viewerContainer');
+var viewer = document.getElementById('pdfViewer');
+var input = document.getElementById("pdfInput");
+var DEFAULT_SCALE_SIZE = 1.0;
 
-<script src="asset/js/pdfjs/pdf.js"></script>
 
-<script id="script">
-  //
-  // If absolute URL from the remote server is provided, configure the CORS
-  // header on that server.
-  //
-  var url = './asset/raw/contract-template.pdf';
+// (Optionally) enable hyperlinks within PDF files.
+var pdfLinkService = new pdfjsViewer.PDFLinkService();
 
-  //
-  // The workerSrc property shall be specified.
-  //
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'asset/js/pdfjs/pdf.worker.js';
 
-  //
-  // Asynchronous download PDF
-  //
-  var loadingTask = pdfjsLib.getDocument(url);
-  loadingTask.promise.then(function(pdf) {
-    //
-    // Fetch the first page
-    //
-    pdf.getPage(1).then(function(page) {
-      var scale = 1.5;
-      var viewport = page.getViewport({ scale: scale, });
+var pdfViewer = new pdfjsViewer.PDFViewer({
+  container: container,
+  viewer: viewer,
+  linkService: pdfLinkService,
+});
+pdfLinkService.setViewer(pdfViewer);
 
-      //
-      // Prepare canvas using PDF page dimensions
-      //
-      var canvas = document.getElementById('the-canvas');
-      var context = canvas.getContext('2d');
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
+document.addEventListener('pagesinit', function () {
+  // We can use pdfViewer now, e.g. let's change default scale.
+  pdfViewer.currentScaleValue = 'auto';
+});
 
-      //
-      // Render PDF page into canvas context
-      //
-      var renderContext = {
-        canvasContext: context,
-        viewport: viewport,
-      };
-      page.render(renderContext);
-    });
-  });
-</script>
+// Loading document.
+var loadingTask = pdfjsLib.getDocument({
+  url: DEFAULT_URL,
+});
+loadingTask.promise.then(function(pdfDocument) {
+  // Document loaded, specifying document for the viewer and
+  // the (optional) linkService.
+  pdfViewer.setDocument(pdfDocument);
 
-<hr>
-<h2>JavaScript code:</h2>
-<pre id="code"></pre>
-<script>
-  document.getElementById('code').textContent =
-      document.getElementById('script').text;
-</script>
+  pdfLinkService.setDocument(pdfDocument, null);
+});
+   
+viewerContainer.addEventListener('click', (evt) => {
+                let x = evt.pageX - document.getElementsByClassName('page')[pdfViewer.currentPageNumber - 1].offsetLeft;
+                let y = evt.pageY - document.getElementsByClassName('page')[pdfViewer.currentPageNumber - 1].offsetTop;
+
+                x, y = pdfViewer._pages[pdfViewer.currentPageNumber - 1].viewport.convertToPdfPoint(x, y)
+                console.log(x, y);
+                });
+    
+    input.addEventListener("keyup", function(event) {
+        var val = Number(input.value);
+  		if (event.keyCode === 13 && val) {
+    		// Cancel the default action, if needed
+    		event.preventDefault();
+    		if(val > pdfViewer.pagesCount)
+    		{
+    			val = pdfViewer.pagesCount;
+    		} 
+    		console.log(val);
+    		pdfViewer.currentPageNumber = val;
+  		}
+	});
+	
+	container.onscroll = function() {
+    	input.value = pdfViewer.currentPageNumber;
+	}
+  </script>
 </body>
 </html>
