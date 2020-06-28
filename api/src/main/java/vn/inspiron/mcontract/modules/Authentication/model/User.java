@@ -1,6 +1,7 @@
-package vn.inspiron.mcontract.modules.Authenticate.daos;
+package vn.inspiron.mcontract.modules.Authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-public class UserApp implements UserDetails {
+@Table(name = "user")
+@Data
+public class User implements UserDetails
+{
     /**
      *
      */
@@ -21,13 +25,8 @@ public class UserApp implements UserDetails {
     private Long id;
 
     private String username;
-    private String email;
     @JsonIgnore
     private String password;
-    @JsonIgnore
-    private String token;
-    @JsonIgnore
-    private String role;
     @JsonIgnore
     private boolean isEnabled;
 
@@ -35,7 +34,7 @@ public class UserApp implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return Collections.singleton(new SimpleGrantedAuthority(role));
+        return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
     }
 
     @Override
@@ -76,9 +75,9 @@ public class UserApp implements UserDetails {
         return id;
     }
 
-    public void setId(Long uuid)
+    public void setId(Long id)
     {
-        this.id = uuid;
+        this.id = id;
     }
 
     public void setUsername(String username)
@@ -89,36 +88,6 @@ public class UserApp implements UserDetails {
     public void setPassword(String password)
     {
         this.password = password;
-    }
-
-    public String getRole()
-    {
-        return role;
-    }
-
-    public void setRole(String role)
-    {
-        this.role = role;
-    }
-
-    public String getToken()
-    {
-        return this.token;
-    }
-
-    public void setToken(String token)
-    {
-        this.token = token;
-    }
-
-    public String getEmail()
-    {
-        return this.email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
     }
 
     @JsonIgnore
@@ -133,17 +102,16 @@ public class UserApp implements UserDetails {
         isEnabled = enabled;
     }
 
+
     @Override
     public String toString()
     {
         return "UserApp{" +
-                "id=" + this.id +
-                ", username='" + this.username + '\'' +
-                ", password='" + this.password + '\'' +
-                ", token='" + this.token + '\'' +
-                ", email='" + this.email + '\'' +
-                ", role='" + role + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", isEnabled=" + isEnabled +
                 '}';
     }
 }
+

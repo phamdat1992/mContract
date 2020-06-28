@@ -1,18 +1,20 @@
-package vn.inspiron.mcontract.modules.Authenticate.services;
+package vn.inspiron.mcontract.modules.Authentication.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import vn.inspiron.mcontract.modules.Authenticate.model.jwt.JwtTokenRequest;
-import vn.inspiron.mcontract.modules.Authenticate.model.jwt.JwtTokenResponse;
+import org.springframework.stereotype.Service;
+import vn.inspiron.mcontract.modules.Authentication.model.JwtTokenRequest;
+import vn.inspiron.mcontract.modules.Authentication.model.JwtTokenResponse;
 
 import javax.servlet.http.Cookie;
 import java.time.Instant;
@@ -21,19 +23,14 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.TimeZone;
 
+@Service
+@Slf4j
 public class JwtAuthenticationService {
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Value("${jwt.secret-key}")
-    private String SECRET_KEY;
-
-    @Value("${jwt.token-time-live}")
-    private String TOKEN_TIME_LIVE;
-
-    public JwtAuthenticationService(AuthenticationManager authenticationManager)
-    {
-        this.authenticationManager = authenticationManager;
-    }
+    private final String SECRET_KEY = "aaaaaaaa";
 
     public JwtTokenResponse authenticate(JwtTokenRequest tokenRequest, String url, TimeZone timeZone) throws AuthenticationException
     {
@@ -57,7 +54,7 @@ public class JwtAuthenticationService {
                     .withIssuer(url)
                     .withSubject(subject)
                     .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
-                    .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(Integer.parseInt(TOKEN_TIME_LIVE)).toInstant()))
+                    .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(60).toInstant()))
                     .sign(algorithm);
 
             return new JwtTokenResponse(token);

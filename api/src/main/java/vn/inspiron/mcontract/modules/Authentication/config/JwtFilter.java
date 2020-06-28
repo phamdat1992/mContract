@@ -1,12 +1,10 @@
-package vn.inspiron.mcontract.modules.Authenticate.config;
+package vn.inspiron.mcontract.modules.Authentication.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,11 +19,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
-@Slf4j
-public class JwtFilter extends OncePerRequestFilter
-{
-    @Value("${jwt.secret-key}")
-    private String SECRET_KEY;
+public class JwtFilter extends OncePerRequestFilter {
+    private static final String SECRET_KEY = "12345678910";
 
     @Override
     protected void doFilterInternal(
@@ -34,7 +29,6 @@ public class JwtFilter extends OncePerRequestFilter
             FilterChain chain
     ) throws IOException, ServletException
     {
-        System.out.println("FILTER");
         Cookie tokenCookie = getCookieWithAccessToken(request.getCookies());
 
         if (tokenCookie != null) {
@@ -42,7 +36,6 @@ public class JwtFilter extends OncePerRequestFilter
         }
 
         chain.doFilter(request, response);
-        //log.info("chain: {}, request: {}, response: {}", chain, request, response);
     }
 
     private void cookieAuthentication(Cookie cookie) {
