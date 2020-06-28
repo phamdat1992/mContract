@@ -13,31 +13,25 @@
 }
 
 .logo {
-    width:100px;
+    width: 100px;
     height: 100px;
     border-radius: 50%;
-    margin:0 auto;
-    box-shadow: 
-    /* logo shadow */
-    0px 0px 2px #5f5f5f,
-    /* offset */
-    0px 0px 0px 5px #ecf0f3,
-    /*bottom right */
-    8px 8px 15px #a7aaaf,
-    /* top left */
-    -8px -8px 15px #ffffff
-    ;
-  }
+    margin: 0 auto;
+    box-shadow:
+    /* logo shadow */ 0px 0px 2px #5f5f5f, /* offset */ 0px 0px 0px 5px #ecf0f3,
+        /*bottom right */ 8px 8px 15px #a7aaaf, /* top left */ -8px -8px 15px #ffffff;
+}
 
-  .title {
+.title {
     text-align: center;
     font-size: 28px;
     padding-top: 24px;
     letter-spacing: 0.5px;
-  }
-  .sub-title {
+}
+
+.sub-title {
     text-align: center;
     font-size: 15px;
     padding-top: 7px;
     letter-spacing: 3px;
-  }
+}
