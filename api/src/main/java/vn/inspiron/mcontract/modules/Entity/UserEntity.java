@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.model;
+package vn.inspiron.mcontract.modules.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -13,8 +13,7 @@ import java.util.Collections;
 @Entity
 @Table(name = "user")
 @Data
-public class User implements UserDetails
-{
+public class UserEntity implements UserDetails {
     /**
      *
      */
@@ -23,11 +22,13 @@ public class User implements UserDetails
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String username;
     @JsonIgnore
+    @Column
     private String password;
     @JsonIgnore
+    @Column
     private boolean isEnabled;
 
     @JsonIgnore
@@ -35,18 +36,6 @@ public class User implements UserDetails
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
         return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
-    }
-
-    @Override
-    public String getPassword()
-    {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername()
-    {
-        return this.username;
     }
 
     @JsonIgnore
@@ -69,49 +58,4 @@ public class User implements UserDetails
     {
         return true;
     }
-
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isEnabled()
-    {
-        return isEnabled;
-    }
-
-    public void setEnabled(boolean enabled)
-    {
-        isEnabled = enabled;
-    }
-
-
-    @Override
-    public String toString()
-    {
-        return "UserApp{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", isEnabled=" + isEnabled +
-                '}';
-    }
 }
-

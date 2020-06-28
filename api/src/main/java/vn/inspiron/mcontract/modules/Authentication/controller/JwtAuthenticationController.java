@@ -7,15 +7,14 @@ import org.springframework.http.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import vn.inspiron.mcontract.modules.Authentication.model.JwtTokenRequest;
-import vn.inspiron.mcontract.modules.Authentication.model.JwtTokenResponse;
-import vn.inspiron.mcontract.modules.Authentication.model.JwtUtils;
+import vn.inspiron.mcontract.modules.Authentication.component.JwtUtils;
+import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
+import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenResponseDTO;
 import vn.inspiron.mcontract.modules.Authentication.services.JwtAuthenticationService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.Optional;
 import java.util.TimeZone;
 
@@ -31,9 +30,12 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtAuthenticationService authenticationService;
 
-    @RequestMapping(value="/test")
-    public String test() {
-        return "{\"name\":\""+ env.getProperty("jwt-secret-key") +"\",\"age\":30,\"city\":\"New York\"}";
+    @RequestMapping(value = "/test")
+    public ResponseEntity<JwtTokenResponseDTO> test() {
+        JwtTokenResponseDTO accessToken = new JwtTokenResponseDTO();
+        accessToken.setToken("test");
+        return ResponseEntity.status(HttpStatus.OK).body(accessToken);
+        // return "{\"name\":\""+ env.getProperty("jwt-secret-key") +"\",\"age\":30,\"city\":\"New York\"}";
     }
 
     @RequestMapping(value="/logged")
@@ -41,16 +43,14 @@ public class JwtAuthenticationController {
         return "{\"name\":\"aaa\",\"age\":30,\"city\":\"New York\"}";
     }
 
-    @PostMapping(value="/authenticate")
-    public ResponseEntity<String> createJwtAuthenticationToken(@RequestBody JwtTokenRequest tokenRequest, HttpServletRequest request, HttpServletResponse response, TimeZone timeZone)
-    {
+    @PostMapping(value = "/authenticate")
+    public ResponseEntity<String> createJwtAuthenticationToken(@RequestBody JwtTokenRequestDTO tokenRequest, HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         System.out.println("testxxx");
         System.out.println(passwordEncoder.encode("test"));
-        try
-        {
+        try {
 
-            JwtTokenResponse accessToken = this.authenticationService.authenticate(tokenRequest, String.valueOf(request.getRequestURL()), timeZone);
-            JwtTokenResponse refreshToken = authenticationService.generateRefreshToken(tokenRequest.getUsername(), String.valueOf(request.getRequestURL()), timeZone);
+            JwtTokenResponseDTO accessToken = this.authenticationService.authenticate(tokenRequest, String.valueOf(request.getRequestURL()), timeZone);
+            JwtTokenResponseDTO refreshToken = authenticationService.generateRefreshToken(tokenRequest.getUsername(), String.valueOf(request.getRequestURL()), timeZone);
 
 
             HttpCookie accessTokenCookie = createCookieWithToken("accessToken", accessToken.getToken(), 10 * 60);
@@ -76,7 +76,7 @@ public class JwtAuthenticationController {
 
         try
         {
-            JwtTokenResponse accessToken = authenticationService.refreshAccessToken(refreshCookie.get(), String.valueOf(request.getRequestURL()), timeZone);
+            JwtTokenResponseDTO accessToken = authenticationService.refreshAccessToken(refreshCookie.get(), String.valueOf(request.getRequestURL()), timeZone);
 
             HttpCookie accessTokenCookie = createCookieWithToken("accessToken", accessToken.getToken(), 10 * 60);
             HttpCookie refreshTokenCookie = createCookieWithToken("refreshToken",

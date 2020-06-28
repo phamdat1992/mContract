@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import vn.inspiron.mcontract.modules.Authentication.model.UserDetailsServiceImpl;
+import vn.inspiron.mcontract.modules.Authentication.services.UserDetailsServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;

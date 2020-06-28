@@ -13,8 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import vn.inspiron.mcontract.modules.Authentication.model.JwtTokenRequest;
-import vn.inspiron.mcontract.modules.Authentication.model.JwtTokenResponse;
+import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
+import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenResponseDTO;
 
 import javax.servlet.http.Cookie;
 import java.time.Instant;
@@ -30,21 +30,18 @@ public class JwtAuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private final String SECRET_KEY = "aaaaaaaa";
+    private final String SECRET_KEY = "key";
 
-    public JwtTokenResponse authenticate(JwtTokenRequest tokenRequest, String url, TimeZone timeZone) throws AuthenticationException
-    {
+    public JwtTokenResponseDTO authenticate(JwtTokenRequestDTO tokenRequest, String url, TimeZone timeZone) throws AuthenticationException {
         UserDetails userDetails = managerAuthentication(tokenRequest.getUsername(), tokenRequest.getPassword());
 
         String token = generateToken(userDetails.getUsername(), url, timeZone);
 
-        return new JwtTokenResponse(token);
+        return new JwtTokenResponseDTO(token);
     }
 
-    public JwtTokenResponse generateRefreshToken(String subject, String url, TimeZone timeZone)
-    {
-        try
-        {
+    public JwtTokenResponseDTO generateRefreshToken(String subject, String url, TimeZone timeZone) {
+        try {
             Instant now = Instant.now();
 
             ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
@@ -57,7 +54,7 @@ public class JwtAuthenticationService {
                     .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(60).toInstant()))
                     .sign(algorithm);
 
-            return new JwtTokenResponse(token);
+            return new JwtTokenResponseDTO(token);
         }
         catch (JWTCreationException e)
         {
@@ -66,15 +63,14 @@ public class JwtAuthenticationService {
         }
     }
 
-    public JwtTokenResponse refreshAccessToken(Cookie cookie, String url, TimeZone timeZone) throws JWTVerificationException
-    {
+    public JwtTokenResponseDTO refreshAccessToken(Cookie cookie, String url, TimeZone timeZone) throws JWTVerificationException {
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
 
         DecodedJWT decodedJWT = JWT.require(algorithm)
                 .build()
                 .verify(cookie.getValue());
 
-        return new JwtTokenResponse(generateToken(decodedJWT.getSubject(), url, timeZone));
+        return new JwtTokenResponseDTO(generateToken(decodedJWT.getSubject(), url, timeZone));
     }
 
     private String generateToken(String username, String url, TimeZone timeZone)

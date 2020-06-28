@@ -1,4 +1,6 @@
-package vn.inspiron.mcontract.modules.Authentication.model;
+package vn.inspiron.mcontract.modules.Authentication.component;
+
+import vn.inspiron.mcontract.modules.Authentication.component.JwtUtils;
 
 public class JwtRefreshToken {
     private String refreshToken;

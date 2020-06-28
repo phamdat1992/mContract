@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.model;
+package vn.inspiron.mcontract.modules.Authentication.component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -13,7 +13,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 public class JwtUtils {
-    private static final String SECRET_KEY = "aaaaaa";
+    private static final String SECRET_KEY = "key";
 
     public static String getSubjectFromToken(String token)
     {

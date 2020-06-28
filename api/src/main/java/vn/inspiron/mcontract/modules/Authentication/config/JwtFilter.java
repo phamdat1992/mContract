@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.http.Cookie;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.Set;
 
 public class JwtFilter extends OncePerRequestFilter {
-    private static final String SECRET_KEY = "12345678910";
+    private static final String SECRET_KEY = "key";
 
     @Override
     protected void doFilterInternal(

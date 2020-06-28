@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.model;
+package vn.inspiron.mcontract.modules.Authentication.services;
 
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.User;
@@ -6,22 +6,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import vn.inspiron.mcontract.modules.Authentication.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService
 {
-    private UserAppRepository userAppRepository;
+    private UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserAppRepository userAppRepository)
+    public UserDetailsServiceImpl(UserRepository userRepository)
     {
-        this.userAppRepository = userAppRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
     {
         System.out.println("in search");
-        UserDetails userDetails = userAppRepository.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException(s + "No exist"));
+        UserDetails userDetails = userRepository.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException(s + "No exist"));
         System.out.println("xxxxxxxxxxxxxx");
         if (!userDetails.isEnabled())
         {
