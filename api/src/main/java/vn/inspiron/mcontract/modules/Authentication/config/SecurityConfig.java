@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/test")
                 .antMatchers(HttpMethod.POST, "/authenticate")
                 .antMatchers("/authenticate",
+                        "/create-contract",
                         "/configuration/ui",
                         "/swagger-resources/**",
                         "/configuration/security",
@@ -68,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/register", "/test").permitAll()
+                .antMatchers("/authenticate", "/register", "/test", "/create-contract").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data", "/account/*/transfers", "/logged").authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer", "/account/create").authenticated()
                 .antMatchers(HttpMethod.GET, "/refresh-token").permitAll()

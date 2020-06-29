@@ -2,16 +2,11 @@ package vn.inspiron.mcontract.modules.Authentication.services;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
-import vn.inspiron.mcontract.modules.Entity.CompanyEntity;
-import vn.inspiron.mcontract.modules.Entity.MstEntity;
-import vn.inspiron.mcontract.modules.Entity.UserEntity;
-import vn.inspiron.mcontract.modules.Authentication.repository.CompanyRepository;
-import vn.inspiron.mcontract.modules.Authentication.repository.MstRepository;
-import vn.inspiron.mcontract.modules.Authentication.repository.UserRepository;
+import vn.inspiron.mcontract.modules.Repository.*;
+import vn.inspiron.mcontract.modules.Entity.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -27,16 +22,38 @@ public class RegistrationService
     @Autowired
     private MstRepository mstRepository;
     @Autowired
+    private CompanyUserRepository companyUserRepository;
+    @Autowired
+    private EmailRepository emailRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public void register(UserRegistrationDTO userRegistrationDTO) throws Exception {
         if (userNotExists(userRegistrationDTO.getUsername())) {
-            UserEntity user = userRepository.save(createUser(userRegistrationDTO));
-            CompanyEntity company = companyRepository.save(createCompany(userRegistrationDTO));
+            Optional<EmailEntity> email = emailRepository.findByEmail(userRegistrationDTO.getEmail());
+            EmailEntity newEmail = new EmailEntity();
+            if (email.isEmpty()) {
+                newEmail.setEmail(userRegistrationDTO.getEmail());
+                emailRepository.save(newEmail);
+            } else {
+                newEmail.setEmail(email.get().getEmail());
+                newEmail.setFkUser(email.get().getFkUser());
+            }
+
+            if (newEmail.getFkUser() == null) {
+                UserEntity user = userRepository.save(createUser(userRegistrationDTO));
+                CompanyEntity company = companyRepository.save(createCompany(userRegistrationDTO));
+                mstRepository.save(createMst(userRegistrationDTO, company));
+                CompanyUserEntity companyUser = new CompanyUserEntity();
+                companyUser.setFkCompany(company.getId());
+                companyUser.setFkUser(user.getId());
+                companyUser.setFkCompanyUserRole(1L);
+
+                return;
+            }
         }
-        else {
-            throw new Exception("User exist");
-        }
+
+        throw new Exception("User exist");
     }
 
     private boolean userNotExists(@NotNull @NotEmpty String username) {

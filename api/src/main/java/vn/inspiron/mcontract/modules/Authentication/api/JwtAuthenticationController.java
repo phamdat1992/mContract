@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.controller;
+package vn.inspiron.mcontract.modules.Authentication.api;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;

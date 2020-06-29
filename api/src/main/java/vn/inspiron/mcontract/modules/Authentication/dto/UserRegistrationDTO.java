@@ -23,8 +23,8 @@ public class UserRegistrationDTO {
     private String mst;
     @NotNull
     @NotEmpty
-    private String company_name;
+    private String companyName;
     @NotNull
     @NotEmpty
-    private String company_address;
+    private String companyAddress;
 }

@@ -2,7 +2,7 @@ package vn.inspiron.mcontract.modules.Authentication.services;
 
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Entity.UserEntity;
-import vn.inspiron.mcontract.modules.Authentication.repository.UserRepository;
+import vn.inspiron.mcontract.modules.Repository.UserRepository;
 
 import java.security.Principal;
 import java.util.Optional;

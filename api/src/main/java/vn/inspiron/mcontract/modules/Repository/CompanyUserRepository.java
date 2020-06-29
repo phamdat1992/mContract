@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.repository;
+package vn.inspiron.mcontract.modules.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

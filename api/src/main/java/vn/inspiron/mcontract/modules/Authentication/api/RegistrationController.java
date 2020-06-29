@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.controller;
+package vn.inspiron.mcontract.modules.Authentication.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,7 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO)
-    {
+    public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         UserRegistrationResponseDTO response = new UserRegistrationResponseDTO();
         try
         {
