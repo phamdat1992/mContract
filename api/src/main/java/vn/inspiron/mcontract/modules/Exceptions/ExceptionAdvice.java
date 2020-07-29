@@ -61,7 +61,7 @@ public class ExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(Unauthorized.class)
+    @ExceptionHandler(TokenExpired.class)
     public ResponseEntity<ErrorResponse> tokenExpired() {
         ErrorResponse exception = new ErrorResponse();
         exception.setStatus(404);
