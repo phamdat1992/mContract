@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -24,6 +25,28 @@ public class UserEntity implements UserDetails {
     private Long id;
     @Column
     private String username;
+    @Column
+    private String gender;
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
+    @Column
+    private String cmnd;
+    @Column
+    private String place;
+    @Column
+    private Date phone;
+    @Column
+    private String street;
+    @Column
+    private String ward;
+    @Column
+    private String district;
+    @Column
+    private String city;
+
+    @JsonIgnore
+    @Column
+    private Date dateOfRegistration;
     @JsonIgnore
     @Column
     private String password;
