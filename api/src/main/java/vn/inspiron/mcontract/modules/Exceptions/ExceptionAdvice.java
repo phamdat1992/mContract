@@ -54,7 +54,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(InvalidToken.class)
     public ResponseEntity<ErrorResponse> invalidToken() {
         ErrorResponse exception = new ErrorResponse();
-        exception.setStatus(404);
+        exception.setStatus(400);
         exception.setErrorCode("INVALID_TOKEN");
         exception.setErrorMsg("The token is invalid. Please try again.");
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
@@ -64,7 +64,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(TokenExpired.class)
     public ResponseEntity<ErrorResponse> tokenExpired() {
         ErrorResponse exception = new ErrorResponse();
-        exception.setStatus(404);
+        exception.setStatus(400);
         exception.setErrorCode("TOKEN_EXPIRED");
         exception.setErrorMsg("The token has already expired. Please try again.");
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);

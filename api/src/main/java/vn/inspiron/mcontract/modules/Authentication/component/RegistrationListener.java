@@ -18,8 +18,6 @@ import java.util.UUID;
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
-    private static final int TOKEN_EXPIRATION = 24 * 60 * 60;
-
     @Autowired
     private RegistrationService registrationService;
 
@@ -33,22 +31,13 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         String toEmail = event.getToEmail();
-        String randomToken = UUID.randomUUID().toString();
-
-        EmailVerifyTokenEntity emailVerifyTokenEntity = new EmailVerifyTokenEntity();
-
-        emailVerifyTokenEntity.setUser(event.getUser());
-        emailVerifyTokenEntity.setToken(randomToken);
-        emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(TOKEN_EXPIRATION));
-
-        registrationService.setToken(emailVerifyTokenEntity);
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(toEmail);
         email.setSubject("Please complete signing up at mContract!");
         // TODO: Handle magic URL here
         email.setText("Thank you for signing up at mContract.\nPlease visit this link to complete your registration: \n" +
-                "http://localhost:9293/register/verify?token=" + randomToken);
+                "http://localhost:9293/register/verify?token=" + event.getToken());
         mailSender.send(email);
         System.out.println("Verification Email sent");
     }

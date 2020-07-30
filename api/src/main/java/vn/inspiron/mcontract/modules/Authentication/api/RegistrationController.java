@@ -15,12 +15,12 @@ public class RegistrationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public void register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
+    public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
 
         UserRegistrationResponseDTO response = new UserRegistrationResponseDTO();
-        registrationService.register(userRegistrationDTO);
-        response.setUsername(userRegistrationDTO.getUsername());
-        response.setEmail(userRegistrationDTO.getEmail());
+        String token = registrationService.register(userRegistrationDTO);
+        response.setToken(token);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/register/verify")

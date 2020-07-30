@@ -7,23 +7,22 @@ import vn.inspiron.mcontract.modules.Entity.UserEntity;
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
 
     private String toEmail;
-    private UserEntity user;
+    private String token;
 
     /**
      * Create a new {@code ApplicationEvent}.
      */
-    public OnRegistrationCompleteEvent(String toEmail, UserEntity user) {
+    public OnRegistrationCompleteEvent(String toEmail, String token) {
         super(toEmail);
         this.toEmail = toEmail;
-        this.user = user;
+        this.token = token;
     }
 
     public String getToEmail() {
-
         return toEmail;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getToken() {
+        return token;
     }
 }

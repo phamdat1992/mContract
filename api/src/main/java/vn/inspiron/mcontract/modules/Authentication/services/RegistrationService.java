@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.component.OnRegistrationCompleteEvent;
 import vn.inspiron.mcontract.modules.Authentication.dto.CompanyRegistrationDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
+import vn.inspiron.mcontract.modules.Common.util.Util;
 import vn.inspiron.mcontract.modules.Exceptions.InvalidToken;
 import vn.inspiron.mcontract.modules.Exceptions.TokenExpired;
 import vn.inspiron.mcontract.modules.Repository.*;
@@ -19,10 +20,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RegistrationService
 {
+    private static final int TOKEN_EXPIRATION = 24 * 60 * 60;
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -49,7 +53,7 @@ public class RegistrationService
         return company;
     }
 
-    public void register(UserRegistrationDTO userRegistrationDTO) throws Exception {
+    public String register(UserRegistrationDTO userRegistrationDTO) throws Exception {
 
         if (userNotExists(userRegistrationDTO.getUsername())) {
             Optional<EmailEntity> email = emailRepository.findByEmail(userRegistrationDTO.getEmail());
@@ -67,14 +71,22 @@ public class RegistrationService
             if (newEmail.getFkUser() == null) {
                 UserEntity user = userRepository.save(createUser(userRegistrationDTO));
 
+                String randomToken = UUID.randomUUID().toString();
+
+                EmailVerifyTokenEntity emailVerifyTokenEntity = new EmailVerifyTokenEntity();
+                emailVerifyTokenEntity.setUser(user);
+                emailVerifyTokenEntity.setToken(randomToken);
+                emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(TOKEN_EXPIRATION));
+                setToken(emailVerifyTokenEntity);
+
                 // Send verification email
                 try {
-                    eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newEmail.getEmail(), user));
+                    eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newEmail.getEmail(), randomToken));
                 } catch (RuntimeException e) {
                     // TODO: Handle email not sent exception
                     e.printStackTrace();
                 }
-                return;
+                return randomToken;
             }
         }
 
@@ -95,6 +107,8 @@ public class RegistrationService
         if (tokenEntity.get().getExpiry().getTime() - now.getTime() <= 0) {
             throw new TokenExpired();
         }
+
+        System.out.println(tokenEntity.get().getUser());
 
 
     }
