@@ -2,3 +2,8 @@
 .gradle
 build
 .idea
+api/.classpath
+
+api/.project
+
+api/.settings/

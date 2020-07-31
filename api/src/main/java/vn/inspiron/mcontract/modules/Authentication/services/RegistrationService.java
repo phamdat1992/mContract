@@ -13,6 +13,7 @@ import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
 import vn.inspiron.mcontract.modules.Common.util.Util;
 import vn.inspiron.mcontract.modules.Exceptions.InvalidToken;
 import vn.inspiron.mcontract.modules.Exceptions.TokenExpired;
+import vn.inspiron.mcontract.modules.Exceptions.UserExisted;
 import vn.inspiron.mcontract.modules.Repository.*;
 import vn.inspiron.mcontract.modules.Entity.*;
 
@@ -67,7 +68,8 @@ public class RegistrationService
                 newEmail.setFkUser(email.get().getFkUser());
             }
 
-            // If this email has no associated user, create user from request
+            // If this email has no associated user, create user from request.
+            // Otherwise, the user with this email already existed
             if (newEmail.getFkUser() == null) {
                 UserEntity user = userRepository.save(createUser(userRegistrationDTO));
 
@@ -90,7 +92,7 @@ public class RegistrationService
             }
         }
 
-        throw new Exception("User exist");
+        throw new UserExisted();
     }
 
     public void setToken(EmailVerifyTokenEntity tokenEntity) {
@@ -108,9 +110,9 @@ public class RegistrationService
             throw new TokenExpired();
         }
 
-        System.out.println(tokenEntity.get().getUser());
-
-
+        UserEntity user = tokenEntity.get().getUser();
+        user.setEnabled(true);
+        userRepository.save(user);
     }
 
     private boolean userNotExists(@NotNull @NotEmpty String username) {

@@ -9,27 +9,19 @@ import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Repository.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService
-{
+public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository)
-    {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
-    {
-        System.out.println("in search");
-        UserDetails userDetails = userRepository.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException(s + "No exist"));
-        System.out.println("xxxxxxxxxxxxxx");
-        if (!userDetails.isEnabled())
-        {
-            throw new DisabledException("User is not enabled");
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        UserDetails userDetails = userRepository.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("Username " + s + " not exist"));
+        if (!userDetails.isEnabled()) {
+            throw new DisabledException("Email is not verified.");
         }
-
-        System.out.println(userDetails.getPassword());
         return new User(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
     }
 }

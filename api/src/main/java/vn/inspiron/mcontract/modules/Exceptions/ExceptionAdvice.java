@@ -70,4 +70,14 @@ public class ExceptionAdvice {
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(UserExisted.class)
+    public ResponseEntity<ErrorResponse> userExisted() {
+        ErrorResponse exception = new ErrorResponse();
+        exception.setStatus(409);
+        exception.setErrorCode("USER_EXISTED");
+        exception.setErrorMsg("This username already existed. Please log in.");
+        return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
+    }
+
 }

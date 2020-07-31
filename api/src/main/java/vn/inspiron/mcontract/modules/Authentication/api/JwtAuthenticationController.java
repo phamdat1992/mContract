@@ -22,60 +22,37 @@ import java.util.TimeZone;
 public class JwtAuthenticationController {
 
     @Autowired
-    private Environment env;
-
-    @Autowired
     PasswordEncoder passwordEncoder;
-
     @Autowired
     private JwtAuthenticationService authenticationService;
 
-    @RequestMapping(value = "/test")
-    public ResponseEntity<JwtTokenResponseDTO> test() {
-        JwtTokenResponseDTO accessToken = new JwtTokenResponseDTO();
-        accessToken.setToken("test");
-        return ResponseEntity.status(HttpStatus.OK).body(accessToken);
-        // return "{\"name\":\""+ env.getProperty("jwt-secret-key") +"\",\"age\":30,\"city\":\"New York\"}";
-    }
-
-    @RequestMapping(value="/logged")
-    public String logged() {
-        return "{\"name\":\"aaa\",\"age\":30,\"city\":\"New York\"}";
-    }
-
     @PostMapping(value = "/authenticate")
     public ResponseEntity<String> createJwtAuthenticationToken(@RequestBody JwtTokenRequestDTO tokenRequest, HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
-        System.out.println("testxxx");
-        System.out.println(passwordEncoder.encode("test"));
         try {
-
-            JwtTokenResponseDTO accessToken = this.authenticationService.authenticate(tokenRequest, String.valueOf(request.getRequestURL()), timeZone);
+            JwtTokenResponseDTO accessToken = authenticationService.authenticate(tokenRequest, String.valueOf(request.getRequestURL()), timeZone);
             JwtTokenResponseDTO refreshToken = authenticationService.generateRefreshToken(tokenRequest.getUsername(), String.valueOf(request.getRequestURL()), timeZone);
-
 
             HttpCookie accessTokenCookie = createCookieWithToken("accessToken", accessToken.getToken(), 10 * 60);
             HttpCookie refreshTokenCookie = createCookieWithToken("refreshToken", refreshToken.getToken(), 60 * 60);
 
-            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString()).header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).body("Authenticated");
-        }
-        catch (AuthenticationException e)
-        {
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                    .body("Authenticated");
+        } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
     @GetMapping("/refresh-token")
-    public ResponseEntity<String> refreshJWT(HttpServletRequest request, HttpServletResponse response, TimeZone timeZone)
-    {
+    public ResponseEntity<String> refreshJWT(HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         Optional<Cookie> refreshCookie = getRefreshTokenCookieFromRequest(request);
 
-        if (refreshCookie.isEmpty())
-        {
+        if (refreshCookie.isEmpty()) {
             return ResponseEntity.badRequest().body("No refresh token");
         }
 
-        try
-        {
+        try {
             JwtTokenResponseDTO accessToken = authenticationService.refreshAccessToken(refreshCookie.get(), String.valueOf(request.getRequestURL()), timeZone);
 
             HttpCookie accessTokenCookie = createCookieWithToken("accessToken", accessToken.getToken(), 10 * 60);
@@ -84,23 +61,17 @@ public class JwtAuthenticationController {
                     60 * 60);
 
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString()).header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).body("Token refreshed");
-        } catch (JWTVerificationException e)
-        {
+        } catch (JWTVerificationException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
-    private Optional<Cookie> getRefreshTokenCookieFromRequest(HttpServletRequest request)
-    {
+    private Optional<Cookie> getRefreshTokenCookieFromRequest(HttpServletRequest request) {
         Cookie tokenCookie = null;
 
-        if (request.getCookies() != null)
-        {
-            for (Cookie cookie : request.getCookies())
-            {
-                if (cookie.getName().equals("refreshToken"))
-                {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("refreshToken")) {
                     tokenCookie = cookie;
                     break;
                 }
