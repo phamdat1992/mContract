@@ -14,20 +14,20 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
+
         UserRegistrationResponseDTO response = new UserRegistrationResponseDTO();
-        try
-        {
-            registrationService.register(userRegistrationDTO);
-            response.setUsername(userRegistrationDTO.getUsername());
-            response.setEmail(userRegistrationDTO.getEmail());
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
+        String token = registrationService.register(userRegistrationDTO);
+        response.setToken(token);
+        return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/register/verify")
+    @ResponseStatus(HttpStatus.OK)
+    public void verify(@RequestParam("token") String token) throws Exception {
+        registrationService.verifyToken(token);
+    }
+
+
 }

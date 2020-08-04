@@ -11,6 +11,5 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRegistrationResponseDTO {
-    private String username;
-    private String email;
+    private String token;
 }
