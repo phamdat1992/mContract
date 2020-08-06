@@ -17,8 +17,17 @@ public class CompanyEntity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
-    private String companyName;
-    @Column(name = "address", length = 500)
-    private String companyAddress;
+    private String name;
+    @Column(name = "website")
+    private String website;
+    @Column(name = "street", length = 500)
+    private String street;
+    @Column(name = "ward")
+    private String ward;
+    @Column(name = "district")
+    private String district;
+    @Column(name = "city")
+    private String city;
 }
