@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class McontractApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(McontractApplication.class, args);
+		SpringApplication.run(McontractApplication.class, "--debug");
 	}
 
 
