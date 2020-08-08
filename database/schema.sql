@@ -454,4 +454,8 @@ CREATE TABLE `dvhc_wards` (
   CONSTRAINT `dvhc_wards_fk_districts` FOREIGN KEY (`fk_dvhc_district`) REFERENCES `dvhc_districts` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+ALTER TABLE user CHANGE birthday date_of_birth DATE NOT NULL,
+  CHANGE address street VARCHAR(500) NOT NULL;
+
 -- For data dump of dvhc, refer to file ./dvhcvn.sql
