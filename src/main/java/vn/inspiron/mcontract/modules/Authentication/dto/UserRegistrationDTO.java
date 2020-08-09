@@ -19,6 +19,10 @@ public class UserRegistrationDTO {
 
     @NotNull
     @NotEmpty
+    private String fullname;
+
+    @NotNull
+    @NotEmpty
     private String email;
 
     @NotNull

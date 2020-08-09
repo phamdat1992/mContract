@@ -26,6 +26,8 @@ public class UserEntity implements UserDetails {
     @Column
     private String username;
     @Column
+    private String fullname;
+    @Column
     private String gender;
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
