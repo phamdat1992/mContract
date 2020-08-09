@@ -33,8 +33,10 @@ public class UserEntity implements UserDetails {
     private Date dateOfBirth;
     @Column
     private String cmnd;
-    @Column
-    private String place;
+    @Column(name = "cmnd_issue_date")
+    private Date cmndIssueDate;
+    @Column(name = "cmnd_issue_place")
+    private String cmndIssuePlace;
     @Column
     private Date phone;
     @Column

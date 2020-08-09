@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationResponseDTO;
 import vn.inspiron.mcontract.modules.Authentication.services.RegistrationService;
+import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
+import vn.inspiron.mcontract.modules.Exceptions.NotFound;
 
 @RestController
 public class RegistrationController {
@@ -18,8 +20,13 @@ public class RegistrationController {
     public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
 
         UserRegistrationResponseDTO response = new UserRegistrationResponseDTO();
-        String token = registrationService.register(userRegistrationDTO);
-        response.setToken(token);
+        try {
+            String token = registrationService.register(userRegistrationDTO);
+            response.setToken(token);
+        } catch (RuntimeException e) {
+            throw new BadRequest();
+        }
+
         return ResponseEntity.ok(response);
     }
 

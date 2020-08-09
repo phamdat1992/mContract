@@ -45,7 +45,14 @@ public class UserRegistrationDTO {
 
     @NotNull
     @NotEmpty
-    private String place;
+    @JsonProperty("cmnd_issue_date")
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private Date cmndIssueDate;
+
+    @NotNull
+    @NotEmpty
+    @JsonProperty("cmnd_issue_place")
+    private String cmndIssuePlace;
 
     @NotNull
     @NotEmpty
