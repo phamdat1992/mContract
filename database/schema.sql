@@ -461,5 +461,5 @@ ALTER TABLE user CHANGE birthday date_of_birth DATE NOT NULL,
 
 ALTER TABLE user ADD fullname VARCHAR(500) NOT NULL;
 
-ALTER TABLE user ADD cmnd_issue_date DATE NULL,
+ALTER TABLE user ADD cmnd_issue_date DATE NOT NULL,
 CHANGE place cmnd_issue_place VARCHAR(255) NOT NULL;
