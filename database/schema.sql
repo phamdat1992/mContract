@@ -463,3 +463,21 @@ ALTER TABLE user ADD fullname VARCHAR(500) NOT NULL;
 
 ALTER TABLE user ADD cmnd_issue_date DATE NOT NULL,
 CHANGE place cmnd_issue_place VARCHAR(255) NOT NULL;
+
+CREATE TABLE files
+(
+	id INT unsigned auto_increment,
+	original_filename VARCHAR(255) NOT NULL,
+	upload_path VARCHAR(500) NOT NULL,
+	content_type VARCHAR(255) NOT NULL,
+	uploaded_by INT unsigned NOT NULL,
+	uploaded_at datetime DEFAULT current_timestamp NOT NULL,
+	CONSTRAINT files_pk
+		PRIMARY KEY (id),
+	CONSTRAINT files_user_id_fk
+		FOREIGN KEY (uploaded_by) REFERENCES user (id)
+);
+
+CREATE UNIQUE index files_upload_path_uindex
+	ON files (upload_path);
+
