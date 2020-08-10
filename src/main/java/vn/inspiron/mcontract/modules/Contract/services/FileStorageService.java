@@ -41,9 +41,14 @@ public class FileStorageService {
             newFilename += "." + extension;
         }
 
-        Path targetPath = Paths.get(UPLOAD_DIR).toAbsolutePath().normalize().resolve(newFilename);
+        Path targetPath = Paths.get(UPLOAD_DIR);
+        Path targetFile = targetPath.toAbsolutePath().normalize().resolve(newFilename);
+
         try {
-            Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+            if (!Files.exists(targetPath)) {
+                Files.createDirectories(targetPath);
+            }
+            Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequest();
@@ -52,12 +57,12 @@ public class FileStorageService {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setContentType(file.getContentType());
         fileEntity.setOriginalFilename(originalFilename);
-        fileEntity.setUploadPath(targetPath.toString());
+        fileEntity.setUploadPath(targetFile.toString());
         fileEntity.setUploadedBy(userId);
 
         filesRepository.save(fileEntity);
 
-        return targetPath.toString();
+        return targetFile.toString();
 
     }
 
