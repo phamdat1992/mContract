@@ -396,7 +396,7 @@ UNLOCK TABLES;
 
 -- Update 27/07/2020
 
-ALTER TABLE user 
+ALTER TABLE user
 CHANGE birthday date_of_brith DATE NOT NULL,
 CHANGE address street VARCHAR(500) NOT NULL;
 

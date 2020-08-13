@@ -7,3 +7,5 @@ api/.classpath
 api/.project
 
 api/.settings/
+bin/
+mcontract.iml
