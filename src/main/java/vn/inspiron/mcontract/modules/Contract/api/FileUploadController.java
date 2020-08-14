@@ -14,10 +14,10 @@ public class FileUploadController {
     FileStorageService fileStorageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<Long> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("user-id") Long userId) {
-        String uploadedPath = fileStorageService.storeFile(file, userId);
+        Long fileId = fileStorageService.storeFile(file, userId);
 
-        return ResponseEntity.ok(uploadedPath);
+        return ResponseEntity.ok(fileId);
     }
 }

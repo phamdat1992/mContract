@@ -2,17 +2,22 @@ package vn.inspiron.mcontract.modules.Contract.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import vn.inspiron.mcontract.modules.Entity.FileEntity;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 import vn.inspiron.mcontract.modules.Repository.FilesRepository;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,7 +29,7 @@ public class FileStorageService {
     @Autowired
     private FilesRepository filesRepository;
 
-    public String storeFile(MultipartFile file, Long userId) {
+    public Long storeFile(MultipartFile file, Long userId) {
 
         String originalFilename = file.getOriginalFilename();
 
@@ -62,8 +67,31 @@ public class FileStorageService {
 
         filesRepository.save(fileEntity);
 
-        return targetFile.toString();
-
+        return fileEntity.getId();
     }
 
+    public Resource loadFile(Long fileId) throws Exception {
+
+        Optional<FileEntity> mayBeFileEntity = filesRepository.findById(fileId);
+
+        if (mayBeFileEntity.isEmpty()) {
+            throw new FileNotFoundException();
+        }
+
+        FileEntity fileEntity = mayBeFileEntity.get();
+
+        String fullPath = fileEntity.getUploadPath();
+
+        try {
+            Path filePath = Paths.get(fullPath).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new FileNotFoundException();
+            }
+        } catch (MalformedURLException e) {
+            throw new FileNotFoundException();
+        }
+    }
 }
