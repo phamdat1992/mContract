@@ -18,6 +18,7 @@ repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
+	maven { url 'https://ec.europa.eu/cefdigital/artifact/content/repositories/esignaturedss/' }
 }
 
 dependencies {
@@ -32,6 +33,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-service:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-model:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-pades-pdfbox:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-signature-rest:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-validation-rest:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-certificate-validation-rest:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-tsl-validation:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-utils-google-guava:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-crl-parser-stream:5.7'
+
 	runtimeOnly 'org.hsqldb:hsqldb'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	compileOnly 'org.projectlombok:lombok'
