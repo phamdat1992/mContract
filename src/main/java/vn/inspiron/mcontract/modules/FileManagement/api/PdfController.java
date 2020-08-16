@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import vn.inspiron.mcontract.modules.FileManagement.service.FileManageService;
 import vn.inspiron.mcontract.modules.FileManagement.service.UrlService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,9 @@ public class PdfController {
 
     @Autowired
     private UrlService urlService;
+
+    @Autowired
+    private FileManageService fileManageService;
 
     @GetMapping(value = "/generate_pdf_url")
     @ResponseStatus(HttpStatus.OK)
@@ -51,6 +56,14 @@ public class PdfController {
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
+
+    @PostMapping("/upload_pdf")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
+                                             @RequestParam("user-id") Long userId) {
+        String uploadedPath = fileManageService.storeFile(file, userId);
+
+        return ResponseEntity.ok(uploadedPath);
     }
 
     private String getPdfUrl(String id) {
