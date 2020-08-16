@@ -14,6 +14,7 @@ public class FileUploadController {
     FileStorageService fileStorageService;
 
     @PostMapping("/upload")
+    // TODO: Retrieve userId from jwt
     public ResponseEntity<Long> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("user-id") Long userId) {
         Long fileId = fileStorageService.storeFile(file, userId);
