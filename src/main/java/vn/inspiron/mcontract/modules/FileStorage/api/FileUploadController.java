@@ -10,6 +10,9 @@ import vn.inspiron.mcontract.modules.FileStorage.services.FileStorageService;
 
 @RestController
 public class FileUploadController {
+
+    private static final String UPLOAD_DIR = "upload";
+
     @Autowired
     FileStorageService fileStorageService;
 
@@ -17,7 +20,7 @@ public class FileUploadController {
     // TODO: Retrieve userId from jwt
     public ResponseEntity<Long> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("user-id") Long userId) {
-        Long fileId = fileStorageService.storeFile(file, userId);
+        Long fileId = fileStorageService.storeFile(file, userId, UPLOAD_DIR);
 
         return ResponseEntity.ok(fileId);
     }

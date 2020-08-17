@@ -5,7 +5,6 @@ import eu.europa.esig.dss.enumerations.SignatureForm;
 import eu.europa.esig.dss.enumerations.SignatureLevel;
 import eu.europa.esig.dss.enumerations.SignaturePackaging;
 import eu.europa.esig.dss.model.DSSDocument;
-import eu.europa.esig.dss.model.Digest;
 import eu.europa.esig.dss.model.InMemoryDocument;
 import eu.europa.esig.dss.model.ToBeSigned;
 import eu.europa.esig.dss.spi.DSSUtils;
@@ -14,16 +13,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import vn.inspiron.mcontract.modules.Contract.DssWebUtils;
 import vn.inspiron.mcontract.modules.Contract.dto.DataToSignDTO;
 import vn.inspiron.mcontract.modules.Contract.dto.DataToSignResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.SignDocumentResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.SignatureValueDTO;
 import vn.inspiron.mcontract.modules.Contract.model.SignatureDocumentForm;
-import vn.inspiron.mcontract.modules.Contract.services.FileStorageService;
+import vn.inspiron.mcontract.modules.FileStorage.services.FileStorageService;
 import vn.inspiron.mcontract.modules.Contract.services.SigningService;
 
 import javax.xml.bind.DatatypeConverter;
@@ -31,6 +28,8 @@ import java.util.Date;
 
 @RestController
 public class PdfSigningController {
+
+    private static final String SIGNED_FILES_DIR = "signed";
 
     @Autowired
     FileStorageService fileStorageService;
@@ -60,7 +59,7 @@ public class PdfSigningController {
         DSSDocument document = signingService.signDocument(signaturePdfForm);
         InMemoryDocument signedPdfDocument = new InMemoryDocument(DSSUtils.toByteArray(document), document.getName(), document.getMimeType());
 
-        Long fileId = fileStorageService.storeSignedDocument(signedPdfDocument, 1L);
+        Long fileId = fileStorageService.storeSignedDocument(signedPdfDocument, 1L, SIGNED_FILES_DIR);
 
         SignDocumentResponse response = new SignDocumentResponse();
         response.setFileId(fileId);

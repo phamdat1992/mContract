@@ -27,16 +27,16 @@ import java.util.UUID;
 public class FileStorageService {
 
     @Value("${file.upload-dir}")
-    private String UPLOAD_DIR;
+    private String ROOT_DIR;
 
     @Autowired
     private FilesRepository filesRepository;
 
-    public Long storeFile(MultipartFile file, Long userId) {
+    public Long storeFile(MultipartFile file, Long userId, String directory) {
         // Generate new filename
         String originalFilename = file.getOriginalFilename();
         String newFilename = Util.randomFilename(originalFilename);
-        Path targetPath = Paths.get(UPLOAD_DIR);
+        Path targetPath = Paths.get(ROOT_DIR).resolve(directory);
         Path targetFile = targetPath.toAbsolutePath().normalize().resolve(newFilename);
 
         // Copy data bytes
@@ -62,12 +62,12 @@ public class FileStorageService {
         return fileEntity.getId();
     }
 
-    public Long storeSignedDocument(InMemoryDocument document, Long userId) {
+    public Long storeSignedDocument(InMemoryDocument document, Long userId, String directory) {
 
         System.out.println(document.getAbsolutePath());
 
         String filename = document.getName();
-        Path targetPath = Paths.get(UPLOAD_DIR);
+        Path targetPath = Paths.get(ROOT_DIR).resolve(directory);
         Path targetFile = targetPath.toAbsolutePath().normalize().resolve(filename);
 
         // Copy data bytes
