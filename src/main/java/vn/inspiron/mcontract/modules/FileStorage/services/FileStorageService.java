@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Contract.services;
+package vn.inspiron.mcontract.modules.FileStorage.services;
 
 import eu.europa.esig.dss.model.InMemoryDocument;
 import org.springframework.beans.factory.annotation.Autowired;
