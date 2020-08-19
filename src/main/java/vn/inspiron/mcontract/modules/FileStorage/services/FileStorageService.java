@@ -36,15 +36,17 @@ public class FileStorageService {
         // Generate new filename
         String originalFilename = file.getOriginalFilename();
         String newFilename = Util.randomFilename(originalFilename);
-        Path targetPath = Paths.get(ROOT_DIR).resolve(directory);
-        Path targetFile = targetPath.toAbsolutePath().normalize().resolve(newFilename);
+
+        Path relativePath = Paths.get(directory).resolve(newFilename);
+        Path absolutePath = Paths.get(ROOT_DIR).toAbsolutePath().normalize().resolve(directory);
+        Path absoluteFile = Paths.get(ROOT_DIR).toAbsolutePath().normalize().resolve(relativePath);
 
         // Copy data bytes
         try {
-            if (!Files.exists(targetPath)) {
-                Files.createDirectories(targetPath);
+            if (!Files.exists(absolutePath)) {
+                Files.createDirectories(absolutePath);
             }
-            Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(file.getInputStream(), absoluteFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequest();
@@ -54,7 +56,7 @@ public class FileStorageService {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setContentType(file.getContentType());
         fileEntity.setOriginalFilename(originalFilename);
-        fileEntity.setUploadPath(targetFile.toString());
+        fileEntity.setUploadPath(relativePath.toString());
         fileEntity.setUploadedBy(userId);
 
         filesRepository.save(fileEntity);
@@ -64,18 +66,18 @@ public class FileStorageService {
 
     public Long storeSignedDocument(InMemoryDocument document, Long userId, String directory) {
 
-        System.out.println(document.getAbsolutePath());
-
         String filename = document.getName();
-        Path targetPath = Paths.get(ROOT_DIR).resolve(directory);
-        Path targetFile = targetPath.toAbsolutePath().normalize().resolve(filename);
+
+        Path relativePath = Paths.get(directory).resolve(filename);
+        Path absolutePath = Paths.get(ROOT_DIR).toAbsolutePath().normalize().resolve(directory);
+        Path absoluteFile = Paths.get(ROOT_DIR).toAbsolutePath().normalize().resolve(relativePath);
 
         // Copy data bytes
         try {
-            if (!Files.exists(targetPath)) {
-                Files.createDirectories(targetPath);
+            if (!Files.exists(absolutePath)) {
+                Files.createDirectories(absolutePath);
             }
-            Files.write(targetFile, document.getBytes());
+            Files.write(absoluteFile, document.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequest();
@@ -85,7 +87,7 @@ public class FileStorageService {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setContentType("signed-document");
         fileEntity.setOriginalFilename(document.getName());
-        fileEntity.setUploadPath(targetFile.toString());
+        fileEntity.setUploadPath(relativePath.toString());
         fileEntity.setUploadedBy(userId);
 
         filesRepository.save(fileEntity);
@@ -102,11 +104,11 @@ public class FileStorageService {
 
         FileEntity fileEntity = mayBeFileEntity.get();
 
-        String fullPath = fileEntity.getUploadPath();
+        String relativePath = fileEntity.getUploadPath();
+        Path absolutePath = Paths.get(ROOT_DIR).resolve(relativePath);
 
         try {
-            Path filePath = Paths.get(fullPath).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
+            Resource resource = new UrlResource(absolutePath.toUri());
             if (resource.exists()) {
                 return resource;
             } else {
