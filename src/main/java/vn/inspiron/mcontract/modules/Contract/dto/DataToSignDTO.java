@@ -21,5 +21,7 @@ public class DataToSignDTO {
     private List<String> certificateChain;
     @NotNull
     private EncryptionAlgorithm encryptionAlgorithm;
+    @NotNull
+    private Long timeStamp;
 
 }

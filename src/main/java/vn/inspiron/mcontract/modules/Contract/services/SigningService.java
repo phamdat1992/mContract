@@ -1,6 +1,9 @@
 package vn.inspiron.mcontract.modules.Contract.services;
 
 import eu.europa.esig.dss.AbstractSignatureParameters;
+import eu.europa.esig.dss.enumerations.SignatureAlgorithm;
+import eu.europa.esig.dss.model.DSSDocument;
+import eu.europa.esig.dss.model.SignatureValue;
 import eu.europa.esig.dss.model.ToBeSigned;
 import eu.europa.esig.dss.model.x509.CertificateToken;
 import eu.europa.esig.dss.pades.PAdESSignatureParameters;
@@ -8,6 +11,7 @@ import eu.europa.esig.dss.pades.signature.PAdESService;
 import eu.europa.esig.dss.signature.DocumentSignatureService;
 import eu.europa.esig.dss.spi.DSSUtils;
 import eu.europa.esig.dss.utils.Utils;
+import org.hibernate.validator.internal.properties.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Contract.DssWebUtils;
@@ -24,14 +28,23 @@ public class SigningService {
     private PAdESService pAdESService;
 
     public ToBeSigned getDataToSign(SignatureDocumentForm form) {
-
         DocumentSignatureService service = pAdESService;
-
         AbstractSignatureParameters parameters = fillParameters(form);
-
         ToBeSigned toBeSigned = service.getDataToSign(form.getDocumentToSign(), parameters);
 
         return toBeSigned;
+    }
+
+    public DSSDocument signDocument(SignatureDocumentForm form) {
+        DocumentSignatureService service = pAdESService;
+        AbstractSignatureParameters parameters = fillParameters(form);
+        DSSDocument toSignDocument = form.getDocumentToSign();
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.getAlgorithm(form.getEncryptionAlgorithm(), form.getDigestAlgorithm());
+        SignatureValue signatureValue = new SignatureValue(signatureAlgorithm, Utils.fromBase64(form.getBase64SignatureValue()));
+
+        DSSDocument signedDocument = service.signDocument(toSignDocument, parameters, signatureValue);
+
+        return signedDocument;
     }
 
     private AbstractSignatureParameters fillParameters(SignatureDocumentForm form) {
