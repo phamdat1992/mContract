@@ -18,7 +18,7 @@ public class FileManageService {
     @Value("${file.upload-dir}")
     private String UPLOAD_DIR;
 
-    public String storeFile(MultipartFile file, long userId) {
+    public Long storeFile(MultipartFile file, long userId) {
         String targetFilePath = null;
         try {
             targetFilePath = saveFileToStorage(file);
@@ -32,7 +32,7 @@ public class FileManageService {
 //        fileEntity.setUploadPath(targetFilePath);
 //        fileEntity.setUploadedBy(userId);
 
-        return targetFilePath;
+        return userId;
     }
 
     private String saveFileToStorage(MultipartFile file) throws Exception {
@@ -58,6 +58,7 @@ public class FileManageService {
             Files.createDirectories(targetPath);
         }
         Files.copy(file.getInputStream(), targetFile, StandardCopyOption.REPLACE_EXISTING);
+//        Files.copy(file.getInputStream(), targetFile, StandardCopyOption.ATOMIC_MOVE);
 
         return targetFile.toString();
     }

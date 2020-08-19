@@ -59,11 +59,11 @@ public class PdfController {
     }
 
     @PostMapping("/upload_pdf")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<Long> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("user-id") Long userId) {
-        String uploadedPath = fileManageService.storeFile(file, userId);
+        Long fileEntityId = fileManageService.storeFile(file, userId);
 
-        return ResponseEntity.ok(uploadedPath);
+        return ResponseEntity.ok(fileEntityId);
     }
 
     private String getPdfUrl(String id) {

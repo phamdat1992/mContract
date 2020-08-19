@@ -3,6 +3,8 @@
 build
 .idea
 api/.classpath
+.classpath
+.settings/
 
 api/.project
 
