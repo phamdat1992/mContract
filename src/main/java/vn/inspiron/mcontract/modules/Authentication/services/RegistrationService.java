@@ -8,7 +8,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.component.OnRegistrationCompleteEvent;
-import vn.inspiron.mcontract.modules.Authentication.dto.CompanyRegistrationDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
 import vn.inspiron.mcontract.modules.Common.util.Util;
 import vn.inspiron.mcontract.modules.Exceptions.InvalidToken;
@@ -31,12 +30,6 @@ public class RegistrationService
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private MstRepository mstRepository;
-    @Autowired
-    private CompanyUserRepository companyUserRepository;
-    @Autowired
     private EmailRepository emailRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,15 +37,6 @@ public class RegistrationService
     ApplicationEventPublisher eventPublisher;
     @Autowired
     EmailVerifyRepository emailVerifyRepository;
-
-    public CompanyEntity registerCompany(CompanyRegistrationDTO companyRegistrationDTO) throws Exception {
-        CompanyEntity company = new CompanyEntity();
-        BeanUtils.copyProperties(companyRegistrationDTO, company);
-        companyRepository.save(company);
-        mstRepository.save(createMst(companyRegistrationDTO, company));
-
-        return company;
-    }
 
     public String register(UserRegistrationDTO userRegistrationDTO) throws Exception {
 
@@ -130,14 +114,6 @@ public class RegistrationService
         user.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
 
         return user;
-    }
-
-    private MstEntity createMst(CompanyRegistrationDTO companyRegistrationDTO, CompanyEntity company) {
-        MstEntity mst = new MstEntity();
-        BeanUtils.copyProperties(companyRegistrationDTO, mst);
-        mst.setFkCompany(company.getId());
-
-        return mst;
     }
 
 }

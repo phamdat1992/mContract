@@ -1,40 +1,31 @@
-package vn.inspiron.mcontract.modules.Authentication.dto;
+package vn.inspiron.mcontract.modules.Company.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class CompanyRegistrationDTO {
+
+    @NotNull
+    private String name;
 
     @NotNull
     @NotEmpty
     private String mst;
 
-    @NotNull
-    @NotEmpty
-    private String name;
-
-    @NotNull
-    @NotEmpty
     private String website;
 
     @NotNull
-    @NotEmpty
     private String street;
 
     @NotNull
-    @NotEmpty
     private String ward;
 
     @NotNull
-    @NotEmpty
     private String district;
 
     @NotNull
-    @NotEmpty
     private String city;
 }
