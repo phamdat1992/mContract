@@ -2,20 +2,24 @@ package vn.inspiron.mcontract.modules.FileManagement.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import vn.inspiron.mcontract.modules.FileManagement.service.FileManageService;
 import vn.inspiron.mcontract.modules.FileManagement.service.UrlService;
 
-import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.InputStream;
 import java.net.URL;
 
 @RestController
 public class PdfController {
-    private final static String PDF_URL_1 = "https://www.w3docs.com/uploads/media/default/0001/01/540cb75550adf33f281f29132dddd14fded85bfc.pdf";
-    private final static String PDF_URL_2 = "https://docs.spring.io/spring-boot/docs/current/reference/pdf/spring-boot-reference.pdf";
+//    private final static String PDF_URL_1 = "https://www.w3docs.com/uploads/media/default/0001/01/540cb75550adf33f281f29132dddd14fded85bfc.pdf";
+//    private final static String PDF_URL_2 = "https://docs.spring.io/spring-boot/docs/current/reference/pdf/spring-boot-reference.pdf";
 
     @Autowired
     private UrlService urlService;
@@ -24,52 +28,40 @@ public class PdfController {
     private FileManageService fileManageService;
 
     @GetMapping(value = "/generate_pdf_url")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> getPdfFile(@RequestParam(value = "order", required=false)  String order) {
-        String id = null;
-        if (order == null) {
-            id = "1";
-        } else {
-            id = order;
-        }
-        String url = "localhost:9293" + urlService.generateExpirationUrl(id, "/pdf/");
-
+    public ResponseEntity<String> getPdfFile(@RequestParam(value = "key")  String key) {
+        String url = "localhost:9293" + urlService.generateExpirationUrl(key, "/pdf/");
         return ResponseEntity.ok(url);
     }
 
     @GetMapping("/pdf/{encrypt}")
-    public void getPdf(@PathVariable String encrypt, HttpServletResponse response) {
-        String file = urlService.getDataFromUrl(encrypt);
-        if (file == null) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
+    public ResponseEntity<byte[]> getPdf(@PathVariable String encrypt) {
+        String fileName = urlService.getDataFromUrl(encrypt);
+        if (fileName == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("url wrong".getBytes());
         }
+        byte[] content = null;
         try {
-            String pdfUrl = getPdfUrl(file);
-            response.setContentType("application/pdf");
-            URL url = new URL(pdfUrl);
-            InputStream is = url.openStream();
-            int nRead;
-            while ((nRead = is.read()) != -1) {
-                response.getWriter().write(nRead);
-            }
+        	content = fileManageService.getFileObject(fileName);
         } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("get file fail".getBytes());
         }
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(content);
     }
 
     @PostMapping("/upload_pdf")
-    public ResponseEntity<Long> uploadFile(@RequestParam("file") MultipartFile file,
-                                             @RequestParam("user-id") Long userId) {
-        Long fileEntityId = fileManageService.storeFile(file, userId);
-
-        return ResponseEntity.ok(fileEntityId);
-    }
-
-    private String getPdfUrl(String id) {
-        if (id.equalsIgnoreCase("1")) {
-            return PDF_URL_1;
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = fileManageService.uploadFile(file);
+        
+        if (fileName == null) {
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Upload fail");
         }
-        return PDF_URL_2;
+
+        return ResponseEntity.ok(fileName);
+    }
+    
+    @DeleteMapping("/delete_pdf")
+    public ResponseEntity<String> deleteFile(@RequestParam(value = "key")  String key) {
+        fileManageService.deleteFileOnS3(key);
+        return ResponseEntity.ok().body(key);
     }
 }

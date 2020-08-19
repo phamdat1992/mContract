@@ -11,8 +11,4 @@ public class McontractApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(McontractApplication.class, "--debug");
 	}
-
-
-
-
 }

@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Password encoder, để Spring Security sử dụng mã hóa mật khẩu người dùng
+        // Password encoder, Ä‘á»ƒ Spring Security sá»­ dá»¥ng mÃ£ hÃ³a máº­t kháº©u ngÆ°á»�i dÃ¹ng
         return new BCryptPasswordEncoder();
     }
 
@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/authenticate", "/register", "/register/verify", "/test", "/create-contract",
-                        "/cities", "/cities/*/districts", "/districts/*/wards", "/upload", "/get-data-to-sign", "/sign-document", "/company/register", "/generate_pdf_url", "/pdf/*", "/upload_pdf").permitAll()
+                        "/cities", "/cities/*/districts", "/districts/*/wards", "/upload", "/get-data-to-sign", "/sign-document", "/company/register", "/generate_pdf_url", "/pdf/*", "/upload_pdf", "/delete_pdf").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data", "/account/*/transfers", "/logged").authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer", "/account/create").authenticated()
                 .antMatchers(HttpMethod.GET, "/refresh-token").permitAll()

@@ -7,19 +7,20 @@ import java.util.Date;
 
 @Service
 public class UrlService {
-    // TIME_TO_LIVE = 1 minute = 60000 millisecond
-    private final static int TIME_TO_LIVE = 60000;
+    // TIME_TO_LIVE = 10 minute = 600000 millisecond
+    private final static int TIME_TO_LIVE = 600000;
+    private final static char SEPARATOR = '@';
 
     public String generateExpirationUrl(String message, String api) {
         Date currentTime = new Date();
         long expTimeMillis = currentTime.getTime() + TIME_TO_LIVE;
-        String content = expTimeMillis + "_" + message;
+        String content = expTimeMillis + String.valueOf(SEPARATOR) + message;
         String encrypt = encryptString(content);
         return api + encrypt;
     }
 
     public String getDataFromUrl(String encrypt) {
-        String[] message = decryptString(encrypt).split("_");
+        String[] message = decryptString(encrypt);
         long currentTime = new Date().getTime();
         long expritionTime = Long.parseLong(message[0]);
         if (currentTime <= expritionTime) {
@@ -35,9 +36,13 @@ public class UrlService {
 
     }
 
-    private String decryptString(String encodedString) {
+    private String[] decryptString(String encodedString) {
         byte[] decryptBytes = Base64.getDecoder().decode(encodedString);
         String decrypt = new String(decryptBytes);
-        return decrypt;
+        int separator = decrypt.indexOf(SEPARATOR);
+        String time = decrypt.substring(0, separator);
+        String message = decrypt.substring(separator + 1);
+        String[] result = { time, message };
+        return result;
     }
 }
