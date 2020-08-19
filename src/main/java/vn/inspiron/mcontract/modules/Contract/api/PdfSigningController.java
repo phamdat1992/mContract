@@ -20,6 +20,7 @@ import vn.inspiron.mcontract.modules.Contract.dto.DataToSignResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.SignDocumentResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.SignatureValueDTO;
 import vn.inspiron.mcontract.modules.Contract.model.SignatureDocumentForm;
+import vn.inspiron.mcontract.modules.Entity.FileEntity;
 import vn.inspiron.mcontract.modules.FileStorage.services.FileStorageService;
 import vn.inspiron.mcontract.modules.Contract.services.SigningService;
 
@@ -68,7 +69,8 @@ public class PdfSigningController {
     }
 
     private SignatureDocumentForm buildSignatureDocumentForm(DataToSignDTO dataToSignDTO) throws Exception {
-        Resource resource = fileStorageService.loadFile(dataToSignDTO.getFileId());
+        FileEntity fileEntity = fileStorageService.loadFileEntity(dataToSignDTO.getFileId());
+        Resource resource = fileStorageService.loadFileResource(fileEntity.getUploadPath());
         DSSDocument document = DssWebUtils.toDSSDocument(resource);
 
         SignatureDocumentForm signaturePdfForm = new SignatureDocumentForm();
@@ -80,8 +82,9 @@ public class PdfSigningController {
         signaturePdfForm.setBase64Certificate(dataToSignDTO.getSigningCertificate());
         signaturePdfForm.setBase64CertificateChain(dataToSignDTO.getCertificateChain());
         signaturePdfForm.setEncryptionAlgorithm(dataToSignDTO.getEncryptionAlgorithm());
-        signaturePdfForm.setSigningDate(new Date(dataToSignDTO.getTimeStamp()));
+        signaturePdfForm.setSigningDate(fileEntity.getUploadedAt());
         signaturePdfForm.setDocumentToSign(document);
+
         return signaturePdfForm;
     }
 
