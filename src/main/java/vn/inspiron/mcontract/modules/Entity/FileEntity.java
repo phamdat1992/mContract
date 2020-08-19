@@ -3,6 +3,7 @@ package vn.inspiron.mcontract.modules.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "files")
@@ -27,4 +28,8 @@ public class FileEntity {
 
     @Column(name = "uploaded_by")
     private Long uploadedBy;
+
+    @Column(name = "uploaded_at", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date uploadedAt;
 }

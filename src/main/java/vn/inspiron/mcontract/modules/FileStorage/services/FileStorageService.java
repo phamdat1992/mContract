@@ -94,7 +94,7 @@ public class FileStorageService {
         return fileEntity.getId();
     }
 
-    public Resource loadFile(Long fileId) throws Exception {
+    public FileEntity loadFileEntity(Long fileId) throws Exception {
 
         Optional<FileEntity> mayBeFileEntity = filesRepository.findById(fileId);
 
@@ -103,10 +103,11 @@ public class FileStorageService {
         }
 
         FileEntity fileEntity = mayBeFileEntity.get();
+        return fileEntity;
+    }
 
-        String relativePath = fileEntity.getUploadPath();
+    public Resource loadFileResource(String relativePath) throws Exception {
         Path absolutePath = Paths.get(ROOT_DIR).resolve(relativePath);
-
         try {
             Resource resource = new UrlResource(absolutePath.toUri());
             if (resource.exists()) {
