@@ -80,4 +80,13 @@ public class ExceptionAdvice {
         return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(MstExisted.class)
+    public ResponseEntity<ErrorResponse> mstExisted() {
+        ErrorResponse exception = new ErrorResponse();
+        exception.setStatus(409);
+        exception.setErrorCode("MST_EXISTED");
+        exception.setErrorMsg("This mst already existed. Please check.");
+        return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
+    }
 }
