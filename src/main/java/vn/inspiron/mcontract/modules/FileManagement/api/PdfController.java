@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import vn.inspiron.mcontract.modules.Exceptions.ExpiredUrlException;
 import vn.inspiron.mcontract.modules.FileManagement.service.FileManageService;
 import vn.inspiron.mcontract.modules.FileManagement.service.UrlService;
 
@@ -38,10 +39,13 @@ public class PdfController {
 
     @GetMapping("/pdf/{encrypt}")
     public ResponseEntity<Object> getPdf(@PathVariable String encrypt) {
-        String fileName = urlService.getDataFromUrl(encrypt);
-        if (fileName == null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("wrong key name".getBytes());
-        }
+    	String fileName = null;
+    	try {
+    		fileName = urlService.getDataFromCode(encrypt);
+		} catch (ExpiredUrlException e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("wrong key name".getBytes());
+		}
+
         byte[] content = null;
         try {
         	content = fileManageService.getFileObject(fileName);

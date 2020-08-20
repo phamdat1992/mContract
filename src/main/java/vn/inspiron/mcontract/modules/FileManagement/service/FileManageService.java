@@ -101,18 +101,18 @@ public class FileManageService {
 	        	return response;
 	        }
 	        String fileName = generateFileName(multipartFile);
-	        boolean isUpload = uploadUsingS3Upload(convertedFile, fileName);
-	        convertedFile.delete();
-	        if (!isUpload) {
+	        try {
+	        	uploadUsingS3Upload(convertedFile, fileName);
+	        } catch (Exception e) {
 	        	response.put("message", "upload fail");
 	        	response.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
 	            return response;
-	        }
+			}
 	        response.put("key", fileName);
 	        return response;
 	    }
 
-	    private boolean uploadUsingS3Upload(File file, String keyName) {
+	    private void uploadUsingS3Upload(File file, String keyName) throws Exception {
 	        ArrayList<PartETag> partETags = new ArrayList<PartETag>();
 	        InitiateMultipartUploadResult initResponse = null;
 	        try {
@@ -125,10 +125,9 @@ public class FileManageService {
 	                    bucketName, keyName, initResponse.getUploadId()));
 	            }
 	            e.printStackTrace();
-	            return false;
+	            throw e;
 	        }
 
-	        return true;
 	    }
 	    
 	    private InitiateMultipartUploadResult sendInitiateMultipartUploadRequest(String keyName) {

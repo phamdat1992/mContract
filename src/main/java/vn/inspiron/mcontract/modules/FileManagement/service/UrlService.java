@@ -2,6 +2,8 @@ package vn.inspiron.mcontract.modules.FileManagement.service;
 
 import org.springframework.stereotype.Service;
 
+import vn.inspiron.mcontract.modules.Exceptions.ExpiredUrlException;
+
 import java.util.Base64;
 import java.util.Date;
 
@@ -19,14 +21,14 @@ public class UrlService {
         return encrypt;
     }
 
-    public String getDataFromUrl(String encrypt) {
+    public String getDataFromCode(String encrypt) throws ExpiredUrlException {
         String[] message = decryptString(encrypt);
         long currentTime = new Date().getTime();
         long expritionTime = Long.parseLong(message[0]);
-        if (currentTime <= expritionTime) {
-            return message[1];
+        if (currentTime > expritionTime) {
+            throw new ExpiredUrlException(); 
         }
-        return null;
+        return message[1];
     }
 
     private String encryptString(String message)
@@ -36,8 +38,8 @@ public class UrlService {
 
     }
 
-    private String[] decryptString(String encodedString) {
-        byte[] decryptBytes = Base64.getDecoder().decode(encodedString);
+    private String[] decryptString(String encryptString) {
+        byte[] decryptBytes = Base64.getDecoder().decode(encryptString);
         String decrypt = new String(decryptBytes);
         int separator = decrypt.indexOf(SEPARATOR);
         String time = decrypt.substring(0, separator);
