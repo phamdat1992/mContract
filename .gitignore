@@ -3,7 +3,15 @@
 build
 .idea
 api/.classpath
+.classpath
+.settings/
 
+.settings/org.eclipse.buildship.core.prefs
+.classpath
+    
 api/.project
 
 api/.settings/
+bin/
+mcontract.iml
+temp

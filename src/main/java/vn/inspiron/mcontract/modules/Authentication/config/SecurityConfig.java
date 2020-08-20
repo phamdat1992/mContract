@@ -51,15 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception
     {
         web.ignoring()
-                .antMatchers(HttpMethod.GET, "/test")
-                .antMatchers(HttpMethod.POST, "/authenticate")
-                .antMatchers("/authenticate",
-                        "/create-contract",
-                        "/configuration/ui",
-                        "/swagger-resources/**",
-                        "/configuration/security",
-                        "/swagger-ui.html",
-                        "/webjars/**");
+            .antMatchers(HttpMethod.GET, "/test")
+            .antMatchers(HttpMethod.POST, "/authenticate")
+            .antMatchers("/authenticate",
+                "/create-contract",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
     }
 
     @Override
@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/authenticate", "/register", "/register/verify", "/test", "/create-contract",
-                        "/cities", "/cities/*/districts", "/districts/*/wards", "/upload", "/get-data-to-sign", "/sign-document", "/company/register").permitAll()
+                        "/cities", "/cities/*/districts", "/districts/*/wards", "/upload", "/get-data-to-sign", "/sign-document", "/company/register", "/generate_pdf_url", "/pdf/*", "/upload_pdf", "/delete_pdf").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data", "/account/*/transfers", "/logged").authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer", "/account/create").authenticated()
                 .antMatchers(HttpMethod.GET, "/refresh-token").permitAll()
@@ -87,16 +87,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         configuration.setAllowedOrigins(List.of("http://localhost:9297"));
         configuration.setAllowedHeaders(
-                List.of(
-                        "DNT",
-                        "X-Mx-ReqToken",
-                        "Keep-Alive",
-                        "User-Agent",
-                        "X-Requested-With",
-                        "If-Modified-Since",
-                        "Cache-Control",
-                        "Content-Type"
-                )
+            List.of(
+                "DNT",
+                "X-Mx-ReqToken",
+                "Keep-Alive",
+                "User-Agent",
+                "X-Requested-With",
+                "If-Modified-Since",
+                "Cache-Control",
+                "Content-Type"
+            )
         );
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE"));
         configuration.setAllowCredentials(true);

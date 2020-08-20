@@ -52,6 +52,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	
+	// s3
+	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.842'
 }
 
 test {
