@@ -15,12 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class PdfController {
-//    private final static String PDF_URL_1 = "https://www.w3docs.com/uploads/media/default/0001/01/540cb75550adf33f281f29132dddd14fded85bfc.pdf";
-//    private final static String PDF_URL_2 = "https://docs.spring.io/spring-boot/docs/current/reference/pdf/spring-boot-reference.pdf";
-
     @Autowired
     private UrlService urlService;
 
@@ -28,35 +27,42 @@ public class PdfController {
     private FileManageService fileManageService;
 
     @GetMapping(value = "/generate_pdf_url")
-    public ResponseEntity<String> getPdfFile(@RequestParam(value = "key")  String key) {
-        String url = "localhost:9293" + urlService.generateExpirationUrl(key, "/pdf/");
-        return ResponseEntity.ok(url);
+    public ResponseEntity<Object> getPdfFile(@RequestParam(value = "key")  String key) {
+    	HashMap<String, Object> responseBody = new HashMap<String, Object>();
+        String url = "localhost:9293/pdf/" + urlService.generateExpirationCode(key);
+        responseBody.put("key", key);
+        responseBody.put("lifetime", "10 minutes");
+        responseBody.put("pdf_url", url);
+        return ResponseEntity.ok(responseBody);
     }
 
     @GetMapping("/pdf/{encrypt}")
-    public ResponseEntity<byte[]> getPdf(@PathVariable String encrypt) {
+    public ResponseEntity<Object> getPdf(@PathVariable String encrypt) {
         String fileName = urlService.getDataFromUrl(encrypt);
         if (fileName == null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("url wrong".getBytes());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("wrong key name".getBytes());
         }
         byte[] content = null;
         try {
         	content = fileManageService.getFileObject(fileName);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("get file fail".getBytes());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("download fail".getBytes());
         }
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(content);
+        return ResponseEntity.ok()
+        		.contentType(MediaType.APPLICATION_PDF)
+        		.body(content);
     }
 
     @PostMapping("/upload_pdf")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = fileManageService.uploadFile(file);
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
+    	Map<String, Object> responseBody = fileManageService.uploadFile(file);
         
-        if (fileName == null) {
-        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Upload fail");
+        if (responseBody.containsKey("exception")) {
+        	HttpStatus httpStatus = (HttpStatus) responseBody.get("exception");
+        	return ResponseEntity.status(httpStatus).body(responseBody);
         }
 
-        return ResponseEntity.ok(fileName);
+        return ResponseEntity.ok(responseBody);
     }
     
     @DeleteMapping("/delete_pdf")

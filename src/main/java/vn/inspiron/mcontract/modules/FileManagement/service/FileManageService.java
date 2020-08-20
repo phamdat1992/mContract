@@ -3,6 +3,7 @@ package vn.inspiron.mcontract.modules.FileManagement.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,6 +42,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -88,20 +90,26 @@ public class FileManageService {
 	            return s3Client;
 	    }
 
-	    public String uploadFile(MultipartFile multipartFile) {
+	    public Map<String, Object> uploadFile(MultipartFile multipartFile) {
+	    	HashMap<String, Object> response = new HashMap<String, Object>();
 	        File convertedFile = null;
 	        try {
 	            convertedFile = convertMultiPartToFile(multipartFile);
 	        } catch (IOException e) {
-	            return null;
+	        	response.put("message", "file is wrong");
+	        	response.put("status", HttpStatus.BAD_REQUEST);
+	        	return response;
 	        }
 	        String fileName = generateFileName(multipartFile);
 	        boolean isUpload = uploadUsingS3Upload(convertedFile, fileName);
 	        convertedFile.delete();
 	        if (!isUpload) {
-	            return null;
+	        	response.put("message", "upload fail");
+	        	response.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
+	            return response;
 	        }
-	        return fileName;
+	        response.put("key", fileName);
+	        return response;
 	    }
 
 	    private boolean uploadUsingS3Upload(File file, String keyName) {

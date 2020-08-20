@@ -11,12 +11,12 @@ public class UrlService {
     private final static int TIME_TO_LIVE = 600000;
     private final static char SEPARATOR = '@';
 
-    public String generateExpirationUrl(String message, String api) {
+    public String generateExpirationCode(String message) {
         Date currentTime = new Date();
         long expTimeMillis = currentTime.getTime() + TIME_TO_LIVE;
         String content = expTimeMillis + String.valueOf(SEPARATOR) + message;
         String encrypt = encryptString(content);
-        return api + encrypt;
+        return encrypt;
     }
 
     public String getDataFromUrl(String encrypt) {
