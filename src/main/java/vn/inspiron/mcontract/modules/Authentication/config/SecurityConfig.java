@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Password encoder, Ä‘á»ƒ Spring Security sá»­ dá»¥ng mÃ£ hÃ³a máº­t kháº©u ngÆ°á»�i dÃ¹ng
+        // Password encoder, để Spring Security sử dụng mã hóa mật khẩu người dùng
         return new BCryptPasswordEncoder();
     }
 
