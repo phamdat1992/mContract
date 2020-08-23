@@ -496,7 +496,7 @@ ALTER TABLE contract DROP COLUMN fk_company;
 ALTER TABLE contract ADD fk_mst INT UNSIGNED NULL;
 ALTER TABLE contract ADD CONSTRAINT contract_fk FOREIGN KEY (fk_mst) REFERENCES mst(id);
 
-// create table contract_history to store history when send contract between 2 person
+-- create table contract_history to store history when send contract between 2 person
 CREATE TABLE contract_history (
       id INT UNSIGNED auto_increment NOT NULL,
       fk_contract INT UNSIGNED NOT NULL,
