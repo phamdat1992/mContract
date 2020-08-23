@@ -112,6 +112,7 @@ public class RegistrationService
         BeanUtils.copyProperties(userRegistrationDTO, user);
         user.setDateOfRegistration(new Date(System.currentTimeMillis()));
         user.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
+        user.setToken(UUID.randomUUID().toString());
 
         return user;
     }

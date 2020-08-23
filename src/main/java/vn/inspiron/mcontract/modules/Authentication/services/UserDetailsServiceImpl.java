@@ -1,11 +1,14 @@
 package vn.inspiron.mcontract.modules.Authentication.services;
 
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
+import vn.inspiron.mcontract.modules.Entity.UserEntity;
 import vn.inspiron.mcontract.modules.Repository.UserRepository;
 
 @Service
@@ -17,11 +20,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserDetails userDetails = userRepository.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("Username " + s + " not exist"));
-        if (!userDetails.isEnabled()) {
+    public UserAuth loadUserByUsername(String s) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("Username " + s + " not exist"));
+        if (!userEntity.isEnabled()) {
             throw new DisabledException("Email is not verified.");
         }
-        return new User(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+        return new UserAuth(userEntity);
+    }
+
+    public UserAuth loadUserByToken(String token) throws DisabledException {
+        UserEntity userEntity = userRepository.findByToken(token).orElseThrow(() -> new DisabledException("Invalid token"));
+        if (!userEntity.isEnabled()) {
+            throw new DisabledException("Email is not verified.");
+        }
+        return new UserAuth(userEntity);
     }
 }

@@ -5,12 +5,22 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
+import vn.inspiron.mcontract.modules.Authentication.services.UserDetailsServiceImpl;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +32,8 @@ import java.util.Set;
 public class JwtFilter extends OncePerRequestFilter {
     private static final String SECRET_KEY = "key";
 
+    private UserDetailsServiceImpl userDetailsService;
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -29,6 +41,13 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws IOException, ServletException
     {
+        // Manually wire UserDetailsService
+        if (userDetailsService == null) {
+            ServletContext servletContext = request.getServletContext();
+            WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+            userDetailsService = webApplicationContext.getBean(UserDetailsServiceImpl.class);
+        }
+
         Cookie tokenCookie = getCookieWithAccessToken(request.getCookies());
 
         if (tokenCookie != null) {
@@ -45,9 +64,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private UsernamePasswordAuthenticationToken getTokenAuthentication(String token) {
         DecodedJWT decodedJWT = decodeAndVerifyJwt(token);
-        String subject = decodedJWT.getSubject();
-        Set<SimpleGrantedAuthority> simpleGrantedAuthority = Collections.singleton(new SimpleGrantedAuthority("USER"));
-        return new UsernamePasswordAuthenticationToken(subject, null, simpleGrantedAuthority);
+        String userToken = decodedJWT.getSubject();
+        UserAuth userAuth = userDetailsService.loadUserByToken(userToken);
+        return new UsernamePasswordAuthenticationToken(userAuth, null, userAuth.getAuthorities());
     }
 
     private Cookie getCookieWithAccessToken(Cookie[] cookies) {
