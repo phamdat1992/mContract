@@ -481,3 +481,40 @@ CREATE TABLE files
 CREATE UNIQUE index files_upload_path_uindex
 	ON files (upload_path);
 
+--  add column 'mst' in company table
+ALTER TABLE company ADD fk_mst INT UNSIGNED NULL;
+ALTER TABLE company ADD CONSTRAINT company_fk FOREIGN KEY (fk_mst) REFERENCES mst(id);
+
+--  drop column 'company' in mst table
+ALTER TABLE mst DROP COLUMN fk_company;
+ALTER TABLE mst DROP FOREIGN KEY mst_fk_company;
+ALTER TABLE mst DROP COLUMN fk_company;
+
+-- drop column 'company', add column 'mst' in contract
+ALTER TABLE contract DROP FOREIGN KEY contract_fk_company;
+ALTER TABLE contract DROP COLUMN fk_company;
+ALTER TABLE contract ADD fk_mst INT UNSIGNED NULL;
+ALTER TABLE contract ADD CONSTRAINT contract_fk FOREIGN KEY (fk_mst) REFERENCES mst(id);
+
+// create table contract_history to store history when send contract between 2 person
+CREATE TABLE contract_history (
+      id INT UNSIGNED auto_increment NOT NULL,
+      fk_contract INT UNSIGNED NOT NULL,
+      fk_mail_sender INT UNSIGNED NOT NULL,
+      fk_mail_receiver INT UNSIGNED NOT NULL,
+      fk_contract_status INT UNSIGNED NOT NULL,
+      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      CONSTRAINT contract_history_pk PRIMARY KEY (id),
+      CONSTRAINT contract_history_fk FOREIGN KEY (fk_contract) REFERENCES contract(id),
+      CONSTRAINT contract_history_fk_1 FOREIGN KEY (fk_mail_sender) REFERENCES email(id),
+      CONSTRAINT contract_history_fk_2 FOREIGN KEY (fk_mail_receiver) REFERENCES email(id),
+      CONSTRAINT contract_history_fk_3 FOREIGN KEY (fk_contract_status) REFERENCES contract_status(id)
+)
+    ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
+
+-- drop column contract_status
+ALTER TABLE contract_user DROP FOREIGN KEY contract_user_fk_contract_status;
+ALTER TABLE contract_user DROP COLUMN fk_contract_status;
