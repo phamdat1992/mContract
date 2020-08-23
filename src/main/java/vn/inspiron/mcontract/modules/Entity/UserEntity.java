@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,7 +14,7 @@ import java.util.Collections;
 @Entity
 @Table(name = "user")
 @Data
-public class UserEntity implements UserDetails {
+public class UserEntity {
     /**
      *
      */
@@ -47,6 +47,8 @@ public class UserEntity implements UserDetails {
     private String district;
     @Column
     private String city;
+    @Column
+    private String token; // This is not jwt accessToken. This is a token used to identify a user (instead of exposing user id in jwt)
 
     @JsonIgnore
     @Column
@@ -57,32 +59,4 @@ public class UserEntity implements UserDetails {
     @JsonIgnore
     @Column
     private boolean isEnabled;
-
-    @JsonIgnore
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
-        return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonExpired()
-    {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonLocked()
-    {
-        return true;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isCredentialsNonExpired()
-    {
-        return true;
-    }
 }
