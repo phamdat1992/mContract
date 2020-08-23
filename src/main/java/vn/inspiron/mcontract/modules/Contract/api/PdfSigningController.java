@@ -11,19 +11,24 @@ import eu.europa.esig.dss.spi.DSSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
 import vn.inspiron.mcontract.modules.Contract.DssWebUtils;
 import vn.inspiron.mcontract.modules.Contract.dto.DataToSignDTO;
 import vn.inspiron.mcontract.modules.Contract.dto.DataToSignResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.SignDocumentResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.SignatureValueDTO;
 import vn.inspiron.mcontract.modules.Contract.model.SignatureDocumentForm;
+import vn.inspiron.mcontract.modules.Entity.FileEntity;
+import vn.inspiron.mcontract.modules.Exceptions.NotFound;
 import vn.inspiron.mcontract.modules.FileStorage.services.FileStorageService;
 import vn.inspiron.mcontract.modules.Contract.services.SigningService;
 
 import javax.xml.bind.DatatypeConverter;
+import java.io.FileNotFoundException;
 import java.util.Date;
 
 @RestController
@@ -38,8 +43,12 @@ public class PdfSigningController {
     SigningService signingService;
 
     @PostMapping("/get-data-to-sign")
-    public ResponseEntity<DataToSignResponse> getDataToSign(@RequestBody DataToSignDTO dataToSignDTO) throws Exception {
-        SignatureDocumentForm signaturePdfForm = buildSignatureDocumentForm(dataToSignDTO);
+    public ResponseEntity<DataToSignResponse> getDataToSign(@RequestBody DataToSignDTO dataToSignDTO,
+                                                            Authentication authentication) throws Exception {
+
+        UserAuth userAuth = (UserAuth) authentication.getPrincipal();
+
+        SignatureDocumentForm signaturePdfForm = buildSignatureDocumentForm(dataToSignDTO, userAuth.getUserEntity().getId());
         ToBeSigned dataToSign = signingService.getDataToSign(signaturePdfForm);
         if (dataToSign == null) {
             return null;
@@ -52,14 +61,17 @@ public class PdfSigningController {
     }
 
     @PostMapping("/sign-document")
-    public ResponseEntity<SignDocumentResponse> signDocument(@RequestBody SignatureValueDTO signatureValueDTO) throws Exception {
-        SignatureDocumentForm signaturePdfForm = buildSignatureDocumentForm(signatureValueDTO);
+    public ResponseEntity<SignDocumentResponse> signDocument(@RequestBody SignatureValueDTO signatureValueDTO,
+                                                             Authentication authentication) throws Exception {
+        UserAuth userAuth = (UserAuth) authentication.getPrincipal();
+
+        SignatureDocumentForm signaturePdfForm = buildSignatureDocumentForm(signatureValueDTO, userAuth.getUserEntity().getId());
         signaturePdfForm.setBase64SignatureValue(signatureValueDTO.getSignatureValue());
 
         DSSDocument document = signingService.signDocument(signaturePdfForm);
         InMemoryDocument signedPdfDocument = new InMemoryDocument(DSSUtils.toByteArray(document), document.getName(), document.getMimeType());
 
-        Long fileId = fileStorageService.storeSignedDocument(signedPdfDocument, 1L, SIGNED_FILES_DIR);
+        Long fileId = fileStorageService.storeSignedDocument(signedPdfDocument, userAuth.getUserEntity().getId(), SIGNED_FILES_DIR);
 
         SignDocumentResponse response = new SignDocumentResponse();
         response.setFileId(fileId);
@@ -67,8 +79,20 @@ public class PdfSigningController {
         return ResponseEntity.ok(response);
     }
 
-    private SignatureDocumentForm buildSignatureDocumentForm(DataToSignDTO dataToSignDTO) throws Exception {
-        Resource resource = fileStorageService.loadFile(dataToSignDTO.getFileId());
+    private SignatureDocumentForm buildSignatureDocumentForm(DataToSignDTO dataToSignDTO, Long ownerId) throws Exception {
+        FileEntity fileEntity;
+        try {
+            fileEntity = fileStorageService.loadFileEntity(dataToSignDTO.getFileId());
+        } catch (FileNotFoundException e) { // File with id not found
+            throw new NotFound();
+        }
+
+        // Stop user from signing other users' document
+        if (fileEntity.getUploadedBy() != ownerId) {
+            throw new NotFound();
+        }
+
+        Resource resource = fileStorageService.loadFileResource(fileEntity.getUploadPath());
         DSSDocument document = DssWebUtils.toDSSDocument(resource);
 
         SignatureDocumentForm signaturePdfForm = new SignatureDocumentForm();
@@ -80,8 +104,9 @@ public class PdfSigningController {
         signaturePdfForm.setBase64Certificate(dataToSignDTO.getSigningCertificate());
         signaturePdfForm.setBase64CertificateChain(dataToSignDTO.getCertificateChain());
         signaturePdfForm.setEncryptionAlgorithm(dataToSignDTO.getEncryptionAlgorithm());
-        signaturePdfForm.setSigningDate(new Date(dataToSignDTO.getTimeStamp()));
+        signaturePdfForm.setSigningDate(fileEntity.getUploadedAt());
         signaturePdfForm.setDocumentToSign(document);
+
         return signaturePdfForm;
     }
 
