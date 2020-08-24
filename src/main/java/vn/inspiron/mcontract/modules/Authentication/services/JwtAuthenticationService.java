@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenResponseDTO;
+import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
 
 import javax.servlet.http.Cookie;
 import java.time.Instant;
@@ -33,9 +34,9 @@ public class JwtAuthenticationService {
     private final String SECRET_KEY = "key";
 
     public JwtTokenResponseDTO authenticate(JwtTokenRequestDTO tokenRequest, String url, TimeZone timeZone) throws AuthenticationException {
-        UserDetails userDetails = managerAuthentication(tokenRequest.getUsername(), tokenRequest.getPassword());
+        UserAuth userAuth = managerAuthentication(tokenRequest.getUsername(), tokenRequest.getPassword());
 
-        String token = generateToken(userDetails.getUsername(), url, timeZone);
+        String token = generateToken(userAuth.getUserEntity().getToken(), url, timeZone);
 
         return new JwtTokenResponseDTO(token);
     }
@@ -73,7 +74,7 @@ public class JwtAuthenticationService {
         return new JwtTokenResponseDTO(generateToken(decodedJWT.getSubject(), url, timeZone));
     }
 
-    private String generateToken(String username, String url, TimeZone timeZone)
+    private String generateToken(String userToken, String url, TimeZone timeZone)
     {
         try
         {
@@ -84,7 +85,7 @@ public class JwtAuthenticationService {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
             String token = JWT.create()
                     .withIssuer(url)
-                    .withSubject(username)
+                    .withSubject(userToken)
                     .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
                     .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(10).toInstant()))
                     .sign(algorithm);
@@ -98,10 +99,10 @@ public class JwtAuthenticationService {
         }
     }
 
-    private UserDetails managerAuthentication(String username, String password) throws AuthenticationException
+    private UserAuth managerAuthentication(String username, String password) throws AuthenticationException
     {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-        return (UserDetails) authenticate.getPrincipal();
+        return (UserAuth) authenticate.getPrincipal();
     }
 }
