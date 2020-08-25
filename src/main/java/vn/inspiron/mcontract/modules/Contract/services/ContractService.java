@@ -2,18 +2,21 @@ package vn.inspiron.mcontract.modules.Contract.services;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vn.inspiron.mcontract.modules.Common.data.type.ContractSearchType;
+import vn.inspiron.mcontract.modules.Common.data.type.ContractStatusEnum;
+import vn.inspiron.mcontract.modules.Common.util.MContractResponseBody;
+import vn.inspiron.mcontract.modules.Contract.dto.ContractResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
-import vn.inspiron.mcontract.modules.Entity.ContractEntity;
-import vn.inspiron.mcontract.modules.Entity.ContractUserEntity;
-import vn.inspiron.mcontract.modules.Entity.EmailEntity;
-import vn.inspiron.mcontract.modules.Entity.MstEntity;
-import vn.inspiron.mcontract.modules.Repository.ContractRepository;
-import vn.inspiron.mcontract.modules.Repository.ContractUserRepository;
-import vn.inspiron.mcontract.modules.Repository.EmailRepository;
-import vn.inspiron.mcontract.modules.Repository.MstRepository;
+import vn.inspiron.mcontract.modules.Entity.*;
+import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
+import vn.inspiron.mcontract.modules.Repository.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,10 @@ public class ContractService {
     private EmailRepository emailRepository;
     @Autowired
     private ContractUserRepository contractUserRepository;
+    @Autowired
+    private ContractStatusRepository contractStatusRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     public void getAllContract() {
 
@@ -90,5 +97,84 @@ public class ContractService {
             contractUser.setFkMst(mst.getId());
             contractUserRepository.save(contractUser);
         });
+    }
+    
+    public MContractResponseBody<List<ContractResponse>> getContractByCondition(UserEntity userEntity, ContractSearchType contractSearchType, int pageNumber, int pageSize, boolean bookmarkStar) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<ContractEntity> contractPage;
+        Long contractStatusId;
+        switch (contractSearchType) {
+            case ALL_CONTRACT: // 1
+                Long emailId = emailRepository.findByFkUser(userEntity.getId()).get().getId();
+                contractPage = contractRepository.getAllContract(emailId, pageable);
+                break;
+            case SEND: // 3
+                contractPage = contractRepository.getContractEntitiesByFkUser(userEntity.getId(), pageable);
+                break;
+            case DRAFT: // 5
+                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.DRAFT.getValue()).getId();
+                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                break;
+            case BOOKMARK_STAR: // 7
+                contractPage = contractRepository.getContractEntitiesByBookmarkStar(bookmarkStar, pageable);
+                break;
+            case CANCEL: // 9
+                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.CANCELLED.getValue()).getId();
+                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                break;
+            case WAIT_APPROVE: // 11
+                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_APPROVAL.getValue()).getId();
+                contractPage = contractRepository.getAllContractByContractStatus(userEntity.getId(), Arrays.asList(contractStatusId), pageable);
+                break;
+            case EXPIRY: // 13
+                contractPage =  contractRepository.getContractExpire30(0.3F, pageable);
+                break;
+            case SIGNED: // 15
+                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.SIGNED.getValue()).getId();
+                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                break;
+            case INVALID_CERTIFICATE: //17
+                List<ContractStatusEntity> contractStatusEntities = contractStatusRepository.findAll();
+                contractPage = contractRepository.getAllContractByContractStatus(userEntity.getId(), getListContractStatusIdByInvalidCer(contractStatusEntities), pageable);
+                break;
+            case NEED_SIGN: // 19
+                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_SIGNATURE.getValue()).getId();
+                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                break;
+            default:
+                throw new BadRequest("Unsupport condition type search");
+        }
+    
+        // convert data
+        List<ContractResponse> contractResponses = contractPage.getContent().stream().map(contractEntity -> {
+            ContractResponse contractResponse = new ContractResponse();
+            contractResponse.setId(contractEntity.getId().toString()); // hash
+            contractResponse.setTitle(contractEntity.getTitle());
+            contractResponse.setDescription(contractEntity.getDescription());
+            contractResponse.setFileName(contractEntity.getFileName());
+            
+            CompanyEntity companyEntity = companyRepository.getByFkMst(contractEntity.getFkMst());
+            
+            contractResponse.setCompanyName(companyEntity.getName());
+            contractResponse.setCompanyAddress(companyEntity.getAddress());
+            return contractResponse;
+        }).collect(Collectors.toList());
+        
+        MContractResponseBody<List<ContractResponse>> mContractResponseBody = new MContractResponseBody();
+        mContractResponseBody.setData(contractResponses);
+        mContractResponseBody.setTotalCount(contractPage.getTotalElements());
+    
+        return mContractResponseBody;
+    }
+    
+    private List<Long> getListContractStatusIdByInvalidCer(List<ContractStatusEntity> contractStatusEntities) {
+        return contractStatusEntities.stream().filter(contractStatusEntity -> ContractStatusEnum.INVALID_CERT.getValue().equalsIgnoreCase(contractStatusEntity.getName())
+                                                                                || ContractStatusEnum.INVALID_ALGORITHM.getValue().equalsIgnoreCase(contractStatusEntity.getName())
+                                                                                || ContractStatusEnum.INVALID_SIGNATURE.getValue().equalsIgnoreCase(contractStatusEntity.getName())
+                                                                                || ContractStatusEnum.EXPIRED_CERTIFICATE.getValue().equalsIgnoreCase(contractStatusEntity.getName())
+                                                                                || ContractStatusEnum.REVOKED_CERTIFICATE.getValue().equalsIgnoreCase(contractStatusEntity.getName())
+                                                                                || ContractStatusEnum.MISMATCH_TAX_CODE.getValue().equalsIgnoreCase(contractStatusEntity.getName())
+                                            ).map(ContractStatusEntity::getId)
+                                            .collect(Collectors.toList());
     }
 }

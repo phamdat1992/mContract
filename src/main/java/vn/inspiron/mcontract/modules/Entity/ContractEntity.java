@@ -3,6 +3,7 @@ package vn.inspiron.mcontract.modules.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "contract")
@@ -28,7 +29,12 @@ public class ContractEntity
     @Column
     private Long fkUser;
     @Column
-    private Long fkCompany;
+    private Long fkMst;
     @Column
     private Long fkContractStatus;
+    @Column
+    private boolean bookmarkStar;
+    @Column
+    private Date expiryDateSigned;
+    
 }

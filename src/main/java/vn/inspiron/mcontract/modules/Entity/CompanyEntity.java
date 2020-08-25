@@ -30,4 +30,10 @@ public class CompanyEntity
     private String district;
     @Column(name = "city")
     private String city;
+    @Column
+    private Long fkMst;
+    
+    public String getAddress() {
+        return this.street + " " + this.ward + " " + this.district + " " + this.city;
+    }
 }

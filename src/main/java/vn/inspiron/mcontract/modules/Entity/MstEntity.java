@@ -20,7 +20,5 @@ public class MstEntity
     @Column(length = 20)
     private String mst;
     @Column
-    private Long fkCompany;
-    @Column
     private Long fkEmail;
 }

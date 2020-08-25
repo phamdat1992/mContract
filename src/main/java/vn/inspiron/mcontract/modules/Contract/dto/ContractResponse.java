@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContractResponse {
+    private String id;
     private String companyName;
     private String companyAddress;
     private String title;
