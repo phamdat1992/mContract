@@ -6,5 +6,5 @@ import vn.inspiron.mcontract.modules.Entity.CompanyEntity;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
-	CompanyEntity getByFkMst(Long mstId);
+	CompanyEntity getFirstByFkMst(Long mstId);
 }

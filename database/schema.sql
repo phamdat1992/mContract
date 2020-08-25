@@ -525,3 +525,12 @@ INSERT INTO contract_status (name) VALUES ('revoked_certificate');
 INSERT INTO contract_status (name) VALUES ('mismatch_tax_code');
 
 ALTER TABLE `user` CHANGE date_of_brith date_of_birth date NOT NULL;
+
+update contract c
+set c.fk_mst  = 1
+where c.fk_mst is null;
+
+update contract c
+set c.expiry_date_signed = '2020-09-06';
+where c.expiry_date_signed is null;
+

@@ -13,6 +13,7 @@ import vn.inspiron.mcontract.modules.Contract.dto.ContractResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
 import vn.inspiron.mcontract.modules.Contract.services.ContractService;
 import vn.inspiron.mcontract.modules.Entity.UserEntity;
+import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 
 import java.util.List;
 
@@ -28,19 +29,22 @@ public class ContractController {
         return ResponseEntity.ok(newContractDTO);
     }
     
-    @GetMapping("get-list-contract-by-condition")
-    public ResponseEntity<MContractResponseBody<ContractResponse>> getListContractByCondition(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
+    @GetMapping("/api/v1/get-list-contract-by-condition")
+    public ResponseEntity<MContractResponseBody<List<ContractResponse>>> getListContractByCondition(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
                                                                                @RequestParam(value = "pageSize", defaultValue = "999999") int pageSize,
-                                                                               @RequestParam(value = "searchType", required = true) ContractSearchType searchType,
+                                                                               @RequestParam(value = "searchType") ContractSearchType searchType,
                                                                                @RequestParam(value = "bookmarkStar", required = false) boolean bookmarkStar,
                                                                                Authentication authentication) {
-        MContractResponseBody mContractResponseBody = new MContractResponseBody();
         UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
         MContractResponseBody<List<ContractResponse>> responseBody = contractService.getContractByCondition(userEntity, searchType, pageNumber, pageSize, bookmarkStar);
         try {
-            return ResponseEntity.ok(mContractResponseBody);
+            return ResponseEntity.ok(responseBody);
+        } catch (BadRequest e) {
+            responseBody.setMsg(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mContractResponseBody);
+            responseBody.setMsg("Other error");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
         }
         
     }

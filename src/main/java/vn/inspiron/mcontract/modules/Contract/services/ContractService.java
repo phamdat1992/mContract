@@ -105,7 +105,8 @@ public class ContractService {
         Long contractStatusId;
         switch (contractSearchType) {
             case ALL_CONTRACT: // 1
-                Long emailId = emailRepository.findByFkUser(userEntity.getId()).get().getId();
+                EmailEntity emailEntity = emailRepository.findByFkUser(userEntity.getId()).orElseThrow(() -> new BadRequest("Don't exist user with mail"));
+                Long emailId = emailEntity.getId();
                 contractPage = contractRepository.getAllContract(emailId, pageable);
                 break;
             case SEND: // 3
@@ -113,25 +114,25 @@ public class ContractService {
                 break;
             case DRAFT: // 5
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.DRAFT.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
                 break;
             case BOOKMARK_STAR: // 7
-                contractPage = contractRepository.getContractEntitiesByBookmarkStar(bookmarkStar, pageable);
+                contractPage = contractRepository.getContractEntitiesByBookmarkStarAndFkUser(bookmarkStar, userEntity.getId(), pageable);
                 break;
             case CANCEL: // 9
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.CANCELLED.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
                 break;
             case WAIT_APPROVE: // 11
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_APPROVAL.getValue()).getId();
                 contractPage = contractRepository.getAllContractByContractStatus(userEntity.getId(), Arrays.asList(contractStatusId), pageable);
                 break;
             case EXPIRY: // 13
-                contractPage =  contractRepository.getContractExpire30(0.3F, pageable);
+                contractPage =  contractRepository.getContractExpire30(0.3F, userEntity.getId(), pageable);
                 break;
             case SIGNED: // 15
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.SIGNED.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
                 break;
             case INVALID_CERTIFICATE: //17
                 List<ContractStatusEntity> contractStatusEntities = contractStatusRepository.findAll();
@@ -139,7 +140,7 @@ public class ContractService {
                 break;
             case NEED_SIGN: // 19
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_SIGNATURE.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatus(contractStatusId, pageable);
+                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
                 break;
             default:
                 throw new BadRequest("Unsupport condition type search");
@@ -153,7 +154,7 @@ public class ContractService {
             contractResponse.setDescription(contractEntity.getDescription());
             contractResponse.setFileName(contractEntity.getFileName());
             
-            CompanyEntity companyEntity = companyRepository.getByFkMst(contractEntity.getFkMst());
+            CompanyEntity companyEntity = companyRepository.getFirstByFkMst(contractEntity.getFkMst());
             
             contractResponse.setCompanyName(companyEntity.getName());
             contractResponse.setCompanyAddress(companyEntity.getAddress());
