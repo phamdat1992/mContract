@@ -535,3 +535,6 @@ set c.expiry_date_signed = '2020-09-06';
 where c.expiry_date_signed is null;
 
 ALTER TABLE contract ADD fk_contract_message INT UNSIGNED NULL;
+
+ALTER TABLE contract ADD fk_file INT UNSIGNED NULL;
+ALTER TABLE contract ADD CONSTRAINT contract_fk_1 FOREIGN KEY (fk_file) REFERENCES m_contract.files(id);

@@ -71,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/authenticate", "/register", "/register/verify", "/test", "/create-contract",
                         "/cities", "/cities/*/districts", "/districts/*/wards", "/upload", "/get-data-to-sign", "/sign-document", "/company/register", "/generate_pdf_url", "/pdf/*", "/upload_pdf", "/delete_pdf",
-                        "/get-list-contract-by-condition").permitAll()
+                        "/get-list-contract-by-condition", "/bookmark", "/get-detail-contract-for-user", "/update-contract-message", "/cancel-contract",
+                        "/cancel-contract-by-guest").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data", "/account/*/transfers", "/logged").authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer", "/account/create").authenticated()
                 .antMatchers(HttpMethod.GET, "/refresh-token").permitAll()

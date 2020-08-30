@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ContractMessageRepository extends JpaRepository<ContractMessageEntity, Long> {
+	List<ContractMessageEntity> getAllByFkContractOrderByIdDesc(Long contractId);
 }

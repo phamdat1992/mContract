@@ -38,4 +38,6 @@ public class ContractEntity
     private Date expiryDateSigned;
     @Column
     private Long fkContractMessage;
+    @Column
+    private Long fkFile;
 }

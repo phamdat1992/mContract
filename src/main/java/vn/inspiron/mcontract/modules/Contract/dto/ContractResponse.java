@@ -19,6 +19,9 @@ public class ContractResponse {
     private String shortDescription;
     private String fileName;
     private String latestContentMessage;
+    private Boolean bookmarkStar;
+    private String urlFile;
     
     private List<UserResponse> userResponse;
+    private List<ContractMessageResponse> contractMessageResponses;
 }

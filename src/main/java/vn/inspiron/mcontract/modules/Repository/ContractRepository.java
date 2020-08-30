@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import vn.inspiron.mcontract.modules.Entity.ContractEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContractRepository extends JpaRepository<ContractEntity, Long> {
@@ -46,4 +47,8 @@ public interface ContractRepository extends JpaRepository<ContractEntity, Long> 
 									"order by c2.updated_at desc"
 			, nativeQuery = true)
 	Page<ContractEntity> getAllContractByContractStatus(Long userId, List<Long> contractStatusId, Pageable pageable); // s11, s17
+	
+	Optional<ContractEntity> findByIdAndFkUser(Long contractId, Long userId);
+	
+	
 }
