@@ -14,10 +14,12 @@ import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
 import vn.inspiron.mcontract.modules.Entity.*;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 import vn.inspiron.mcontract.modules.Repository.*;
+import vn.inspiron.mcontract.modules.User.dto.UserResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +36,11 @@ public class ContractService {
     private ContractStatusRepository contractStatusRepository;
     @Autowired
     private CompanyRepository companyRepository;
-
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ContractMessageRepository contractMessageRepository;
+    
     public void getAllContract() {
 
     }
@@ -110,18 +116,18 @@ public class ContractService {
                 contractPage = contractRepository.getAllContract(emailId, pageable);
                 break;
             case SEND: // 3
-                contractPage = contractRepository.getContractEntitiesByFkUser(userEntity.getId(), pageable);
+                contractPage = contractRepository.getContractByCondition(null, userEntity.getId(), pageable, null);
                 break;
             case DRAFT: // 5
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.DRAFT.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
+                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             case BOOKMARK_STAR: // 7
-                contractPage = contractRepository.getContractEntitiesByBookmarkStarAndFkUser(bookmarkStar, userEntity.getId(), pageable);
+                contractPage = contractRepository.getContractByCondition(null, userEntity.getId(), pageable, bookmarkStar);
                 break;
             case CANCEL: // 9
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.CANCELLED.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
+                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             case WAIT_APPROVE: // 11
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_APPROVAL.getValue()).getId();
@@ -132,7 +138,7 @@ public class ContractService {
                 break;
             case SIGNED: // 15
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.SIGNED.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
+                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             case INVALID_CERTIFICATE: //17
                 List<ContractStatusEntity> contractStatusEntities = contractStatusRepository.findAll();
@@ -140,7 +146,7 @@ public class ContractService {
                 break;
             case NEED_SIGN: // 19
                 contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_SIGNATURE.getValue()).getId();
-                contractPage = contractRepository.getContractEntitiesByFkContractStatusAndFkUser(contractStatusId, userEntity.getId(), pageable);
+                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             default:
                 throw new BadRequest("Unsupport condition type search");
@@ -152,12 +158,37 @@ public class ContractService {
             contractResponse.setId(contractEntity.getId().toString()); // hash
             contractResponse.setTitle(contractEntity.getTitle());
             contractResponse.setDescription(contractEntity.getDescription());
+            contractResponse.setShortDescription(contractEntity.getDescription().length() < 100
+                ? contractEntity.getDescription().substring(0, contractEntity.getDescription().length() - 1)
+                : contractEntity.getDescription().substring(0, 100));
             contractResponse.setFileName(contractEntity.getFileName());
             
             CompanyEntity companyEntity = companyRepository.getFirstByFkMst(contractEntity.getFkMst());
             
             contractResponse.setCompanyName(companyEntity.getName());
             contractResponse.setCompanyAddress(companyEntity.getAddress());
+            
+            if (Objects.nonNull(contractEntity.getFkContractMessage())) {
+                ContractMessageEntity contractMessageEntity = contractMessageRepository.findById(contractEntity.getFkContractMessage()).get();
+                contractResponse.setLatestContentMessage(contractMessageEntity.getMessage());
+            }
+    
+            List<UserResponse> userResponses = contractUserRepository.getAllByFkContract(contractEntity.getId()).stream()
+                .map(contractUserEntity -> {
+                    UserResponse userResponse = new UserResponse();
+                    EmailEntity emailEntity = emailRepository.findById(contractUserEntity.getFkEmail()).get();
+                    
+                    if (Objects.nonNull(emailEntity.getFkUser())) {
+                        UserEntity userEntity1 = userRepository.findById(emailEntity.getFkUser()).get();
+                        
+                        userResponse.setFullname(userEntity1.getFullname());
+                        userResponse.setPhone(userEntity1.getPhone());
+                        userResponse.setUsername(userEntity1.getUsername());
+                    }
+                    userResponse.setMail(emailEntity.getEmail());
+                    return userResponse;
+                }).collect(Collectors.toList());
+            contractResponse.setUserResponse(userResponses);
             return contractResponse;
         }).collect(Collectors.toList());
         

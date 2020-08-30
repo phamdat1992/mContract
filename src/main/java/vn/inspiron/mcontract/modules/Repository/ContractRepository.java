@@ -12,18 +12,21 @@ import java.util.List;
 @Repository
 public interface ContractRepository extends JpaRepository<ContractEntity, Long> {
 	
-	Page<ContractEntity> getContractEntitiesByFkContractStatusAndFkUser(Long contractStatusId, Long userId, Pageable pageable); //s19, s15, s9, s5
+	@Query(value = "select * " +
+			"from contract c " +
+			"where (:contractStatusId is null or c.fk_contract_status = :contractStatusId) " +
+			"   and (:userId is null or c.fk_user = :userId) " +
+			"   and (:bookmarkStar is null or c.bookmark_star = :bookmarkStar) " +
+			"order by c.updated_at desc", nativeQuery = true)
+	Page<ContractEntity> getContractByCondition(Long contractStatusId, Long userId, Pageable pageable, Boolean bookmarkStar); //s19, s15, s9, s5, s7, s3
 	
 	@Query(value = "select * " +
 									"from contract c  " +
 									"where DATEDIFF(c.expiry_date_signed, CURRENT_DATE()) / DATEDIFF(c.expiry_date_signed, c.created_at) < :percentTime " +
-									"   and c.fk_user = :userId",
+									"   and c.fk_user = :userId " +
+									"order by c.updated_at desc",
 			nativeQuery = true)
 	Page<ContractEntity> getContractExpire30(Float percentTime, Long userId, Pageable pageable); // s13
-	
-	Page<ContractEntity> getContractEntitiesByBookmarkStarAndFkUser(boolean bookmarkStar, Long userId, Pageable pageable); // s7
-	
-	Page<ContractEntity> getContractEntitiesByFkUser(Long userId, Pageable pageable); // s3
 	
 	@Query(value = "select * " +
 									"from contract c  " +
@@ -31,14 +34,16 @@ public interface ContractRepository extends JpaRepository<ContractEntity, Long> 
 									"                 select distinct cu.fk_contract  " +
 									"                 from contract_user cu  " +
 									"                 where cu.fk_email = :emailId " +
-									"               )",
+									"               ) " +
+									"order by c.updated_at desc",
 							nativeQuery = true)
 	Page<ContractEntity> getAllContract(Long emailId, Pageable pageable); // s1
 	
 	@Query(value = "select distinct c2.* " +
 									"from contract_user cu, contract c2  " +
 									"where c2.fk_user = :userId and cu.fk_contract = c2.id  " +
-									"   and cu.fk_contract_status in (:contractStatusId)"
+									"   and cu.fk_contract_status in (:contractStatusId) " +
+									"order by c2.updated_at desc"
 			, nativeQuery = true)
 	Page<ContractEntity> getAllContractByContractStatus(Long userId, List<Long> contractStatusId, Pageable pageable); // s11, s17
 }

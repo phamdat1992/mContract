@@ -534,3 +534,4 @@ update contract c
 set c.expiry_date_signed = '2020-09-06';
 where c.expiry_date_signed is null;
 
+ALTER TABLE contract ADD fk_contract_message INT UNSIGNED NULL;

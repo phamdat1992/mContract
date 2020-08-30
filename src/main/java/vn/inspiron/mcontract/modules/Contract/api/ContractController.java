@@ -29,7 +29,7 @@ public class ContractController {
         return ResponseEntity.ok(newContractDTO);
     }
     
-    @GetMapping("/api/v1/get-list-contract-by-condition")
+    @GetMapping("/get-list-contract-by-condition")
     public ResponseEntity<MContractResponseBody<List<ContractResponse>>> getListContractByCondition(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
                                                                                @RequestParam(value = "pageSize", defaultValue = "999999") int pageSize,
                                                                                @RequestParam(value = "searchType") ContractSearchType searchType,

@@ -36,5 +36,6 @@ public class ContractEntity
     private boolean bookmarkStar;
     @Column
     private Date expiryDateSigned;
-    
+    @Column
+    private Long fkContractMessage;
 }
