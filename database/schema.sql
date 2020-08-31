@@ -481,3 +481,60 @@ CREATE TABLE files
 CREATE UNIQUE index files_upload_path_uindex
 	ON files (upload_path);
 
+--  add column 'mst' in company table
+ALTER TABLE company ADD fk_mst INT UNSIGNED NULL;
+ALTER TABLE company ADD CONSTRAINT company_fk FOREIGN KEY (fk_mst) REFERENCES mst(id);
+
+--  drop column 'company' in mst table
+ALTER TABLE mst DROP COLUMN fk_company;
+ALTER TABLE mst DROP FOREIGN KEY mst_fk_company;
+ALTER TABLE mst DROP COLUMN fk_company;
+
+-- drop column 'company', add column 'mst' in contract
+ALTER TABLE contract DROP FOREIGN KEY contract_fk_company;
+ALTER TABLE contract DROP COLUMN fk_company;
+ALTER TABLE contract ADD fk_mst INT UNSIGNED NULL;
+ALTER TABLE contract ADD CONSTRAINT contract_fk FOREIGN KEY (fk_mst) REFERENCES mst(id);
+
+-- create table contract_history to store history when send contract between 2 person
+DROP TABLE IF EXISTS `contract_message`;
+CREATE TABLE `contract_message` (
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
+    `fk_contract` int unsigned NOT NULL,
+    `fk_mail` int unsigned NOT NULL,
+    `message` varchar(500) DEFAULT NULL,
+    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `contract_message_fk` (`fk_contract`),
+    KEY `contract_message_fk_1` (`fk_mail`),
+    CONSTRAINT `contract_message_fk` FOREIGN KEY (`fk_contract`) REFERENCES `contract` (`id`),
+    CONSTRAINT `contract_message_fk_1` FOREIGN KEY (`fk_mail`) REFERENCES `email` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--  Auto-generated SQL script #202008242257
+INSERT INTO contract_status (name,created_at,updated_at) VALUES ('draft','2020-08-24 22:57:44','2020-08-24 22:57:44');
+ALTER TABLE contract ADD bookmark_star BOOL DEFAULT false NOT NULL;
+ALTER TABLE contract ADD expiry_date_signed DATE NOT NULL;
+--  Auto-generated SQL script #202008242307
+INSERT INTO contract_status (name) VALUES ('invalid_cert');
+INSERT INTO contract_status (name) VALUES ('invalid_algorithm');
+INSERT INTO contract_status (name) VALUES ('invalid_signature');
+INSERT INTO contract_status (name) VALUES ('expired_certificate');
+INSERT INTO contract_status (name) VALUES ('revoked_certificate');
+INSERT INTO contract_status (name) VALUES ('mismatch_tax_code');
+
+ALTER TABLE `user` CHANGE date_of_brith date_of_birth date NOT NULL;
+
+update contract c
+set c.fk_mst  = 1
+where c.fk_mst is null;
+
+update contract c
+set c.expiry_date_signed = '2020-09-06';
+where c.expiry_date_signed is null;
+
+ALTER TABLE contract ADD fk_contract_message INT UNSIGNED NULL;
+
+ALTER TABLE contract ADD fk_file INT UNSIGNED NULL;
+ALTER TABLE contract ADD CONSTRAINT contract_fk_1 FOREIGN KEY (fk_file) REFERENCES m_contract.files(id);

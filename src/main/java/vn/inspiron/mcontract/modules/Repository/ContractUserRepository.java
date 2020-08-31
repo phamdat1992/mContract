@@ -10,4 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface ContractUserRepository extends JpaRepository<ContractUserEntity, Long> {
+	List<ContractUserEntity> getAllByFkContract(Long contractId);
+	Optional<ContractUserEntity> getByFkContractAndFkEmail(Long contractId, Long mailId);
 }

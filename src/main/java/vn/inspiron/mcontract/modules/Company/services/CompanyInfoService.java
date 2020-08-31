@@ -35,7 +35,6 @@ public class CompanyInfoService {
     private MstEntity newMst(String mst, CompanyEntity companyEntity) {
         MstEntity mstEntity = new MstEntity();
         mstEntity.setMst(mst);
-        mstEntity.setFkCompany(companyEntity.getId());
         mstRepository.save(mstEntity);
         return mstEntity;
     }

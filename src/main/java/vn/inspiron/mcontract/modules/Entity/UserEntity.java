@@ -38,7 +38,7 @@ public class UserEntity {
     @Column(name = "cmnd_issue_place")
     private String cmndIssuePlace;
     @Column
-    private Date phone;
+    private String phone;
     @Column
     private String street;
     @Column
