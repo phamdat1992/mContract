@@ -15,3 +15,5 @@ api/.settings/
 bin/
 mcontract.iml
 temp
+
+src/main/resources/application.properties
