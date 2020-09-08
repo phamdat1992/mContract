@@ -99,7 +99,7 @@ public class PdfSigningController {
         SignatureDocumentForm signaturePdfForm = new SignatureDocumentForm();
 
         signaturePdfForm.setSignatureForm(SignatureForm.PAdES);
-        signaturePdfForm.setSignatureLevel(SignatureLevel.PAdES_BASELINE_LT);
+        signaturePdfForm.setSignatureLevel(SignatureLevel.PAdES_BASELINE_LTA);
         signaturePdfForm.setDigestAlgorithm(DigestAlgorithm.SHA256);
         signaturePdfForm.setSignaturePackaging(SignaturePackaging.ENVELOPED);
         signaturePdfForm.setBase64Certificate(dataToSignDTO.getSigningCertificate());
