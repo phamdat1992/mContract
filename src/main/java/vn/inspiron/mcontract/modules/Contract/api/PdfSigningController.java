@@ -8,6 +8,7 @@ import eu.europa.esig.dss.model.DSSDocument;
 import eu.europa.esig.dss.model.InMemoryDocument;
 import eu.europa.esig.dss.model.ToBeSigned;
 import eu.europa.esig.dss.spi.DSSUtils;
+import eu.europa.esig.dss.validation.CertificateVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +89,7 @@ public class PdfSigningController {
         }
 
         // Stop user from signing other users' document
-        if (fileEntity.getUploadedBy() != ownerId) {
+        if (!fileEntity.getUploadedBy().equals(ownerId)) {
             throw new NotFound();
         }
 
@@ -98,7 +99,7 @@ public class PdfSigningController {
         SignatureDocumentForm signaturePdfForm = new SignatureDocumentForm();
 
         signaturePdfForm.setSignatureForm(SignatureForm.PAdES);
-        signaturePdfForm.setSignatureLevel(SignatureLevel.PAdES_BASELINE_B);
+        signaturePdfForm.setSignatureLevel(SignatureLevel.PAdES_BASELINE_LTA);
         signaturePdfForm.setDigestAlgorithm(DigestAlgorithm.SHA256);
         signaturePdfForm.setSignaturePackaging(SignaturePackaging.ENVELOPED);
         signaturePdfForm.setBase64Certificate(dataToSignDTO.getSigningCertificate());

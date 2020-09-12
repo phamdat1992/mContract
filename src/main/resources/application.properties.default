@@ -4,8 +4,8 @@ jwt-token-time-live=43200
 spring.registration.url=${REGISTRATION_URL}
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=
-spring.mail.password=
+spring.mail.username=USERNAME@gmail.com
+spring.mail.password=PASSWORD
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
@@ -16,8 +16,8 @@ spring.mail.properties.mail.smtp.starttls.required=true
 
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost/m_contract
-spring.datasource.username=root
-spring.datasource.password=
+spring.datasource.username=DBUSERNAME
+spring.datasource.password=DBPASSWORD
 
 # ===============================
 # JPA / HIBERNATE
@@ -42,14 +42,14 @@ spring.servlet.multipart.max-file-size=100MB
 spring.servlet.multipart.max-request-size=105MB
 file.upload-dir=${TMPDIR}/storage
 
-viettelProperties.endpointUrl=https://s1.cloudstorage.com.vn
-viettelProperties.accessKey=5002198-s3user
-viettelProperties.secretKey=eugmb1NWp5ZspLD5E6Y8CjJB8w4jUAUlj2d94PCa
-viettelProperties.bucketName=duydo-demo
-
-
-
-
-
 logging.level.org.hibernate.SQL=DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+
+# ===============================
+# DSS PROPERTIES
+# ===============================
+current.lotl.url = https://ec.europa.eu/tools/lotl/eu-lotl.xml
+current.oj.url = https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv:OJ.C_.2019.276.01.0001.01.ENG
+oj.content.keystore.type = PKCS12
+oj.content.keystore.filename = keystore.p12
+oj.content.keystore.password = dss-password

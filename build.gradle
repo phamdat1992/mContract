@@ -40,8 +40,9 @@ dependencies {
 	implementation 'eu.europa.ec.joinup.sd-dss:dss-validation-rest:5.7'
 	implementation 'eu.europa.ec.joinup.sd-dss:dss-certificate-validation-rest:5.7'
 	implementation 'eu.europa.ec.joinup.sd-dss:dss-tsl-validation:5.7'
-	implementation 'eu.europa.ec.joinup.sd-dss:dss-utils-google-guava:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-utils-apache-commons:5.7'
 	implementation 'eu.europa.ec.joinup.sd-dss:dss-crl-parser-stream:5.7'
+	implementation 'eu.europa.ec.joinup.sd-dss:dss-token:5.7'
 
 	runtimeOnly 'org.hsqldb:hsqldb'
 	implementation 'org.springframework.boot:spring-boot-starter'

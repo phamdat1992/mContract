@@ -74,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/get-list-contract-by-condition", "/bookmark", "/get-detail-contract-for-user", "/update-contract-message", "/cancel-contract",
                         "/cancel-contract-by-guest").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data", "/account/*/transfers", "/logged").authenticated()
-                .antMatchers(HttpMethod.POST, "/transfer", "/account/create").authenticated()
+                .antMatchers(HttpMethod.POST, "/transfer", "/account/create", "/upload", "/get-data-to-sign", "/sign-document").authenticated()
                 .antMatchers(HttpMethod.GET, "/refresh-token").permitAll()
                 .anyRequest().denyAll()
                 .and()
