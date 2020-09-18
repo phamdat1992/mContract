@@ -53,3 +53,8 @@ current.oj.url = https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv:OJ.
 oj.content.keystore.type = PKCS12
 oj.content.keystore.filename = keystore.p12
 oj.content.keystore.password = dss-password
+
+s3.Properties.endpointUrl=endpointUrl
+s3.Properties.bucketName=bucketName
+s3.Properties.accessKey=accessKey
+s3.Properties.secretKey=secretKey
