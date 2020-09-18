@@ -52,13 +52,13 @@ import javax.annotation.PostConstruct;
 public class FileManageService {
 	private final static long MAX_PART_SIZE = 5242880;
 
-	  @Value("${viettelProperties.endpointUrl}")
+	  @Value("${s3.Properties.endpointUrl}")
 	  private String endpointUrl;
-	  @Value("${viettelProperties.bucketName}")
+	  @Value("${s3.Properties.bucketName}")
 	  private String bucketName;
-	  @Value("${viettelProperties.accessKey}")
+	  @Value("${s3.Properties.accessKey}")
 	  private String accessKey;
-	  @Value("${viettelProperties.secretKey}")
+	  @Value("${s3.Properties.secretKey}")
 	  private String secretKey;
 
 	  private AmazonS3 s3Client;
