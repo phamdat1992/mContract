@@ -56,7 +56,7 @@ public class UserRegistrationDTO {
 
     @NotNull
     @NotEmpty
-    private Date phone;
+    private String phone;
 
     @NotNull
     @NotEmpty
