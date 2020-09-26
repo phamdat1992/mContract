@@ -17,17 +17,13 @@ public class RegistrationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserRegistrationResponseDTO> register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
+    public void register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
 
-        UserRegistrationResponseDTO response = new UserRegistrationResponseDTO();
         try {
-            String token = registrationService.register(userRegistrationDTO);
-            response.setToken(token);
+            registrationService.register(userRegistrationDTO);
         } catch (RuntimeException e) {
             throw new BadRequest();
         }
-
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/register/verify")

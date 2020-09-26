@@ -1,6 +1,7 @@
 package vn.inspiron.mcontract.modules.Authentication.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,9 @@ import java.util.UUID;
 
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
+
+    @Value("${client.url}")
+    private String url;
 
     @Autowired
     private RegistrationService registrationService;
@@ -37,9 +41,8 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         email.setSubject("Please complete signing up at mContract!");
         // TODO: Handle magic URL here
         email.setText("Thank you for signing up at mContract.\nPlease visit this link to complete your registration: \n" +
-                "http://localhost:9293/register/verify?token=" + event.getToken());
+                this.url + "/register/verify?token=" + event.getToken());
         mailSender.send(email);
-        System.out.println("Verification Email sent");
     }
 
 }

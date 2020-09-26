@@ -47,8 +47,8 @@ public class ContractService {
     }
 
     public void createContract(NewContractDTO newContractDTO) {
-        List<String> msts = new ArrayList<>();
-        List<String> emails = new ArrayList<>();
+        List<String> msts = new ArrayList<String>();
+        List<String> emails = new ArrayList<String>();
         ContractEntity contract = new ContractEntity();
         BeanUtils.copyProperties(newContractDTO, contract);
         contract.setFkContractStatus(2L);
@@ -236,7 +236,7 @@ public class ContractService {
         }
         
         List<ContractUserEntity> contractUsers = contractUserRepository.getAllByFkContract(contractId);
-        List<UserResponse> userResponses = new ArrayList<>();
+        List<UserResponse> userResponses = new ArrayList<UserResponse>();
         ContractResponse contractResponse = new ContractResponse();
         
         // set user own contract

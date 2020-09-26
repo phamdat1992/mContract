@@ -38,45 +38,44 @@ public class RegistrationService
     @Autowired
     EmailVerifyRepository emailVerifyRepository;
 
-    public String register(UserRegistrationDTO userRegistrationDTO) throws Exception {
+    public void register(UserRegistrationDTO userRegistrationDTO) throws Exception {
 
-        if (userNotExists(userRegistrationDTO.getUsername())) {
-            Optional<EmailEntity> email = emailRepository.findByEmail(userRegistrationDTO.getEmail());
-            EmailEntity newEmail = new EmailEntity();
-            // If email not existed, take email from user input
-            if (email.isEmpty()) {
-                newEmail.setEmail(userRegistrationDTO.getEmail());
-                emailRepository.save(newEmail);
-            } else { // Email existed, probably the corresponding user does not exist yet
-                newEmail.setEmail(email.get().getEmail());
-                newEmail.setFkUser(email.get().getFkUser());
-            }
-
-            // If this email has no associated user, create user from request.
-            // Otherwise, the user with this email already existed
-            if (newEmail.getFkUser() == null) {
-                UserEntity user = userRepository.save(createUser(userRegistrationDTO));
-
-                String randomToken = UUID.randomUUID().toString();
-
-                EmailVerifyTokenEntity emailVerifyTokenEntity = new EmailVerifyTokenEntity();
-                emailVerifyTokenEntity.setUser(user);
-                emailVerifyTokenEntity.setToken(randomToken);
-                emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(TOKEN_EXPIRATION));
-                setToken(emailVerifyTokenEntity);
-
-                // Send verification email
-                try {
-                    eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newEmail.getEmail(), randomToken));
-                } catch (RuntimeException e) {
-                    // TODO: Handle email not sent exception
-                    e.printStackTrace();
-                }
-                return randomToken;
-            }
+        if (!userNotExists(userRegistrationDTO.getUsername())) {
+            throw new UserExisted();
         }
 
-        throw new UserExisted();
+        Optional<EmailEntity> email = emailRepository.findByEmail(userRegistrationDTO.getEmail());
+        EmailEntity newEmail = new EmailEntity();
+        // If email not existed, take email from user input
+        if (email.isEmpty()) {
+            newEmail.setEmail(userRegistrationDTO.getEmail());
+            emailRepository.save(newEmail);
+        } else { // Email existed, probably the corresponding user does not exist yet
+            newEmail.setEmail(email.get().getEmail());
+            newEmail.setFkUser(email.get().getFkUser());
+        }
+
+        // If this email has no associated user, create user from request.
+        // Otherwise, the user with this email already existed
+        if (newEmail.getFkUser() == null) {
+            UserEntity user = userRepository.save(createUser(userRegistrationDTO));
+
+            String randomToken = UUID.randomUUID().toString();
+
+            EmailVerifyTokenEntity emailVerifyTokenEntity = new EmailVerifyTokenEntity();
+            emailVerifyTokenEntity.setUser(user);
+            emailVerifyTokenEntity.setToken(randomToken);
+            emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(TOKEN_EXPIRATION));
+            setToken(emailVerifyTokenEntity);
+
+            // Send verification email
+            try {
+                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newEmail.getEmail(), randomToken));
+            } catch (RuntimeException e) {
+                // TODO: Handle email not sent exception
+                e.printStackTrace();
+            }
+        }
     }
 
     public void setToken(EmailVerifyTokenEntity tokenEntity) {
