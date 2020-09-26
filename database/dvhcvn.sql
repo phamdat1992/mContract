@@ -1,6 +1,6 @@
 
 LOCK TABLES `dvhc_cities` WRITE;
-/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dvhc_cities` DISABLE KEYS */;
 INSERT INTO dvhc_cities (id, name, prefix) VALUES(89, 'An Giang', 'Tỉnh');
 INSERT INTO dvhc_cities (id, name, prefix) VALUES(77, 'Bà Rịa - Vũng Tàu', 'Tỉnh');
 INSERT INTO dvhc_cities (id, name, prefix) VALUES(24, 'Bắc Giang', 'Tỉnh');
@@ -64,11 +64,11 @@ INSERT INTO dvhc_cities (id, name, prefix) VALUES(08, 'Tuyên Quang', 'Tỉnh');
 INSERT INTO dvhc_cities (id, name, prefix) VALUES(86, 'Vĩnh Long', 'Tỉnh');
 INSERT INTO dvhc_cities (id, name, prefix) VALUES(26, 'Vĩnh Phúc', 'Tỉnh');
 INSERT INTO dvhc_cities (id, name, prefix) VALUES(15, 'Yên Bái', 'Tỉnh');
-/*!40000 ALTER TABLE `company` ENABLE KEYS */;
+/*!40000 ALTER TABLE `dvhc_cities` ENABLE KEYS */;
 UNLOCK TABLES;
 
 LOCK TABLES `dvhc_districts` WRITE;
-/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dvhc_districts` DISABLE KEYS */;
 INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(886, 'An Phú', 'Huyện', 89);
 INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(884, 'Châu Đốc', 'Thành phố', 89);
 INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(889, 'Châu Phú', 'Huyện', 89);
@@ -776,11 +776,11 @@ INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(140, 'Văn Ch
 INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(136, 'Văn Yên', 'Huyện', 15);
 INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(132, 'Yên Bái', 'Thành phố', 15);
 INSERT INTO dvhc_districts (id, name, prefix, fk_dvhc_city) VALUES(141, 'Yên Bình', 'Huyện', 15);
-/*!40000 ALTER TABLE `company` ENABLE KEYS */;
+/*!40000 ALTER TABLE `dvhc_districts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 LOCK TABLES `dvhc_wards` WRITE;
-/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dvhc_wards` DISABLE KEYS */;
 INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(30337, 'An Phú', 'Thị trấn', 886);
 INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(30373, 'Đa Phước', 'Xã', 886);
 INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(30340, 'Khánh An', 'Xã', 886);
@@ -11424,5 +11424,5 @@ INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(04720, 'Xuân
 INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(04714, 'Yên Bình', 'Thị trấn', 141);
 INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(04774, 'Yên Bình', 'Xã', 141);
 INSERT INTO dvhc_wards (id, name, prefix, fk_dvhc_district) VALUES(04753, 'Yên Thành', 'Xã', 141);
-/*!40000 ALTER TABLE `company` ENABLE KEYS */;
+/*!40000 ALTER TABLE `dvhc_wards` ENABLE KEYS */;
 UNLOCK TABLES;
