@@ -1,5 +1,6 @@
 package vn.inspiron.mcontract.modules.Authentication.config;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,9 @@ import java.util.List;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${client.url}")
+    private String url;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -89,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:9297"));
+        configuration.setAllowedOrigins(List.of(this.url));
         configuration.setAllowedHeaders(
             List.of(
                 "DNT",
