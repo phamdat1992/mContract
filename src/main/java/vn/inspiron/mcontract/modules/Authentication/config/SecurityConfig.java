@@ -51,15 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception
     {
         web.ignoring()
-            .antMatchers(HttpMethod.GET, "/test")
-            .antMatchers(HttpMethod.POST, "/authenticate")
-            .antMatchers("/authenticate",
-                "/create-contract",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**");
+            .antMatchers("/");
     }
 
     @Override
@@ -69,13 +61,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/register", "/register/verify", "/test", "/create-contract",
-                        "/cities", "/cities/*/districts", "/districts/*/wards", "/upload", "/get-data-to-sign", "/sign-document", "/company/register", "/generate_pdf_url", "/pdf/*", "/upload_pdf", "/delete_pdf",
-                        "/get-list-contract-by-condition", "/bookmark", "/get-detail-contract-for-user", "/update-contract-message", "/cancel-contract",
+                .antMatchers(HttpMethod.POST, "/authenticate",
+                        "/register", "/register/verify", "/refresh-token").permitAll()
+                .antMatchers(HttpMethod.GET, "/cities", "/cities/*/districts",
+                        "/districts/*/wards").permitAll()
+                .antMatchers("/create-contract",
+                        "/upload", "/get-data-to-sign", "/sign-document",
+                        "/company/register", "/generate_pdf_url",
+                        "/pdf/*", "/upload_pdf", "/delete_pdf",
+                        "/get-list-contract-by-condition", "/bookmark",
+                        "/get-detail-contract-for-user",
+                        "/update-contract-message", "/cancel-contract",
                         "/cancel-contract-by-guest").permitAll()
-                .antMatchers(HttpMethod.GET, "/user-data", "/account/*/transfers", "/logged").authenticated()
-                .antMatchers(HttpMethod.POST, "/transfer", "/account/create", "/upload", "/get-data-to-sign", "/sign-document").authenticated()
-                .antMatchers(HttpMethod.GET, "/refresh-token").permitAll()
+                .antMatchers(HttpMethod.GET, "/user-data",
+                        "/account/*/transfers", "/logged").authenticated()
+                .antMatchers(HttpMethod.POST, "/transfer",
+                        "/account/create", "/upload", "/get-data-to-sign",
+                        "/sign-document").authenticated()
                 .anyRequest().denyAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

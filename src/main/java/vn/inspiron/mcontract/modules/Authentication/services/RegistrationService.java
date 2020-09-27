@@ -44,7 +44,7 @@ public class RegistrationService
     public void register(UserRegistrationDTO userRegistrationDTO) throws Exception {
 
         UserEntity user = this.registerNewUser(userRegistrationDTO);
-        EmailEntity newEmail = registerNewEmail(user, userRegistrationDTO.getEmail());
+        EmailEntity newEmail = this.registerNewEmail(user, userRegistrationDTO.getEmail());
         String randomToken = this.generateVerifyToken(user);
         this.sendVerificationEmail(newEmail.getEmail(), randomToken);
     }
@@ -62,7 +62,7 @@ public class RegistrationService
         return randomToken;
     }
 
-    public UserEntity registerNewUser(UserRegistrationDTO userRegistrationDTO) {
+    public UserEntity registerNewUser(UserRegistrationDTO userRegistrationDTO) throws Exception {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(userRegistrationDTO.getUsername());
         UserEntity user = this.createUser(userRegistrationDTO);
         if (optionalUser.isPresent()) {
