@@ -1,5 +1,6 @@
 package vn.inspiron.mcontract.modules.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 
@@ -23,6 +24,10 @@ public class EmailVerifyTokenEntity {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiry;
+
+    @JsonIgnore
+    @Column
+    private boolean isActive;
 
     @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "fk_user")

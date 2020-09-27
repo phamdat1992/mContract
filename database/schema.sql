@@ -403,3 +403,5 @@ ALTER TABLE `user` CHANGE date_of_brith date_of_birth date NOT NULL;
 ALTER TABLE contract ADD fk_contract_message INT UNSIGNED NULL;
 ALTER TABLE contract ADD fk_file INT UNSIGNED NULL;
 ALTER TABLE contract ADD CONSTRAINT contract_fk_1 FOREIGN KEY (fk_file) REFERENCES files(id);
+
+ALTER TABLE email_verify_token ADD is_active bit(1) NOT NULL DEFAULT b'1';

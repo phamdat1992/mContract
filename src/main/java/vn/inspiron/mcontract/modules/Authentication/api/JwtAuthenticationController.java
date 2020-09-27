@@ -60,7 +60,10 @@ public class JwtAuthenticationController {
                     authenticationService.generateRefreshToken(JwtUtils.getSubjectFromToken(accessToken.getToken()), request.getRequestURI(), timeZone).getToken(),
                     60 * 60);
 
-            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString()).header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).body("Token refreshed");
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                    .body("Token refreshed");
         } catch (JWTVerificationException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

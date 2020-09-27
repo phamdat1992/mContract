@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationResponseDTO;
+import vn.inspiron.mcontract.modules.Authentication.dto.VerifyTokenDTO;
 import vn.inspiron.mcontract.modules.Authentication.services.RegistrationService;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 import vn.inspiron.mcontract.modules.Exceptions.NotFound;
@@ -26,11 +27,9 @@ public class RegistrationController {
         }
     }
 
-    @GetMapping("/register/verify")
+    @PostMapping("/register/verify")
     @ResponseStatus(HttpStatus.OK)
-    public void verify(@RequestParam("token") String token) throws Exception {
-        registrationService.verifyToken(token);
+    public void verify(@RequestBody VerifyTokenDTO verifyTokenDTO) throws Exception {
+        registrationService.verifyToken(verifyTokenDTO.getToken());
     }
-
-
 }
