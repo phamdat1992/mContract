@@ -58,7 +58,7 @@ public class RegistrationService
         // If this email has no associated user, create user from request.
         // Otherwise, the user with this email already existed
         if (newEmail.getFkUser() == null) {
-            UserEntity user = userRepository.save(createUser(userRegistrationDTO));
+            UserEntity user = userRepository.save(this.createUser(userRegistrationDTO));
 
             String randomToken = UUID.randomUUID().toString();
 
@@ -66,15 +66,20 @@ public class RegistrationService
             emailVerifyTokenEntity.setUser(user);
             emailVerifyTokenEntity.setToken(randomToken);
             emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(TOKEN_EXPIRATION));
-            setToken(emailVerifyTokenEntity);
+            emailVerifyTokenEntity.setActive(true);
+            this.setToken(emailVerifyTokenEntity);
 
-            // Send verification email
-            try {
-                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newEmail.getEmail(), randomToken));
-            } catch (RuntimeException e) {
-                // TODO: Handle email not sent exception
-                e.printStackTrace();
-            }
+            this.sendVerificationEmail(newEmail.getEmail(), randomToken);
+        }
+    }
+
+    public void sendVerificationEmail(String email, String token) {
+        // Send verification email
+        try {
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(email, token));
+        } catch (RuntimeException e) {
+            // TODO: Handle email not sent exception
+            e.printStackTrace();
         }
     }
 
@@ -88,21 +93,25 @@ public class RegistrationService
             throw new InvalidToken();
         }
 
+        if (!tokenEntity.get().isActive()) {
+            throw new TokenExpired();
+        }
+
         java.util.Date now = new java.util.Date();
         if (tokenEntity.get().getExpiry().getTime() - now.getTime() <= 0) {
             throw new TokenExpired();
         }
 
+        tokenEntity.get().setActive(false);
+        this.emailVerifyRepository.save(tokenEntity.get());
+
         UserEntity user = tokenEntity.get().getUser();
         user.setEnabled(true);
-        userRepository.save(user);
+        this.userRepository.save(user);
     }
 
     private boolean userNotExists(@NotNull @NotEmpty String username) {
         Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
-        System.out.println(optionalUser);
-        System.out.println(optionalUser.isEmpty());
-
         return optionalUser.isEmpty();
     }
 
@@ -115,5 +124,4 @@ public class RegistrationService
 
         return user;
     }
-
 }
