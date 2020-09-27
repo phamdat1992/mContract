@@ -44,7 +44,7 @@ public class JwtAuthenticationController {
         }
     }
 
-    @GetMapping("/refresh-token")
+    @PostMapping("/refresh-token")
     public ResponseEntity<String> refreshJWT(HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         Optional<Cookie> refreshCookie = getRefreshTokenCookieFromRequest(request);
 
