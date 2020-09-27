@@ -76,24 +76,24 @@ public class RegistrationService
         return userRepository.save(user);
     }
 
-    public EmailEntity registerNewEmail(UserEntity user, String email) {
+    public EmailEntity registerNewEmail(UserEntity user, String email) throws Exception {
         Optional<EmailEntity> emailEntity = this.emailRepository.findByEmail(email);
         EmailEntity newEmail = new EmailEntity();
-        // If email not existed, take email from user input
-        if (emailEntity.isEmpty()) {
-            newEmail.setEmail(email);
-            newEmail.setFkUser(user.getId());
-            this.emailRepository.save(newEmail);
-        } else { // Email existed, probably the corresponding user does not exist yet
-            newEmail.setEmail(emailEntity.get().getEmail());
+        if (emailEntity.isPresent()) {
             newEmail.setId(emailEntity.get().getId());
-            newEmail.setFkUser(emailEntity.get().getFkUser());
-
-            if (!Objects.equals(newEmail.getFkUser(), user.getId())) {
-                newEmail.setFkUser(user.getId());
-                this.emailRepository.save(newEmail);
+            if (!Objects.equals(emailEntity.get().getFkUser(), user.getId())) {
+                Optional<UserEntity> optionalUser = userRepository.findById(emailEntity.get().getFkUser());
+                if (optionalUser.isPresent()) {
+                    if (optionalUser.get().isEnabled() || this.isActiveVerifyToken(optionalUser.get().getId())) {
+                        throw new UserExisted();
+                    }
+                }
             }
         }
+
+        newEmail.setEmail(email);
+        newEmail.setFkUser(user.getId());
+        this.emailRepository.save(newEmail);
 
         return newEmail;
     }
