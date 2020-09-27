@@ -21,5 +21,5 @@ public interface EmailVerifyRepository extends JpaRepository<EmailVerifyTokenEnt
             "   and (is_active = true) ",
             nativeQuery = true
     )
-    public Optional<EmailVerifyTokenEntity> getEmailVerifyToken(Long userId);
+    public Optional<EmailVerifyTokenEntity> getActiveTokenByUserId(Long userId);
 }
