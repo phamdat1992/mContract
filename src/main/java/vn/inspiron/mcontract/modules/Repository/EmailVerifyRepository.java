@@ -18,7 +18,8 @@ public interface EmailVerifyRepository extends JpaRepository<EmailVerifyTokenEnt
     @Query(value = "select * " +
             "from email_verify_token" +
             "where fk_user = :userId " +
-            "   and (is_active = true) ",
+            "   and (is_active = true) " +
+            "limit 1",
             nativeQuery = true
     )
     public Optional<EmailVerifyTokenEntity> getActiveTokenByUserId(Long userId);

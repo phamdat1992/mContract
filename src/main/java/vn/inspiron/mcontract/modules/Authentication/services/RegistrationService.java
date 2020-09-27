@@ -2,6 +2,7 @@ package vn.inspiron.mcontract.modules.Authentication.services;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,13 +20,15 @@ import vn.inspiron.mcontract.modules.Entity.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class RegistrationService
 {
-    private static final int TOKEN_EXPIRATION = 24 * 60 * 60;
+    @Value("${verify-token-expiration}")
+    private String tokenExpiration;
 
     @Autowired
     private UserRepository userRepository;
@@ -52,7 +55,7 @@ public class RegistrationService
         EmailVerifyTokenEntity emailVerifyTokenEntity = new EmailVerifyTokenEntity();
         emailVerifyTokenEntity.setUser(user);
         emailVerifyTokenEntity.setToken(randomToken);
-        emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(TOKEN_EXPIRATION));
+        emailVerifyTokenEntity.setExpiry(Util.calculateDateFromNow(Integer.parseInt(this.tokenExpiration)));
         emailVerifyTokenEntity.setActive(true);
         this.setToken(emailVerifyTokenEntity);
 
@@ -86,7 +89,7 @@ public class RegistrationService
             newEmail.setId(emailEntity.get().getId());
             newEmail.setFkUser(emailEntity.get().getFkUser());
 
-            if (!newEmail.getFkUser().equals(user.getId())) {
+            if (!Objects.equals(newEmail.getFkUser(), user.getId())) {
                 newEmail.setFkUser(user.getId());
                 this.emailRepository.save(newEmail);
             }
