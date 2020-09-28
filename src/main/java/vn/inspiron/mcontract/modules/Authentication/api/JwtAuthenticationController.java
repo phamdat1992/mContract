@@ -87,6 +87,7 @@ public class JwtAuthenticationController {
         return ResponseCookie.from(name, token)
                 .httpOnly(true)
                 .maxAge(maxAge)
+                .sameSite("strict")
                 .path("/")
                 .build();
     }
