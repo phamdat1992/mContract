@@ -1,6 +1,7 @@
 server.port=9293
-jwt-secret-key=aaaaaaaaaaaa
-jwt-token-time-live=43200
+jwt-secret-key=secret-key
+jwt-refresh-token-time-live=2592000
+jwt-access-token-time-live=300
 spring.registration.url=${REGISTRATION_URL}
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587

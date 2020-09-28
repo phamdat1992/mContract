@@ -41,20 +41,21 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws IOException, ServletException
     {
-        // Manually wire UserDetailsService
-        if (userDetailsService == null) {
-            ServletContext servletContext = request.getServletContext();
-            WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-            userDetailsService = webApplicationContext.getBean(UserDetailsServiceImpl.class);
+        try {
+            // Manually wire UserDetailsService
+            if (this.userDetailsService == null) {
+                ServletContext servletContext = request.getServletContext();
+                WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+                this.userDetailsService = webApplicationContext.getBean(UserDetailsServiceImpl.class);
+            }
+
+            Cookie tokenCookie = getCookieWithAccessToken(request.getCookies());
+            if (tokenCookie != null) {
+                cookieAuthentication(tokenCookie);
+            }
+        } finally {
+            chain.doFilter(request, response);
         }
-
-        Cookie tokenCookie = getCookieWithAccessToken(request.getCookies());
-
-        if (tokenCookie != null) {
-            cookieAuthentication(tokenCookie);
-        }
-
-        chain.doFilter(request, response);
     }
 
     private void cookieAuthentication(Cookie cookie) {
@@ -65,7 +66,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private UsernamePasswordAuthenticationToken getTokenAuthentication(String token) {
         DecodedJWT decodedJWT = decodeAndVerifyJwt(token);
         String userToken = decodedJWT.getSubject();
-        UserAuth userAuth = userDetailsService.loadUserByToken(userToken);
+        UserAuth userAuth = this.userDetailsService.loadUserByToken(userToken);
         return new UsernamePasswordAuthenticationToken(userAuth, null, userAuth.getAuthorities());
     }
 
