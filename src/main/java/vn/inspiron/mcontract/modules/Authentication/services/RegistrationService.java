@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.component.OnRegistrationCompleteEvent;
+import vn.inspiron.mcontract.modules.Authentication.dto.AccountRequestDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.UserRegistrationDTO;
 import vn.inspiron.mcontract.modules.Common.util.Util;
 import vn.inspiron.mcontract.modules.Exceptions.InvalidToken;
@@ -19,14 +20,14 @@ import vn.inspiron.mcontract.modules.Entity.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class RegistrationService
 {
+    final String EXIST_EMAIL = "The email is taken";
+    final String EXIST_USERNAME = "The username is taken";
+
     @Value("${verify-token-expiration}")
     private String tokenExpiration;
 
@@ -96,6 +97,34 @@ public class RegistrationService
         this.emailRepository.save(newEmail);
 
         return newEmail;
+    }
+
+    public ArrayList<String> checkAccount(AccountRequestDTO account) {
+        ArrayList<String> message = new ArrayList<String>();
+
+        Optional<EmailEntity> emailEntity = this.emailRepository.findByEmail(account.getEmail());
+        if (emailEntity.isPresent()) {
+            Optional<UserEntity> optionalUser = userRepository.findById(emailEntity.get().getFkUser());
+            if (optionalUser.isPresent()) {
+                if (optionalUser.get().isEnabled() || this.isActiveVerifyToken(optionalUser.get().getId())) {
+                    if (account.getUsername().equals(optionalUser.get().getUsername())) {
+                        message.add(this.EXIST_EMAIL);
+                        message.add(this.EXIST_USERNAME);
+                    } else {
+                        message.add(this.EXIST_EMAIL);
+                    }
+                }
+            }
+        } else {
+            Optional<UserEntity> optionalUser = userRepository.findByUsername(account.getUsername());
+            if (optionalUser.isPresent()) {
+                if (optionalUser.get().isEnabled() || this.isActiveVerifyToken(optionalUser.get().getId())) {
+                    message.add(this.EXIST_USERNAME);
+                }
+            }
+        }
+
+        return message;
     }
 
     public void sendVerificationEmail(String email, String token) {
