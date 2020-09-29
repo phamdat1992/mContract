@@ -30,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String url;
 
     @Autowired
+    private JwtFilter jwtFilter;
+
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
     @Override
@@ -87,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

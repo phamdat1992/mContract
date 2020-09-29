@@ -32,7 +32,8 @@ public class JwtAuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private final String SECRET_KEY = "key";
+    @Value("${jwt-secret-key}")
+    private String secretKey;
 
     public JwtTokenResponseDTO authenticate(JwtTokenRequestDTO tokenRequest, String url, TimeZone timeZone, int timeLiveInMinute) throws AuthenticationException {
         UserAuth userAuth = managerAuthentication(tokenRequest.getUsername(), tokenRequest.getPassword());
@@ -47,7 +48,7 @@ public class JwtAuthenticationService {
 
             ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
 
-            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+            Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
             String token = JWT.create()
                     .withIssuer(url)
                     .withSubject(subject)
@@ -65,7 +66,7 @@ public class JwtAuthenticationService {
     }
 
     public JwtTokenResponseDTO refreshAccessToken(Cookie cookie, String url, TimeZone timeZone, int timeLiveInMinute) throws JWTVerificationException {
-        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+        Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
 
         DecodedJWT decodedJWT = JWT.require(algorithm)
                 .build()
@@ -82,7 +83,7 @@ public class JwtAuthenticationService {
 
             ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
 
-            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+            Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
             String token = JWT.create()
                     .withIssuer(url)
                     .withSubject(userToken)

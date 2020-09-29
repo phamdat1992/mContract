@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +30,11 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
+@Component
 public class JwtFilter extends OncePerRequestFilter {
-    private static final String SECRET_KEY = "key";
+
+    @Value("${jwt-secret-key}")
+    private String secretKey;
 
     private UserDetailsServiceImpl userDetailsService;
 
@@ -89,7 +93,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private DecodedJWT decodeAndVerifyJwt(String token) {
         DecodedJWT decodedJWT = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(this.secretKey)).build();
             decodedJWT = verifier.verify(token);
         } catch (JWTVerificationException e) {
             //Invalid signature/token expired
