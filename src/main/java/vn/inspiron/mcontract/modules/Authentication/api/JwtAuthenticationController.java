@@ -25,11 +25,11 @@ public class JwtAuthenticationController {
     final String ACCESS_TOKEN = "accessToken";
     final String REFRESH_TOKEN = "refreshToken";
 
-    @Value("${jwt-access-token-time-live}")
-    private String accessTokenTimeLive;
+    @Value("${jwt-access-token-time-live-in-second}")
+    private String accessTokenTimeLiveInSecond;
 
-    @Value("${jwt-refresh-token-time-live}")
-    private String refreshTokenTimeLive;
+    @Value("${jwt-refresh-token-time-live-in-second}")
+    private String refreshTokenTimeLiveInSecond;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -39,11 +39,29 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/authenticate")
     public ResponseEntity<String> createJwtAuthenticationToken(@RequestBody JwtTokenRequestDTO tokenRequest, HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         try {
-            JwtTokenResponseDTO accessToken = authenticationService.authenticate(tokenRequest, String.valueOf(request.getRequestURL()), timeZone);
-            JwtTokenResponseDTO refreshToken = authenticationService.generateRefreshToken(tokenRequest.getUsername(), String.valueOf(request.getRequestURL()), timeZone);
+            JwtTokenResponseDTO accessToken = authenticationService.authenticate(
+                    tokenRequest,
+                    String.valueOf(request.getRequestURL()),
+                    timeZone,
+                    Integer.parseInt(this.accessTokenTimeLiveInSecond)/60
+            );
+            JwtTokenResponseDTO refreshToken = authenticationService.generateRefreshToken(
+                    tokenRequest.getUsername(),
+                    String.valueOf(request.getRequestURL()),
+                    timeZone,
+                    Integer.parseInt(this.refreshTokenTimeLiveInSecond)/60
+            );
 
-            HttpCookie accessTokenCookie = createCookieWithToken(this.ACCESS_TOKEN, accessToken.getToken(), Integer.parseInt(this.accessTokenTimeLive));
-            HttpCookie refreshTokenCookie = createCookieWithToken(this.REFRESH_TOKEN, refreshToken.getToken(), Integer.parseInt(this.refreshTokenTimeLive));
+            HttpCookie accessTokenCookie = createCookieWithToken(
+                    this.ACCESS_TOKEN,
+                    accessToken.getToken(),
+                    Integer.parseInt(this.accessTokenTimeLiveInSecond)
+            );
+            HttpCookie refreshTokenCookie = createCookieWithToken(
+                    this.REFRESH_TOKEN,
+                    refreshToken.getToken(),
+                    Integer.parseInt(this.refreshTokenTimeLiveInSecond)
+            );
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
@@ -78,8 +96,17 @@ public class JwtAuthenticationController {
         }
 
         try {
-            JwtTokenResponseDTO accessToken = authenticationService.refreshAccessToken(refreshCookie.get(), String.valueOf(request.getRequestURL()), timeZone);
-            HttpCookie accessTokenCookie = createCookieWithToken(this.ACCESS_TOKEN, accessToken.getToken(), Integer.parseInt(this.accessTokenTimeLive));
+            JwtTokenResponseDTO accessToken = authenticationService.refreshAccessToken(
+                    refreshCookie.get(),
+                    String.valueOf(request.getRequestURL()),
+                    timeZone,
+                    Integer.parseInt(this.accessTokenTimeLiveInSecond)/60
+            );
+            HttpCookie accessTokenCookie = createCookieWithToken(
+                    this.ACCESS_TOKEN,
+                    accessToken.getToken(),
+                    Integer.parseInt(this.accessTokenTimeLiveInSecond)
+            );
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
