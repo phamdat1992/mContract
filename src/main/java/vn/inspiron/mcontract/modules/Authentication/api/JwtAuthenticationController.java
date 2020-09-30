@@ -39,13 +39,13 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/authenticate")
     public ResponseEntity<String> createJwtAuthenticationToken(@RequestBody JwtTokenRequestDTO tokenRequest, HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         try {
-            JwtTokenResponseDTO accessToken = authenticationService.authenticate(
+            JwtTokenResponseDTO accessToken = this.authenticationService.authenticate(
                     tokenRequest,
                     String.valueOf(request.getRequestURL()),
                     timeZone,
                     Integer.parseInt(this.accessTokenTimeLiveInSecond)/60
             );
-            JwtTokenResponseDTO refreshToken = authenticationService.generateRefreshToken(
+            JwtTokenResponseDTO refreshToken = this.authenticationService.generateRefreshToken(
                     tokenRequest.getUsername(),
                     String.valueOf(request.getRequestURL()),
                     timeZone,
@@ -89,14 +89,14 @@ public class JwtAuthenticationController {
 
     @PostMapping("/refresh-token")
     public ResponseEntity<String> refreshJWT(HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
-        Optional<Cookie> refreshCookie = getRefreshTokenCookieFromRequest(request);
+        Optional<Cookie> refreshCookie = this.getRefreshTokenCookieFromRequest(request);
 
         if (refreshCookie.isEmpty()) {
             return ResponseEntity.badRequest().body("No refresh token");
         }
 
         try {
-            JwtTokenResponseDTO accessToken = authenticationService.refreshAccessToken(
+            JwtTokenResponseDTO accessToken = this.authenticationService.refreshAccessToken(
                     refreshCookie.get(),
                     String.valueOf(request.getRequestURL()),
                     timeZone,

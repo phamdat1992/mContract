@@ -72,7 +72,7 @@ public class JwtAuthenticationService {
                 .build()
                 .verify(cookie.getValue());
 
-        return new JwtTokenResponseDTO(generateToken(decodedJWT.getSubject(), url, timeZone, timeLiveInMinute));
+        return new JwtTokenResponseDTO(this.generateToken(decodedJWT.getSubject(), url, timeZone, timeLiveInMinute));
     }
 
     private String generateToken(String userToken, String url, TimeZone timeZone, int timeLiveInMinute)
