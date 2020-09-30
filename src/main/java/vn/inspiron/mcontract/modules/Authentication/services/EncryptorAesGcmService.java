@@ -58,7 +58,7 @@ public class EncryptorAesGcmService {
     }
 
     // we need the same password, salt and iv to decrypt it
-    private String decrypt(String cText) throws Exception {
+    public String decrypt(String cText) throws Exception {
 
         byte[] decode = Base64.getDecoder().decode(cText.getBytes(this.UTF_8));
 

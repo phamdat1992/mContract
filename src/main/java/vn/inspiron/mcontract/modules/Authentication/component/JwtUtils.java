@@ -22,7 +22,7 @@ public class JwtUtils {
 
     public String getSubjectFromToken(String token)
     {
-        Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
+        Algorithm algorithm = Algorithm.HMAC512(this.secretKey);
         DecodedJWT decodedJWT = JWT.require(algorithm)
                 .build()
                 .verify(token);

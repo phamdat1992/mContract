@@ -93,7 +93,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private DecodedJWT decodeAndVerifyJwt(String token) {
         DecodedJWT decodedJWT = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(this.secretKey)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC512(this.secretKey)).build();
             decodedJWT = verifier.verify(token);
         } catch (JWTVerificationException e) {
             //Invalid signature/token expired

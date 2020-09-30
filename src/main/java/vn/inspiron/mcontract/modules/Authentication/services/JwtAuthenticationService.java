@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,12 +18,16 @@ import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenResponseDTO;
 import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
+import vn.inspiron.mcontract.modules.Entity.UserEntity;
+import vn.inspiron.mcontract.modules.Repository.UserRepository;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Optional;
 import java.util.TimeZone;
 
 @Service
@@ -32,78 +37,118 @@ public class JwtAuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private EncryptorAesGcmService encryptorAesGcmService;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Value("${jwt-secret-key}")
     private String secretKey;
 
-    public JwtTokenResponseDTO authenticate(JwtTokenRequestDTO tokenRequest, String url, TimeZone timeZone, int timeLiveInMinute) throws AuthenticationException {
+    public UserEntity authenticate(JwtTokenRequestDTO tokenRequest) throws AuthenticationException {
         UserAuth userAuth = managerAuthentication(tokenRequest.getUsername(), tokenRequest.getPassword());
-        String token = generateToken(userAuth.getUserEntity().getToken(), url, timeZone, timeLiveInMinute);
+        return userAuth.getUserEntity();
+    }
+
+    public JwtTokenResponseDTO generateAccessToken(
+            String subject,
+            String url,
+            TimeZone timeZone,
+            int timeLiveInMinute
+    ) throws Exception {
+        subject = this.encryptorAesGcmService.encrypt(subject.getBytes());
+        String token = this.generateToken(subject, url, timeZone, timeLiveInMinute);
+        return new JwtTokenResponseDTO(token);
+    }
+
+    public JwtTokenResponseDTO generateRefreshToken(
+            String subject,
+            String password,
+            String userPC,
+            String userIP,
+            String url,
+            TimeZone timeZone,
+            int timeLiveInMinute
+    ) throws Exception {
+        Instant now = Instant.now();
+        ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
+
+        subject = this.encryptorAesGcmService.encrypt(subject.getBytes());
+        password = this.encryptorAesGcmService.encrypt(password.getBytes());
+        userPC = this.encryptorAesGcmService.encrypt(userPC.getBytes());
+        userIP = this.encryptorAesGcmService.encrypt(userIP.getBytes());
+
+        Algorithm algorithm = Algorithm.HMAC512(this.secretKey);
+        String token = JWT.create()
+                .withIssuer(url)
+                .withSubject(subject)
+                .withClaim("code1", password)
+                .withClaim("code2", userPC)
+                .withClaim("code3", userIP)
+                .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
+                .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(timeLiveInMinute).toInstant()))
+                .sign(algorithm);
 
         return new JwtTokenResponseDTO(token);
     }
 
-    public JwtTokenResponseDTO generateRefreshToken(String subject, String url, TimeZone timeZone, int timeLiveInMinute) {
-        try {
-            Instant now = Instant.now();
-
-            ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
-
-            Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
-            String token = JWT.create()
-                    .withIssuer(url)
-                    .withSubject(subject)
-                    .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
-                    .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(timeLiveInMinute).toInstant()))
-                    .sign(algorithm);
-
-            return new JwtTokenResponseDTO(token);
-        }
-        catch (JWTCreationException e)
-        {
-            e.printStackTrace();
-            throw new JWTCreationException("Exception creating token", e);
-        }
-    }
-
-    public JwtTokenResponseDTO refreshAccessToken(Cookie cookie, String url, TimeZone timeZone, int timeLiveInMinute) throws JWTVerificationException {
-        Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
-
+    public JwtTokenResponseDTO refreshAccessToken(
+            String userPC,
+            String userIP,
+            Cookie cookie,
+            String url,
+            TimeZone timeZone,
+            int timeLiveInMinute
+    ) throws Exception {
+        Algorithm algorithm = Algorithm.HMAC512(this.secretKey);
         DecodedJWT decodedJWT = JWT.require(algorithm)
                 .build()
                 .verify(cookie.getValue());
 
+        Long userID = Long.parseLong(this.encryptorAesGcmService.decrypt(decodedJWT.getSubject()));
+        Optional<UserEntity> user = userRepository.findById(userID);
+        if (user.isEmpty()) {
+            throw new Exception("Cannot create access token");
+        }
+
+        String cUserIP = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code3").toString());
+        String cUserPC = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code2").toString());
+        String cPassword = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code1").toString());
+
+        if (!(userIP.equals(cUserIP) && userPC.equals(cUserPC) && user.get().getPassword().equals(cPassword))) {
+            throw new Exception("Cannot create access token");
+        }
+
         return new JwtTokenResponseDTO(this.generateToken(decodedJWT.getSubject(), url, timeZone, timeLiveInMinute));
     }
 
-    private String generateToken(String userToken, String url, TimeZone timeZone, int timeLiveInMinute)
-    {
-        try
-        {
-            Instant now = Instant.now();
+    private String generateToken(String userToken, String url, TimeZone timeZone, int timeLiveInMinute) throws Exception {
+        userToken = this.encryptorAesGcmService.encrypt(userToken.getBytes());
+        Instant now = Instant.now();
+        ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
 
-            ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
+        Algorithm algorithm = Algorithm.HMAC512(this.secretKey);
 
-            Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
-            String token = JWT.create()
-                    .withIssuer(url)
-                    .withSubject(userToken)
-                    .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
-                    .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(timeLiveInMinute).toInstant()))
-                    .sign(algorithm);
-
-            return token;
-        }
-        catch (JWTCreationException e)
-        {
-            e.printStackTrace();
-            throw new JWTCreationException("Exception creating token", e);
-        }
+        return JWT.create()
+                .withIssuer(url)
+                .withSubject(userToken)
+                .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
+                .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(timeLiveInMinute).toInstant()))
+                .sign(algorithm);
     }
 
     private UserAuth managerAuthentication(String username, String password) throws AuthenticationException
     {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-
         return (UserAuth) authenticate.getPrincipal();
+    }
+
+    public String getClientIP(HttpServletRequest request) {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 }
