@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class CryptoUtils {
 
-    final Integer ITERATION_COUNT = 65536;
+    final Integer ITERATION_COUNT = 1000;
     final Integer KEY_LENGTH = 256;
     final String SECRET_KEY_ALGORITHM = "PBKDF2WithHmacSHA256";
     final String ALGORITHM = "AES";
