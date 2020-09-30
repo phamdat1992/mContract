@@ -112,9 +112,9 @@ public class JwtAuthenticationService {
             throw new Exception("Cannot create access token");
         }
 
-        String cUserIP = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code3").toString());
-        String cUserPC = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code2").toString());
-        String cPassword = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code1").toString());
+        String cUserIP = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code3").asString());
+        String cUserPC = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code2").asString());
+        String cPassword = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code1").asString());
 
         if (!(userIP.equals(cUserIP) && userPC.equals(cUserPC) && user.get().getPassword().equals(cPassword))) {
             throw new Exception("Cannot create access token");
