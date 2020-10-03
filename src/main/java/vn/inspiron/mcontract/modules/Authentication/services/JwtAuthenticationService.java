@@ -65,8 +65,7 @@ public class JwtAuthenticationService {
     public JwtTokenResponseDTO generateRefreshToken(
             String subject,
             String password,
-            String userPC,
-            String userIP,
+            String code,
             String url,
             TimeZone timeZone,
             int timeLiveInMinute
@@ -76,16 +75,14 @@ public class JwtAuthenticationService {
 
         subject = this.encryptorAesGcmService.encrypt(subject.getBytes());
         password = this.encryptorAesGcmService.encrypt(password.getBytes());
-        userPC = this.encryptorAesGcmService.encrypt(userPC.getBytes());
-        userIP = this.encryptorAesGcmService.encrypt(userIP.getBytes());
+        code = this.encryptorAesGcmService.encrypt(code.getBytes());
 
         Algorithm algorithm = Algorithm.HMAC512(this.secretKey);
         String token = JWT.create()
                 .withIssuer(url)
                 .withSubject(subject)
                 .withClaim("code1", password)
-                .withClaim("code2", userPC)
-                .withClaim("code3", userIP)
+                .withClaim("code2", code)
                 .withIssuedAt(Date.from(zonedDateTimeNow.toInstant()))
                 .withExpiresAt(Date.from(zonedDateTimeNow.plusMinutes(timeLiveInMinute).toInstant()))
                 .sign(algorithm);
@@ -94,8 +91,7 @@ public class JwtAuthenticationService {
     }
 
     public JwtTokenResponseDTO refreshAccessToken(
-            String userPC,
-            String userIP,
+            String code,
             Cookie cookie,
             String url,
             TimeZone timeZone,
@@ -112,11 +108,10 @@ public class JwtAuthenticationService {
             throw new Exception("Cannot create access token");
         }
 
-        String cUserIP = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code3").asString());
-        String cUserPC = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code2").asString());
+        String cCode = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code2").asString());
         String cPassword = this.encryptorAesGcmService.decrypt(decodedJWT.getClaim("code1").asString());
 
-        if (!(userIP.equals(cUserIP) && userPC.equals(cUserPC) && user.get().getPassword().equals(cPassword))) {
+        if (!(code.equals(cCode) && user.get().getPassword().equals(cPassword))) {
             throw new Exception("Cannot create access token");
         }
 

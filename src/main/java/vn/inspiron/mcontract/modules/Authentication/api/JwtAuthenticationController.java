@@ -50,11 +50,11 @@ public class JwtAuthenticationController {
                     Integer.parseInt(this.accessTokenTimeLiveInSecond)/60
             );
 
+            String code = request.getHeader(HttpHeaders.USER_AGENT) + this.authenticationService.getClientIP(request);
             JwtTokenResponseDTO refreshToken = this.authenticationService.generateRefreshToken(
                     String.valueOf(user.getId()),
                     user.getPassword(),
-                    request.getHeader(HttpHeaders.USER_AGENT),
-                    this.authenticationService.getClientIP(request),
+                    code,
                     String.valueOf(request.getRequestURL()),
                     timeZone,
                     Integer.parseInt(this.refreshTokenTimeLiveInSecond)/60
@@ -104,9 +104,9 @@ public class JwtAuthenticationController {
         }
 
         try {
+            String code = request.getHeader(HttpHeaders.USER_AGENT) + this.authenticationService.getClientIP(request);
             JwtTokenResponseDTO accessToken = this.authenticationService.refreshAccessToken(
-                    request.getHeader(HttpHeaders.USER_AGENT),
-                    this.authenticationService.getClientIP(request),
+                    code,
                     refreshCookie.get(),
                     String.valueOf(request.getRequestURL()),
                     timeZone,

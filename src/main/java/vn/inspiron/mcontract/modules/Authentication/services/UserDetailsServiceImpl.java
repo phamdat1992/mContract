@@ -28,10 +28,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserAuth(userEntity);
     }
 
-    public UserAuth loadUserByToken(String token) throws DisabledException {
-        UserEntity userEntity = userRepository.findByToken(token).orElseThrow(() -> new DisabledException("Invalid token"));
+    public UserAuth loadUserByToken(String token) throws Exception {
+        UserEntity userEntity = userRepository.findByToken(token).orElseThrow(() -> new Exception("Invalid token"));
         if (!userEntity.isEnabled()) {
-            throw new DisabledException("Email is not verified.");
+            throw new Exception("Email is not verified.");
+        }
+        return new UserAuth(userEntity);
+    }
+
+    public UserAuth loadUserByID(String userID) throws Exception {
+        UserEntity userEntity = userRepository.findByToken(userID).orElseThrow(() -> new Exception("Invalid token"));
+        if (!userEntity.isEnabled()) {
+            throw new Exception("Email is not verified.");
         }
         return new UserAuth(userEntity);
     }
