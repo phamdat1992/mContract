@@ -70,7 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate",
                         "/register", "/register/verify", "/refresh-token",
-                        "/log-out", "/check-account").permitAll()
+                        "/log-out", "/check-account", "/forgot-password",
+                        "/verify-reset-password").permitAll()
                 .antMatchers(HttpMethod.GET, "/cities", "/cities/*/districts",
                         "/districts/*/wards").permitAll()
                 .antMatchers("/create-contract",

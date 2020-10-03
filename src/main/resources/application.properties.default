@@ -12,7 +12,8 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 client.url=http://localhost:9297
-verify-token-expiration=86400
+server.servlet.context-path=/api
+verify-token-expiration-in-second=86400
 
 # ===============================
 # DATABASE

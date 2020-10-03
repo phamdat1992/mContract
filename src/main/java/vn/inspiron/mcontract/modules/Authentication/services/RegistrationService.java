@@ -28,7 +28,7 @@ public class RegistrationService
     final String EXIST_EMAIL = "The email is taken";
     final String EXIST_USERNAME = "The username is taken";
 
-    @Value("${verify-token-expiration}")
+    @Value("${verify-token-expiration-in-second}")
     private String tokenExpiration;
 
     @Autowired
@@ -64,7 +64,7 @@ public class RegistrationService
     }
 
     public UserEntity registerNewUser(UserRegistrationDTO userRegistrationDTO) throws Exception {
-        Optional<UserEntity> optionalUser = userRepository.findByUsername(userRegistrationDTO.getUsername());
+        Optional<UserEntity> optionalUser = this.userRepository.findByUsername(userRegistrationDTO.getUsername());
         UserEntity user = this.createUser(userRegistrationDTO);
         if (optionalUser.isPresent()) {
             if (optionalUser.get().isEnabled() || this.isActiveVerifyToken(optionalUser.get().getId())) {
@@ -74,7 +74,7 @@ public class RegistrationService
             user.setId(optionalUser.get().getId());
         }
 
-        return userRepository.save(user);
+        return this.userRepository.save(user);
     }
 
     public EmailEntity registerNewEmail(UserEntity user, String email) throws Exception {
@@ -83,7 +83,7 @@ public class RegistrationService
         if (emailEntity.isPresent()) {
             newEmail.setId(emailEntity.get().getId());
             if (!Objects.equals(emailEntity.get().getFkUser(), user.getId())) {
-                Optional<UserEntity> optionalUser = userRepository.findById(emailEntity.get().getFkUser());
+                Optional<UserEntity> optionalUser = this.userRepository.findById(emailEntity.get().getFkUser());
                 if (optionalUser.isPresent()) {
                     if (optionalUser.get().isEnabled() || this.isActiveVerifyToken(optionalUser.get().getId())) {
                         throw new UserExisted();
@@ -130,7 +130,7 @@ public class RegistrationService
     public void sendVerificationEmail(String email, String token) {
         // Send verification email
         try {
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(email, token));
+            this.eventPublisher.publishEvent(new OnRegistrationCompleteEvent(email, token));
         } catch (RuntimeException e) {
             // TODO: Handle email not sent exception
             e.printStackTrace();
