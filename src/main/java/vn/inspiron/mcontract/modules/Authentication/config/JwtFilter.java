@@ -18,6 +18,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
+import vn.inspiron.mcontract.modules.Authentication.services.EncryptorAesGcmService;
 import vn.inspiron.mcontract.modules.Authentication.services.UserDetailsServiceImpl;
 
 import javax.servlet.FilterChain;
@@ -38,6 +39,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private EncryptorAesGcmService encryptorAesGcmService;
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -57,20 +61,22 @@ public class JwtFilter extends OncePerRequestFilter {
             if (tokenCookie != null) {
                 cookieAuthentication(tokenCookie);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             chain.doFilter(request, response);
         }
     }
 
-    private void cookieAuthentication(Cookie cookie) {
+    private void cookieAuthentication(Cookie cookie) throws Exception {
         UsernamePasswordAuthenticationToken auth = getTokenAuthentication(cookie.getValue());
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
-    private UsernamePasswordAuthenticationToken getTokenAuthentication(String token) {
+    private UsernamePasswordAuthenticationToken getTokenAuthentication(String token) throws Exception {
         DecodedJWT decodedJWT = decodeAndVerifyJwt(token);
-        String userToken = decodedJWT.getSubject();
-        UserAuth userAuth = this.userDetailsService.loadUserByToken(userToken);
+        String userID = this.encryptorAesGcmService.decrypt(decodedJWT.getSubject());
+        UserAuth userAuth = this.userDetailsService.loadUserByID(userID);
         return new UsernamePasswordAuthenticationToken(userAuth, null, userAuth.getAuthorities());
     }
 
@@ -93,7 +99,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private DecodedJWT decodeAndVerifyJwt(String token) {
         DecodedJWT decodedJWT = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(this.secretKey)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC512(this.secretKey)).build();
             decodedJWT = verifier.verify(token);
         } catch (JWTVerificationException e) {
             //Invalid signature/token expired

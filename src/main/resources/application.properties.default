@@ -2,6 +2,7 @@ server.port=9293
 jwt-secret-key=secret-key
 jwt-refresh-token-time-live-in-second=2592000
 jwt-access-token-time-live-in-second=300
+advanced-encryption-standard-password=password
 spring.registration.url=${REGISTRATION_URL}
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
@@ -11,7 +12,9 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 client.url=http://localhost:9297
-verify-token-expiration=86400
+server.servlet.context-path=/api
+verify-token-expiration-in-second=86400
+reset-password-token-expiration-in-second=86400
 
 # ===============================
 # DATABASE

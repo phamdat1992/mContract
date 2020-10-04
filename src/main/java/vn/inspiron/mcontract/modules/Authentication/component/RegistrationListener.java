@@ -42,7 +42,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         // TODO: Handle magic URL here
         email.setText("Thank you for signing up at mContract.\nPlease visit this link to complete your registration: \n" +
                 this.url + "/register/verify?token=" + event.getToken());
-        mailSender.send(email);
+        this.mailSender.send(email);
     }
-
 }

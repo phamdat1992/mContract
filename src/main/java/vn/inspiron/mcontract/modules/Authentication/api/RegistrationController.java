@@ -28,7 +28,7 @@ public class RegistrationController {
 
         try {
             registrationService.register(userRegistrationDTO);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new BadRequest();
         }
     }

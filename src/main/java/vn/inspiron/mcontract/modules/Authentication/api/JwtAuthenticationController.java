@@ -12,6 +12,8 @@ import vn.inspiron.mcontract.modules.Authentication.component.JwtUtils;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenResponseDTO;
 import vn.inspiron.mcontract.modules.Authentication.services.JwtAuthenticationService;
+import vn.inspiron.mcontract.modules.Entity.UserEntity;
+import vn.inspiron.mcontract.modules.Repository.UserRepository;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,20 +35,26 @@ public class JwtAuthenticationController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
     private JwtAuthenticationService authenticationService;
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<String> createJwtAuthenticationToken(@RequestBody JwtTokenRequestDTO tokenRequest, HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         try {
-            JwtTokenResponseDTO accessToken = authenticationService.authenticate(
-                    tokenRequest,
+            UserEntity user = this.authenticationService.authenticate(tokenRequest);
+            JwtTokenResponseDTO accessToken = this.authenticationService.generateAccessToken(
+                    String.valueOf(user.getId()),
                     String.valueOf(request.getRequestURL()),
                     timeZone,
                     Integer.parseInt(this.accessTokenTimeLiveInSecond)/60
             );
-            JwtTokenResponseDTO refreshToken = authenticationService.generateRefreshToken(
-                    tokenRequest.getUsername(),
+
+            String code = request.getHeader(HttpHeaders.USER_AGENT) + this.authenticationService.getClientIP(request);
+            JwtTokenResponseDTO refreshToken = this.authenticationService.generateRefreshToken(
+                    String.valueOf(user.getId()),
+                    user.getPassword(),
+                    code,
                     String.valueOf(request.getRequestURL()),
                     timeZone,
                     Integer.parseInt(this.refreshTokenTimeLiveInSecond)/60
@@ -67,8 +75,8 @@ public class JwtAuthenticationController {
                     .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                     .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                     .body("Authenticated");
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Cannot sign-in");
         }
     }
 
@@ -89,14 +97,16 @@ public class JwtAuthenticationController {
 
     @PostMapping("/refresh-token")
     public ResponseEntity<String> refreshJWT(HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
-        Optional<Cookie> refreshCookie = getRefreshTokenCookieFromRequest(request);
+        Optional<Cookie> refreshCookie = this.getRefreshTokenCookieFromRequest(request);
 
         if (refreshCookie.isEmpty()) {
             return ResponseEntity.badRequest().body("No refresh token");
         }
 
         try {
-            JwtTokenResponseDTO accessToken = authenticationService.refreshAccessToken(
+            String code = request.getHeader(HttpHeaders.USER_AGENT) + this.authenticationService.getClientIP(request);
+            JwtTokenResponseDTO accessToken = this.authenticationService.refreshAccessToken(
+                    code,
                     refreshCookie.get(),
                     String.valueOf(request.getRequestURL()),
                     timeZone,
@@ -111,7 +121,7 @@ public class JwtAuthenticationController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                     .body("Token refreshed");
-        } catch (JWTVerificationException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Cannot get access token");
         }
     }

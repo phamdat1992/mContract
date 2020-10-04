@@ -35,7 +35,7 @@ public class DvhcController {
     @GetMapping("/cities/{cityId}/districts")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, List<DvhcDTO>> getDistricts(@PathVariable Long cityId) throws Exception {
-        List<DvhcDistrictEntity> entities = dvhcService.getDistricts(cityId);
+        List<DvhcDistrictEntity> entities = this.dvhcService.getDistricts(cityId);
         List<DvhcDTO> districts = new ArrayList<DvhcDTO>();
         for (DvhcDistrictEntity entity : entities) {
             districts.add(new DvhcDTO(entity.getId(), entity.getPrefix() + " " + entity.getName()));
