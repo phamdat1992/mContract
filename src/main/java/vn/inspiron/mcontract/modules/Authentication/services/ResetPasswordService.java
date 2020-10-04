@@ -1,7 +1,9 @@
 package vn.inspiron.mcontract.modules.Authentication.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Authentication.component.OnRegistrationCompleteEvent;
 import vn.inspiron.mcontract.modules.Authentication.component.OnResetPasswordEvent;
@@ -21,6 +23,9 @@ import java.util.Optional;
 @Service
 public class ResetPasswordService {
 
+    @Value("${verify-token-expiration-in-second}")
+    private String tokenExpiration;
+
     @Autowired
     ApplicationEventPublisher eventPublisher;
 
@@ -30,17 +35,25 @@ public class ResetPasswordService {
     @Autowired
     private EncryptorAesGcmService encryptorAesGcmService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
+
     public void resetPass(ResetPasswordDTO resetPasswordDTO) throws Exception {
         Optional<EmailEntity> emailEntity = this.emailRepository.findByEmail(resetPasswordDTO.getEmail());
-        if (emailEntity.isPresent()) {
-            long retryDate = System.currentTimeMillis();
-            Timestamp expireDate = Timestamp.from(new Timestamp(retryDate).toInstant().plusSeconds(600));
-            String token = resetPasswordDTO.getEmail() + "-" + expireDate.getTime();
-            this.sendResetPasswordEmail(
-                    resetPasswordDTO.getEmail(),
-                    this.encryptorAesGcmService.encrypt(token.getBytes())
-            );
+        if (emailEntity.isEmpty()) {
+            throw new Exception("Email is not exist");
         }
+
+        long retryDate = System.currentTimeMillis();
+        Timestamp expireDate = Timestamp.from(new Timestamp(retryDate).toInstant().plusSeconds(Integer.parseInt(this.tokenExpiration)));
+        String token = resetPasswordDTO.getEmail() + "-" + expireDate.getTime();
+        this.sendResetPasswordEmail(
+                resetPasswordDTO.getEmail(),
+                this.encryptorAesGcmService.encrypt(token.getBytes())
+        );
     }
 
     public void sendResetPasswordEmail(String email, String token) {
@@ -58,15 +71,28 @@ public class ResetPasswordService {
         token = this.encryptorAesGcmService.decrypt(token);
         String[] split = token.split("-");
 
-        if (split.length > 1) {
-            Timestamp expire = Timestamp.from(new Timestamp(Long.parseLong(split[split.length - 1])).toInstant());
-            Timestamp current = Timestamp.from(new Timestamp(System.currentTimeMillis()).toInstant());
-
-            if (current.after(expire)) {
-                throw new Exception("The token is expired");
-            }
-
-
+        if (split.length < 2) {
+            throw new Exception("Invalid token");
         }
+        Timestamp expire = Timestamp.from(new Timestamp(Long.parseLong(split[split.length - 1])).toInstant());
+        Timestamp current = Timestamp.from(new Timestamp(System.currentTimeMillis()).toInstant());
+
+        if (current.after(expire)) {
+            throw new Exception("The token is expired");
+        }
+
+        String email = split[0];
+        Optional<EmailEntity> emailOption = this.emailRepository.findByEmail(email);
+        if (emailOption.isEmpty()) {
+            throw new Exception("Email is not exist");
+        }
+
+        Optional<UserEntity> user = this.userRepository.findById(emailOption.get().getFkUser());
+        if (user.isEmpty() || !user.get().isEnabled()) {
+            throw new Exception("Email is not activated");
+        }
+
+        user.get().setPassword(this.passwordEncoder.encode(verifyResetPasswordDTO.getPassword()));
+        this.userRepository.save(user.get());
     }
 }

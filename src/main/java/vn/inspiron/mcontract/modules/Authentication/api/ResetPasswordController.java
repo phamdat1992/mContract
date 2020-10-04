@@ -24,7 +24,7 @@ public class ResetPasswordController {
     public void register(@RequestBody ResetPasswordDTO resetPasswordDTO) throws Exception {
         try {
             this.resetPasswordService.resetPass(resetPasswordDTO);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new BadRequest();
         }
     }
@@ -34,7 +34,7 @@ public class ResetPasswordController {
     public void verifyResetPassword(@RequestBody VerifyResetPasswordDTO verifyResetPasswordDTO) throws Exception {
         try {
             this.resetPasswordService.verifyResetPassword(verifyResetPasswordDTO);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new BadRequest();
         }
     }
