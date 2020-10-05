@@ -68,7 +68,8 @@ public class JwtAuthenticationController {
             HttpCookie refreshTokenCookie = createCookieWithToken(
                     this.REFRESH_TOKEN,
                     refreshToken.getToken(),
-                    Integer.parseInt(this.refreshTokenTimeLiveInSecond)
+                    Integer.parseInt(this.refreshTokenTimeLiveInSecond),
+                    "/api/refresh-token"
             );
 
             return ResponseEntity.ok()
@@ -141,11 +142,15 @@ public class JwtAuthenticationController {
     }
 
     private HttpCookie createCookieWithToken(String name, String token, int maxAge) {
+        return this.createCookieWithToken(name, token, maxAge, "/");
+    }
+
+    private HttpCookie createCookieWithToken(String name, String token, int maxAge, String path) {
         return ResponseCookie.from(name, token)
                 .httpOnly(true)
                 .maxAge(maxAge)
                 .sameSite("strict")
-                .path("/")
+                .path(path)
                 .build();
     }
 }
