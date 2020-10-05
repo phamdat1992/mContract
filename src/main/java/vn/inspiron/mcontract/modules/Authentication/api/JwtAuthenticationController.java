@@ -63,7 +63,8 @@ public class JwtAuthenticationController {
             HttpCookie accessTokenCookie = createCookieWithToken(
                     this.ACCESS_TOKEN,
                     accessToken.getToken(),
-                    Integer.parseInt(this.accessTokenTimeLiveInSecond)
+                    Integer.parseInt(this.accessTokenTimeLiveInSecond),
+                    "/api"
             );
             HttpCookie refreshTokenCookie = createCookieWithToken(
                     this.REFRESH_TOKEN,
