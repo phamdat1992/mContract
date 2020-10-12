@@ -151,6 +151,7 @@ public class JwtAuthenticationController {
                 .httpOnly(true)
                 .maxAge(maxAge)
                 .sameSite("strict")
+                .secure(true)
                 .path(path)
                 .build();
     }
