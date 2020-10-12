@@ -3,7 +3,7 @@
 # ===============================
 server.port=9293
 system.dateFormat=dd/MM/yyyy
-client.url=http://localhost:9297
+client.url=https://localhost:9297
 server.servlet.context-path=/api
 verify-token-expiration-in-second=86400
 reset-password-token-expiration-in-second=86400
@@ -86,9 +86,5 @@ server.ssl.key-store-type=PKCS12
 server.ssl.key-store=classpath:mcontract.p12
 server.ssl.key-store-password=mcontract
 server.ssl.key-alias=mcontract
-server.ssl.enabled=true
-security.require-ssl=true
-server.use-forward-headers=true
-server.forward-headers-strategy=FRAMEWORK
 trust.store=classpath:mcontract.p12
 trust.store.password=mcontract
