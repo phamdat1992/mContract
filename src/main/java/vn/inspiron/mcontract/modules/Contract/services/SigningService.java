@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Contract.DssWebUtils;
 import vn.inspiron.mcontract.modules.Contract.model.SignatureDocumentForm;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,10 +29,14 @@ public class SigningService {
     @Autowired
     private PAdESService pAdESService;
 
-    public ToBeSigned getDataToSign(SignatureDocumentForm form) {
+    public ToBeSigned getDataToSign(SignatureDocumentForm form) throws NoSuchAlgorithmException {
         DocumentSignatureService service = pAdESService;
         AbstractSignatureParameters parameters = fillParameters(form);
         ToBeSigned toBeSigned = service.getDataToSign(form.getDocumentToSign(), parameters);
+
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] encoded = digest.digest(toBeSigned.getBytes());
+        toBeSigned.setBytes(encoded);
 
         return toBeSigned;
     }
