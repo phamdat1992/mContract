@@ -83,8 +83,7 @@ s3.Properties.secretKey=secretKey
 # CONFIGURING SSL PROPERTIES
 # ===============================
 server.ssl.key-store-type=PKCS12
-server.ssl.key-store=classpath:mcontract.p12
-server.ssl.key-store-password=mcontract
-server.ssl.key-alias=mcontract
-trust.store=classpath:mcontract.p12
-trust.store.password=mcontract
+server.ssl.key-store=classpath:cert.p12
+server.ssl.key-store-password=123456
+trust.store=classpath:cert.p12
+trust.store.password=123456
