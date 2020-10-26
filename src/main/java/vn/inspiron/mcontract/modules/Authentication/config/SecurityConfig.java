@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -71,22 +72,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/authenticate",
                         "/register", "/register/verify", "/refresh-token",
                         "/log-out", "/check-account", "/forgot-password",
-                        "/verify-reset-password").permitAll()
-                .antMatchers(HttpMethod.GET, "/cities", "/cities/*/districts",
-                        "/districts/*/wards").permitAll()
-                .antMatchers("/create-contract",
+                        "/verify-reset-password", "/cities", "/cities/*/districts",
+                        "/districts/*/wards", "/company/register").permitAll()
+                .antMatchers(HttpMethod.POST,"/create-contract",
                         "/upload", "/get-data-to-sign", "/sign-document",
-                        "/company/register", "/generate_pdf_url",
-                        "/pdf/*", "/upload_pdf", "/delete_pdf",
-                        "/get-list-contract-by-condition", "/bookmark",
-                        "/get-detail-contract-for-user",
+                        "/generate_pdf_url", "/upload_pdf",
+                        "/delete_pdf", "/get-list-contract-by-condition",
+                        "/bookmark", "/get-detail-contract-for-user",
                         "/update-contract-message", "/cancel-contract",
                         "/cancel-contract-by-guest").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data",
                         "/account/*/transfers", "/logged").authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer",
-                        "/account/create", "/upload", "/get-data-to-sign",
-                        "/sign-document").authenticated()
+                        "/account/create", "/upload",
+                        "/sign-document", "/pdf/*").authenticated()
                 .anyRequest().denyAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
