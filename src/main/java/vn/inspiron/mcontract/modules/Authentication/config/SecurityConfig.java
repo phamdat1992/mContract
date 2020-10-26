@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/user-data",
                         "/account/*/transfers", "/logged").authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer",
-                        "/account/create", "/upload",
+                        "/account/create", "/upload", "/get-user",
                         "/sign-document", "/pdf/*").authenticated()
                 .anyRequest().denyAll()
                 .and()

@@ -119,7 +119,6 @@ public class JwtAuthenticationService {
     }
 
     private String generateToken(String userToken, String url, TimeZone timeZone, int timeLiveInMinute) throws Exception {
-        userToken = this.encryptorAesGcmService.encrypt(userToken.getBytes());
         Instant now = Instant.now();
         ZonedDateTime zonedDateTimeNow = ZonedDateTime.ofInstant(now, ZoneId.of(timeZone.getID()));
 
