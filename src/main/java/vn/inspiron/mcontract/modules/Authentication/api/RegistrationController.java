@@ -25,7 +25,6 @@ public class RegistrationController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
     public void register(@RequestBody UserRegistrationDTO userRegistrationDTO) throws Exception {
-
         try {
             registrationService.register(userRegistrationDTO);
         } catch (Exception e) {

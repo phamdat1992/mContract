@@ -75,7 +75,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private UsernamePasswordAuthenticationToken getTokenAuthentication(String token) throws Exception {
         DecodedJWT decodedJWT = decodeAndVerifyJwt(token);
-        String userID = this.encryptorAesGcmService.decrypt(decodedJWT.getSubject());
+        Long userID = Long.parseLong(this.encryptorAesGcmService.decrypt(decodedJWT.getSubject()));
         UserAuth userAuth = this.userDetailsService.loadUserByID(userID);
         return new UsernamePasswordAuthenticationToken(userAuth, null, userAuth.getAuthorities());
     }

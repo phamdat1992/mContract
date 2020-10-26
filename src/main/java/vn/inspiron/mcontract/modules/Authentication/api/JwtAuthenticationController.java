@@ -1,18 +1,23 @@
 package vn.inspiron.mcontract.modules.Authentication.api;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import vn.inspiron.mcontract.modules.Authentication.component.JwtUtils;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
 import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenResponseDTO;
+import vn.inspiron.mcontract.modules.Authentication.dto.UserInfoResponseDTO;
+import vn.inspiron.mcontract.modules.Authentication.model.UserAuth;
 import vn.inspiron.mcontract.modules.Authentication.services.JwtAuthenticationService;
 import vn.inspiron.mcontract.modules.Entity.UserEntity;
+import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 import vn.inspiron.mcontract.modules.Repository.UserRepository;
 
 import javax.servlet.http.Cookie;
@@ -138,6 +143,18 @@ public class JwtAuthenticationController {
         }
     }
 
+    @PostMapping("/get-user")
+    public ResponseEntity<UserInfoResponseDTO> getUser(Authentication authentication) {
+        try {
+            UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
+            UserInfoResponseDTO userInfo = new UserInfoResponseDTO();
+            BeanUtils.copyProperties(userEntity, userInfo);
+
+            return ResponseEntity.ok().body(userInfo);
+        } catch (Exception e) {
+            throw new BadRequest();
+        }
+    }
     private Optional<Cookie> getRefreshTokenCookieFromRequest(HttpServletRequest request) {
         Cookie tokenCookie = null;
 
