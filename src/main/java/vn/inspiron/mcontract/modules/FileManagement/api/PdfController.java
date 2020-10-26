@@ -27,7 +27,7 @@ public class PdfController {
     @Autowired
     private FileManageService fileManageService;
 
-    @GetMapping(value = "/generate_pdf_url")
+    @PostMapping(value = "/generate_pdf_url")
     public ResponseEntity<Object> getPdfFile(@RequestParam(value = "key")  String key) {
     	HashMap<String, Object> responseBody = new HashMap<String, Object>();
         String url = "localhost:9293/pdf/" + urlService.generateExpirationCode(key);

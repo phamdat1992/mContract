@@ -85,8 +85,18 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/log-out")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, TimeZone timeZone) {
         try {
-            HttpCookie accessTokenCookie = createCookieWithToken(this.ACCESS_TOKEN, "", 0);
-            HttpCookie refreshTokenCookie = createCookieWithToken(this.REFRESH_TOKEN, "", 0);
+            HttpCookie accessTokenCookie = createCookieWithToken(
+                this.ACCESS_TOKEN,
+                "",
+                0,
+                "/api"
+            );
+            HttpCookie refreshTokenCookie = createCookieWithToken(
+                this.REFRESH_TOKEN,
+                "",
+                0,
+                "/api/refresh-token"
+            );
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())

@@ -21,7 +21,7 @@ public class DvhcController {
     @Autowired
     private DvhcService dvhcService;
 
-    @GetMapping("/cities")
+    @PostMapping("/cities")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, List<DvhcDTO>> getCities() throws Exception {
         List<DvhcCityEntity> entities = dvhcService.getAllCities();
@@ -32,7 +32,7 @@ public class DvhcController {
         return Collections.singletonMap("cities", cities);
     }
 
-    @GetMapping("/cities/{cityId}/districts")
+    @PostMapping("/cities/{cityId}/districts")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, List<DvhcDTO>> getDistricts(@PathVariable Long cityId) throws Exception {
         List<DvhcDistrictEntity> entities = this.dvhcService.getDistricts(cityId);
@@ -43,7 +43,7 @@ public class DvhcController {
         return Collections.singletonMap("districts", districts);
     }
 
-    @GetMapping("/districts/{districtId}/wards")
+    @PostMapping("/districts/{districtId}/wards")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, List<DvhcDTO>> getWards(@PathVariable Long districtId) throws Exception {
         List<DvhcWardEntity> entities = dvhcService.getWards(districtId);
