@@ -13,4 +13,7 @@ public class NewContractDTO {
     private String title;
     private String description;
     private List<NewContractUserDTO> userList;
+    private String fileName;
+    private String fileData;
+    private String expireTime;
 }
