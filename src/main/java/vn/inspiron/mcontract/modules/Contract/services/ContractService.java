@@ -16,6 +16,7 @@ import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
 import vn.inspiron.mcontract.modules.Contract.model.ContractStatus;
 import vn.inspiron.mcontract.modules.Entity.*;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
+import vn.inspiron.mcontract.modules.FileManagement.service.FileManageService;
 import vn.inspiron.mcontract.modules.Repository.*;
 import vn.inspiron.mcontract.modules.User.dto.UserResponse;
 
@@ -45,75 +46,6 @@ public class ContractService {
     
     public void getAllContract() {
 
-    }
-
-    public void createContract(
-            NewContractDTO newContractDTO,
-            UserEntity userEntity
-    ) {
-        List<String> msts = new ArrayList<String>();
-        List<String> emails = new ArrayList<String>();
-        ContractEntity contract = new ContractEntity();
-        BeanUtils.copyProperties(newContractDTO, contract);
-
-        contract.setDescription(newContractDTO.getDescription());
-        contract.setFileName(newContractDTO.getFileName());
-        contract.setTitle(newContractDTO.getTitle());
-        contract.setExpiryDateSigned(newContractDTO.getExpiryDateSigned());
-        //contract.setFkContractStatus((long) ContractStatus.WAITING_FOR_SIGNATURE.getValue());
-        contract.setFkUser(userEntity.getId());
-        contract = contractRepository.save(contract);
-
-        Long idContract = contract.getId();
-
-        newContractDTO.getUserList().forEach((user) -> {
-            msts.add(user.getMst());
-            emails.add(user.getEmail());
-        });
-
-        List<MstEntity> listMst = mstRepository.findByMstIn(msts);
-        List<EmailEntity> listEmail = emailRepository.findByEmailIn(emails);
-
-        listMst.forEach((e) -> System.out.println(e.getMst()));
-        listEmail.forEach((e) -> System.out.println(e.getEmail()));
-
-        newContractDTO.getUserList().forEach((user) -> {
-            List<MstEntity> findMst = listMst.stream().filter(
-                    (mst) -> mst.getMst().equals(user.getMst())
-            ).collect(Collectors.toList());
-
-            List<EmailEntity> findEmail = listEmail.stream().filter(
-                    (mst) -> mst.getEmail().equals(user.getEmail())
-            ).collect(Collectors.toList());
-
-            MstEntity mst = new MstEntity();
-            if (findMst.isEmpty()) {
-                mst.setMst(user.getMst());
-                mst = mstRepository.save(mst);
-                listMst.add(mst);
-            } else {
-                mst.setId(findMst.stream().findFirst().get().getId());
-            }
-
-            EmailEntity email = new EmailEntity();
-            if (findEmail.isEmpty()) {
-                email.setEmail(user.getEmail());
-                email = emailRepository.save(email);
-                listEmail.add(email);
-            } else {
-                email.setId(listEmail.stream().findFirst().get().getId());
-            }
-
-            ContractUserEntity contractUser = new ContractUserEntity();
-            contractUser.setDescription(user.getDescription());
-            contractUser.setName(user.getName());
-            contractUser.setFkContract(idContract);
-            contractUser.setFkContractStatus(2L);
-            contractUser.setFkContractUserRole(2L);
-            contractUser.setFkEmail(email.getId());
-            contractUser.setFkMst(mst.getId());
-            contractUserRepository.save(contractUser);
-        });
     }
     
     public MContractResponseBody<List<ContractResponse>> getContractByCondition(UserEntity userEntity, ContractSearchType contractSearchType, int pageNumber, int pageSize, boolean bookmarkStar) {

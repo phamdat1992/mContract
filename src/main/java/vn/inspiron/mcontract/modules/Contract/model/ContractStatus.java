@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ContractStatus {
-   /* WAITING_FOR_APPROVAL(1),
+    WAITING_FOR_APPROVAL(1),
     WAITING_FOR_SIGNATURE(2),
     SIGNED(3),
     APPROVED(4),
@@ -29,5 +29,5 @@ public enum ContractStatus {
 
     public int getValue() {
         return value;
-    }*/
+    }
 }

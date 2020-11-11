@@ -62,34 +62,23 @@ public class FileManageService {
 		return s3Client;
 	}
 
-	public Map<String, Object> uploadFile(MultipartFile multipartFile) {
-		HashMap<String, Object> response = new HashMap<String, Object>();
-		File convertedFile = null;
+	public void uploadFile(String fileName, byte[] fileData) throws Exception {
 		try {
-			convertedFile = this.convertMultiPartToFile(multipartFile);
-		} catch (IOException e) {
-			response.put("message", "file is wrong");
-			response.put("status", HttpStatus.BAD_REQUEST);
-			return response;
-		}
-		String fileName = this.generateFileName(multipartFile);
-		try {
+			File convertedFile = this.convertFileDataToFile(fileName, fileData);
 			this.uploadUsingS3Upload(convertedFile, fileName);
+		} catch (IOException e) {
+			throw new Exception("file is wrong");
 		} catch (Exception e) {
-			response.put("message", "upload fail");
-			response.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
-			return response;
+			throw new Exception("upload fail");
 		}
-		response.put("key", fileName);
-		return response;
 	}
 
-	private void uploadUsingS3Upload(File file, String keyName) throws Exception {
+	protected void uploadUsingS3Upload(File file, String keyName) throws Exception {
 		ArrayList<PartETag> partETags = new ArrayList<PartETag>();
 		InitiateMultipartUploadResult initResponse = null;
 		try {
 			initResponse = this.sendInitiateMultipartUploadRequest(keyName);
-			this.uploadFileByMultiparts(file, initResponse.getUploadId(), keyName, partETags);
+			this.uploadFileS3(file, initResponse.getUploadId(), keyName, partETags);
 			this.sendCompleteMultipartUploadRequest(initResponse.getUploadId(), keyName, partETags);
 		} catch (Exception e) {
 			if (initResponse != null) {
@@ -107,12 +96,12 @@ public class FileManageService {
 
 	}
 
-	private InitiateMultipartUploadResult sendInitiateMultipartUploadRequest(String keyName) {
+	protected InitiateMultipartUploadResult sendInitiateMultipartUploadRequest(String keyName) {
 		InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, keyName);
 		return s3Client.initiateMultipartUpload(initRequest);
 	}
 
-	private void sendCompleteMultipartUploadRequest(
+	protected void sendCompleteMultipartUploadRequest(
 			String uploadId,
 			String keyName,
 			ArrayList<PartETag> partETags
@@ -125,7 +114,7 @@ public class FileManageService {
 		s3Client.completeMultipartUpload(compRequest);
 	}
 
-	private void uploadFileByMultiparts(
+	protected void uploadFileS3(
 			File file,
 			String uploadId,
 			String keyName,
@@ -155,16 +144,12 @@ public class FileManageService {
 		}
 	}
 
-	private File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-		File convertedFile = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+	protected File convertFileDataToFile(String fileName, byte[] fileData) throws IOException {
+		File convertedFile = new File(Objects.requireNonNull(fileName));
 		FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
-		fileOutputStream.write(multipartFile.getBytes());
+		fileOutputStream.write(fileData);
 		fileOutputStream.close();
 		return convertedFile;
-	}
-
-	private String generateFileName(MultipartFile multiPart) {
-		return new Date().getTime() + "-" + multiPart.getOriginalFilename();
 	}
 
 	public byte[] getFileObject(String keyName) throws IOException {
@@ -179,5 +164,39 @@ public class FileManageService {
 	public String deleteFileOnS3(String keyName) {
 		s3Client.deleteObject(bucketName, keyName);
 		return keyName;
+	}
+
+	public boolean isPDF(byte[] data) {
+		if (data != null && data.length > 4 &&
+				data[0] == 0x25 && // %
+				data[1] == 0x50 && // P
+				data[2] == 0x44 && // D
+				data[3] == 0x46 && // F
+				data[4] == 0x2D) { // -
+
+			// version 1.3 file terminator
+			if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x33 &&
+					data[data.length - 7] == 0x25 && // %
+					data[data.length - 6] == 0x25 && // %
+					data[data.length - 5] == 0x45 && // E
+					data[data.length - 4] == 0x4F && // O
+					data[data.length - 3] == 0x46 && // F
+					data[data.length - 2] == 0x20 && // SPACE
+					data[data.length - 1] == 0x0A) { // EOL
+				return true;
+			}
+
+			// version 1.3 file terminator
+			if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x34 &&
+					data[data.length - 6] == 0x25 && // %
+					data[data.length - 5] == 0x25 && // %
+					data[data.length - 4] == 0x45 && // E
+					data[data.length - 3] == 0x4F && // O
+					data[data.length - 2] == 0x46 && // F
+					data[data.length - 1] == 0x0A) { // EOL
+				return true;
+			}
+		}
+		return false;
 	}
 }

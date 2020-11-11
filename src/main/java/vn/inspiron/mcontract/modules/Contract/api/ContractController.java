@@ -30,8 +30,12 @@ public class ContractController {
             @RequestBody NewContractDTO newContractDTO,
             Authentication authentication
     ) {
-        UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
-        contractService.createContract(newContractDTO, userEntity);
+        try {
+            UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
+            contractService.createContract(newContractDTO, userEntity);
+        } catch (Exception e) {
+
+        }
         return ResponseEntity.ok(newContractDTO);
     }
     
