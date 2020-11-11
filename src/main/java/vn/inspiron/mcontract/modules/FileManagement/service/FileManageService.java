@@ -18,10 +18,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class FileManageService {
@@ -159,7 +156,7 @@ public class FileManageService {
 	}
 
 	private File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-		File convertedFile = new File(multipartFile.getOriginalFilename());
+		File convertedFile = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 		FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
 		fileOutputStream.write(multipartFile.getBytes());
 		fileOutputStream.close();

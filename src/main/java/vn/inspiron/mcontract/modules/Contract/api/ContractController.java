@@ -26,8 +26,12 @@ public class ContractController {
     private ContractService contractService;
 
     @PostMapping("/create-contract")
-    public ResponseEntity<NewContractDTO> createContract(@RequestBody NewContractDTO newContractDTO) {
-        contractService.createContract(newContractDTO);
+    public ResponseEntity<NewContractDTO> createContract(
+            @RequestBody NewContractDTO newContractDTO,
+            Authentication authentication
+    ) {
+        UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
+        contractService.createContract(newContractDTO, userEntity);
         return ResponseEntity.ok(newContractDTO);
     }
     

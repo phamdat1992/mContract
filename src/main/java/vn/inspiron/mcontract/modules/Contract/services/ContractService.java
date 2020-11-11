@@ -13,6 +13,7 @@ import vn.inspiron.mcontract.modules.Common.util.MContractResponseBody;
 import vn.inspiron.mcontract.modules.Contract.dto.ContractMessageResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.ContractResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
+import vn.inspiron.mcontract.modules.Contract.model.ContractStatus;
 import vn.inspiron.mcontract.modules.Entity.*;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 import vn.inspiron.mcontract.modules.Repository.*;
@@ -46,14 +47,23 @@ public class ContractService {
 
     }
 
-    public void createContract(NewContractDTO newContractDTO) {
+    public void createContract(
+            NewContractDTO newContractDTO,
+            UserEntity userEntity
+    ) {
         List<String> msts = new ArrayList<String>();
         List<String> emails = new ArrayList<String>();
         ContractEntity contract = new ContractEntity();
         BeanUtils.copyProperties(newContractDTO, contract);
-        contract.setFkContractStatus(2L);
-        contract.setFkUser(1L);
+
+        contract.setDescription(newContractDTO.getDescription());
+        contract.setFileName(newContractDTO.getFileName());
+        contract.setTitle(newContractDTO.getTitle());
+        contract.setExpiryDateSigned(newContractDTO.getExpiryDateSigned());
+        //contract.setFkContractStatus((long) ContractStatus.WAITING_FOR_SIGNATURE.getValue());
+        contract.setFkUser(userEntity.getId());
         contract = contractRepository.save(contract);
+
         Long idContract = contract.getId();
 
         newContractDTO.getUserList().forEach((user) -> {
