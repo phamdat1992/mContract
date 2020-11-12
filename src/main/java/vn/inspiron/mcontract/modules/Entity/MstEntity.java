@@ -19,6 +19,4 @@ public class MstEntity
     private Long id;
     @Column(length = 20)
     private String mst;
-    @Column
-    private Long fkEmail;
 }

@@ -29,6 +29,4 @@ public class ContractUserEntity
     private Long fkMst;
     @Column
     private String name;
-    @Column(length = 1000)
-    private String description;
 }
