@@ -40,7 +40,7 @@ public class ContractController {
             UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
             this.newContractService.createContract(newContractDTO, userEntity);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return ResponseEntity.ok(newContractDTO);
     }
@@ -55,24 +55,6 @@ public class ContractController {
         MContractResponseBody<List<ContractResponse>> responseBody = new MContractResponseBody<>();
         try {
             responseBody = this.pagingContractService.getContractByCondition(userEntity, searchType, pageNumber, pageSize, bookmarkStar);
-            return ResponseEntity.ok(responseBody);
-        } catch (BadRequest e) {
-            responseBody.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
-        } catch (Exception e) {
-            responseBody.setMsg("Other error");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
-        }
-    }
-    
-    @PatchMapping("/bookmark")
-    public ResponseEntity<MContractResponseBody<ContractResponse>> bookmarkContract(@RequestParam(value = "id") String id,
-                                                                                    @RequestParam(value = "bookmarkStar") boolean bookmarkStar,
-                                                                                    Authentication authentication) {
-        UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
-        MContractResponseBody<ContractResponse> responseBody = new MContractResponseBody<>();
-        try {
-            responseBody = this.contractService.bookmarkContract(Long.parseLong(id), bookmarkStar, userEntity.getId()); // wait Khai supply service decode id
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
             responseBody.setMsg(e.getMessage());

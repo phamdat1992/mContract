@@ -44,19 +44,6 @@ public class ContractService {
     @Autowired
     private FilesRepository filesRepository;
     
-    public MContractResponseBody<ContractResponse> bookmarkContract(Long contractId, boolean bookmark, Long userId) {
-        ContractEntity contractEntity = contractRepository.findByIdAndFkUser(contractId, userId).orElseThrow(() -> new BadRequest("Contract ID: " + contractId + " not exist with user"));
-        contractEntity.setBookmarkStar(bookmark);
-        contractEntity = this.contractRepository.save(contractEntity);
-        MContractResponseBody responseBody = new MContractResponseBody();
-        ContractResponse contractResponse = new ContractResponse();
-        contractResponse.setId(contractEntity.getId().toString());
-        contractResponse.setBookmarkStar(contractEntity.isBookmarkStar());
-        responseBody.setData(contractResponse);
-        
-        return responseBody;
-    }
-    
     public MContractResponseBody<ContractResponse> getDetailContractForUser(Long contractId, Long userId, String mail) {
         ContractEntity contractEntity;
         if (Objects.nonNull(userId)) {
@@ -105,6 +92,7 @@ public class ContractService {
     
     
         // set contract
+        /*
         contractResponse.setId(contractEntity.getId().toString()); // hash
         contractResponse.setTitle(contractEntity.getTitle());
         contractResponse.setDescription(contractEntity.getDescription());
@@ -123,7 +111,8 @@ public class ContractService {
         
         MContractResponseBody<ContractResponse> responseBody = new MContractResponseBody<>();
         responseBody.setData(contractResponse);
-        return responseBody;
+        return responseBody;*/
+        return null;
     }
     
     @Transactional(rollbackFor = Exception.class)

@@ -4,20 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
 import vn.inspiron.mcontract.modules.Contract.model.ContractStatus;
-import vn.inspiron.mcontract.modules.Entity.ContractEntity;
-import vn.inspiron.mcontract.modules.Entity.FileEntity;
-import vn.inspiron.mcontract.modules.Entity.UserEntity;
+import vn.inspiron.mcontract.modules.Contract.model.ContractUserRole;
+import vn.inspiron.mcontract.modules.Entity.*;
 import vn.inspiron.mcontract.modules.FileManagement.service.FileManageService;
-import vn.inspiron.mcontract.modules.Repository.ContractRepository;
-import vn.inspiron.mcontract.modules.Repository.FilesRepository;
+import vn.inspiron.mcontract.modules.Repository.*;
 
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class NewContractService {
+    @Autowired
+    private ContractUserRepository contractUserRepository;
+    @Autowired
+    private EmailRepository emailRepository;
+    @Autowired
+    private MstRepository mstRepository;
     @Autowired
     private ContractRepository contractRepository;
     @Autowired
@@ -28,17 +33,17 @@ public class NewContractService {
     protected FileEntity uploadFile(NewContractDTO newContractDTO) throws Exception {
         byte[] fileData = Base64.getDecoder().decode(newContractDTO.getFileData());
         String newFileName = UUID.randomUUID().toString();
-        if (!fileManageService.isPDF(fileData)) {
+        if (!this.fileManageService.isPDF(fileData)) {
             throw new Exception("invalid PDF format");
         }
 
-        fileManageService.uploadFile(newFileName, fileData);
+        this.fileManageService.uploadFile(newFileName, fileData);
 
         FileEntity fileEntity = new FileEntity();
         fileEntity.setFileName(newContractDTO.getFileName());
         fileEntity.setKeyName(newFileName);
         fileEntity.setToken(UUID.randomUUID().toString());
-        return filesRepository.save(fileEntity);
+        return this.filesRepository.save(fileEntity);
     }
 
     protected ContractEntity addNewContract(
@@ -53,27 +58,23 @@ public class NewContractService {
         contract.setFkContractStatus((long) ContractStatus.WAITING_FOR_SIGNATURE.getValue());
         contract.setFkFile(fileEntity.getId());
         contract.setFkUser(userEntity.getId());
-        return contractRepository.save(contract);
+        return this.contractRepository.save(contract);
     }
 
-    public void createContract(
+    protected void addInvolvedGuysContract(
             NewContractDTO newContractDTO,
-            UserEntity userEntity
-    ) throws Exception {
-        FileEntity fileEntity = this.uploadFile(newContractDTO);
-        ContractEntity contract = this.addNewContract(newContractDTO, userEntity, fileEntity);
+            ContractEntity contract
+    ) {
+        List<String> msts = new ArrayList<>();
+        List<String> emails = new ArrayList<>();
 
-        List<String> msts = new ArrayList<String>();
-        List<String> emails = new ArrayList<String>();
-
-/*
         newContractDTO.getUserList().forEach((user) -> {
             msts.add(user.getMst());
             emails.add(user.getEmail());
         });
 
-        List<MstEntity> listMst = mstRepository.findByMstIn(msts);
-        List<EmailEntity> listEmail = emailRepository.findByEmailIn(emails);
+        List<MstEntity> listMst = this.mstRepository.findByMstIn(msts);
+        List<EmailEntity> listEmail = this.emailRepository.findByEmailIn(emails);
 
         listMst.forEach((e) -> System.out.println(e.getMst()));
         listEmail.forEach((e) -> System.out.println(e.getEmail()));
@@ -90,7 +91,7 @@ public class NewContractService {
             MstEntity mst = new MstEntity();
             if (findMst.isEmpty()) {
                 mst.setMst(user.getMst());
-                mst = mstRepository.save(mst);
+                mst = this.mstRepository.save(mst);
                 listMst.add(mst);
             } else {
                 mst.setId(findMst.stream().findFirst().get().getId());
@@ -102,18 +103,26 @@ public class NewContractService {
                 email = emailRepository.save(email);
                 listEmail.add(email);
             } else {
-                email.setId(listEmail.stream().findFirst().get().getId());
+                email.setId(findEmail.stream().findFirst().get().getId());
             }
 
             ContractUserEntity contractUser = new ContractUserEntity();
-            //contractUser.setDescription(user.getDescription());
             contractUser.setName(user.getName());
-            contractUser.setFkContract(idContract);
-            contractUser.setFkContractStatus(2L);
-            contractUser.setFkContractUserRole(2L);
+            contractUser.setFkContract(contract.getId());
+            contractUser.setFkContractStatus((long) ContractStatus.WAITING_FOR_SIGNATURE.getValue());
+            contractUser.setFkContractUserRole((long) ContractUserRole.SIGNER.getValue());
             contractUser.setFkEmail(email.getId());
             contractUser.setFkMst(mst.getId());
-            contractUserRepository.save(contractUser);
-        });*/
+            this.contractUserRepository.save(contractUser);
+        });
+    }
+
+    public void createContract(
+            NewContractDTO newContractDTO,
+            UserEntity userEntity
+    ) throws Exception {
+        FileEntity fileEntity = this.uploadFile(newContractDTO);
+        ContractEntity contract = this.addNewContract(newContractDTO, userEntity, fileEntity);
+        this.addInvolvedGuysContract(newContractDTO, contract);
     }
 }

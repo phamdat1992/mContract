@@ -93,7 +93,6 @@ public class FileManageService {
 			e.printStackTrace();
 			throw e;
 		}
-
 	}
 
 	protected InitiateMultipartUploadResult sendInitiateMultipartUploadRequest(String keyName) {
@@ -188,6 +187,17 @@ public class FileManageService {
 
 			// version 1.3 file terminator
 			if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x34 &&
+					data[data.length - 6] == 0x25 && // %
+					data[data.length - 5] == 0x25 && // %
+					data[data.length - 4] == 0x45 && // E
+					data[data.length - 3] == 0x4F && // O
+					data[data.length - 2] == 0x46 && // F
+					data[data.length - 1] == 0x0A) { // EOL
+				return true;
+			}
+
+			// version 1.7
+			if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35 &&
 					data[data.length - 6] == 0x25 && // %
 					data[data.length - 5] == 0x25 && // %
 					data[data.length - 4] == 0x45 && // E

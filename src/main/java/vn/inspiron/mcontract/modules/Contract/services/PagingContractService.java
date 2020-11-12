@@ -88,6 +88,7 @@ public class PagingContractService {
         }
 
         // convert data
+        /*
         List<ContractResponse> contractResponses = contractPage.getContent().stream().map(contractEntity -> {
             ContractResponse contractResponse = new ContractResponse();
             contractResponse.setId(contractEntity.getId().toString()); // hash
@@ -96,7 +97,6 @@ public class PagingContractService {
             contractResponse.setShortDescription(contractEntity.getDescription().length() < 100
                     ? contractEntity.getDescription().substring(0, contractEntity.getDescription().length() - 1)
                     : contractEntity.getDescription().substring(0, 100));
-            contractResponse.setFileName(contractEntity.getFileName());
 
             CompanyEntity companyEntity = this.companyRepository.getFirstByFkMst(contractEntity.getFkMst());
 
@@ -132,6 +132,8 @@ public class PagingContractService {
         mContractResponseBody.setTotalCount(contractPage.getTotalElements());
 
         return mContractResponseBody;
+         */
+        return null;
     }
 
     private List<Long> getListContractStatusIdByInvalidCer(List<ContractStatusEntity> contractStatusEntities) {
