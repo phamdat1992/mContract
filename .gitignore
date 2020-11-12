@@ -15,5 +15,5 @@ api/.settings/
 bin/
 mcontract.iml
 temp
-
+*.pdf
 src/main/resources/application.properties

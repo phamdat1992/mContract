@@ -28,8 +28,9 @@ public enum ContractSearchType {
 	
 	public static ContractSearchType lookUp(String name) throws IllegalArgumentException {
 		for (ContractSearchType val : values()) {
-			if (val.name().equalsIgnoreCase(name))
+			if (val.name().equalsIgnoreCase(name)) {
 				return val;
+			}
 		}
 		return null;
 	}

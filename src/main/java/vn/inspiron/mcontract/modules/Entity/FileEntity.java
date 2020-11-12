@@ -17,19 +17,12 @@ public class FileEntity {
     @Column
     private Long id;
 
-    @Column(name = "original_filename")
-    private String originalFilename;
+    @Column(name = "file_name")
+    private String fileName;
 
-    @Column(name = "upload_path")
-    private String uploadPath;
+    @Column(name = "key_name")
+    private String keyName;
 
-    @Column(name = "content_type")
-    private String contentType;
-
-    @Column(name = "uploaded_by")
-    private Long uploadedBy;
-
-    @Column(name = "uploaded_at", insertable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date uploadedAt;
+    @Column(name = "token")
+    private String token;
 }

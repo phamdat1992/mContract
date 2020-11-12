@@ -23,17 +23,9 @@ public class ContractEntity
     @Column(length = 10000)
     private String description;
     @Column
-    private String fileName;
-    @Column
-    private String token;
-    @Column
     private Long fkUser;
     @Column
-    private Long fkMst;
-    @Column
     private Long fkContractStatus;
-    @Column
-    private boolean bookmarkStar;
     @Column
     private Date expiryDateSigned;
     @Column

@@ -1,4 +1,5 @@
 package vn.inspiron.mcontract.modules.Authentication.config;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +12,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -69,23 +68,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/authenticate",
+                .antMatchers(HttpMethod.POST,
+                        "/authenticate",
                         "/register", "/register/verify", "/refresh-token",
                         "/log-out", "/check-account", "/forgot-password",
                         "/verify-reset-password", "/cities", "/cities/*/districts",
-                        "/districts/*/wards", "/company/register").permitAll()
-                .antMatchers(HttpMethod.POST,"/create-contract",
+                        "/districts/*/wards"
+                ).permitAll()
+                .antMatchers(HttpMethod.POST,
                         "/upload", "/get-data-to-sign", "/sign-document",
-                        "/generate_pdf_url", "/upload_pdf",
+                        "/cancel-contract-by-guest",
                         "/delete_pdf", "/get-list-contract-by-condition",
                         "/bookmark", "/get-detail-contract-for-user",
-                        "/update-contract-message", "/cancel-contract",
-                        "/cancel-contract-by-guest").permitAll()
+                        "/update-contract-message", "/cancel-contract"
+                ).permitAll()
                 .antMatchers(HttpMethod.GET, "/user-data",
-                        "/account/*/transfers", "/logged").authenticated()
+                        "/account/*/transfers", "/logged",
+                        "/company/register"
+                ).authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer",
                         "/account/create", "/upload", "/get-user",
-                        "/sign-document", "/pdf/*").authenticated()
+                        "/sign-document", "/pdf/*", "/upload_pdf",
+                        "/generate_pdf_url", "/create-contract"
+                ).authenticated()
                 .anyRequest().denyAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

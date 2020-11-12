@@ -56,18 +56,6 @@ public class PdfController {
         		.contentType(MediaType.APPLICATION_PDF)
         		.body(content);
     }
-
-    @PostMapping("/upload_pdf")
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
-    	Map<String, Object> responseBody = fileManageService.uploadFile(file);
-        
-        if (responseBody.containsKey("exception")) {
-        	HttpStatus httpStatus = (HttpStatus) responseBody.get("exception");
-        	return ResponseEntity.status(httpStatus).body(responseBody);
-        }
-
-        return ResponseEntity.ok(responseBody);
-    }
     
     @DeleteMapping("/delete_pdf")
     public ResponseEntity<String> deleteFile(@RequestParam(value = "key")  String key) {
