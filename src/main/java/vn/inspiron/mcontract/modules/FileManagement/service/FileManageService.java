@@ -12,12 +12,12 @@ import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
+import vn.inspiron.mcontract.modules.Entity.*;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 @Service
@@ -62,93 +62,15 @@ public class FileManageService {
 		return s3Client;
 	}
 
-	public void uploadFile(String fileName, byte[] fileData) throws Exception {
+	public void uploadFile(String fileName, byte[] fileData, UserEntity userEntity) throws Exception {
 		try {
-			File convertedFile = this.convertFileDataToFile(fileName, fileData);
-			this.uploadUsingS3Upload(convertedFile, fileName);
-		} catch (IOException e) {
-			throw new Exception("file is wrong");
+			InputStream uploadStream = new ByteArrayInputStream(fileData);
+			ObjectMetadata metadata = new ObjectMetadata();
+			metadata.addUserMetadata("name", "");
+			this.s3Client.putObject(this.bucketName, fileName, uploadStream, metadata);
 		} catch (Exception e) {
 			throw new Exception("upload fail");
 		}
-	}
-
-	protected void uploadUsingS3Upload(File file, String keyName) throws Exception {
-		ArrayList<PartETag> partETags = new ArrayList<PartETag>();
-		InitiateMultipartUploadResult initResponse = null;
-		try {
-			initResponse = this.sendInitiateMultipartUploadRequest(keyName);
-			this.uploadFileS3(file, initResponse.getUploadId(), keyName, partETags);
-			this.sendCompleteMultipartUploadRequest(initResponse.getUploadId(), keyName, partETags);
-		} catch (Exception e) {
-			if (initResponse != null) {
-				s3Client.abortMultipartUpload(
-						new AbortMultipartUploadRequest(
-								bucketName,
-								keyName,
-								initResponse.getUploadId()
-						)
-				);
-			}
-			e.printStackTrace();
-			throw e;
-		}
-	}
-
-	protected InitiateMultipartUploadResult sendInitiateMultipartUploadRequest(String keyName) {
-		InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, keyName);
-		return s3Client.initiateMultipartUpload(initRequest);
-	}
-
-	protected void sendCompleteMultipartUploadRequest(
-			String uploadId,
-			String keyName,
-			ArrayList<PartETag> partETags
-	) {
-		CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(
-				bucketName,
-				keyName,
-				uploadId,
-				partETags);
-		s3Client.completeMultipartUpload(compRequest);
-	}
-
-	protected void uploadFileS3(
-			File file,
-			String uploadId,
-			String keyName,
-			ArrayList<PartETag> partETags
-	) {
-		long filePosition = 0;
-		long contentLength = file.length();
-		long partSize = MAX_PART_SIZE;
-		for (int i = 1; filePosition < contentLength; i++) {
-			// Last part can be less than 5 MB. Adjust part size.
-			partSize = Math.min(partSize, (contentLength - filePosition));
-
-			// Create request to upload a part.
-			UploadPartRequest uploadRequest = new UploadPartRequest()
-					.withBucketName(bucketName).withKey(keyName)
-					.withUploadId(uploadId).withPartNumber(i)
-					.withFileOffset(filePosition)
-					.withFile(file)
-					.withPartSize(partSize);
-
-			// Upload part and add response to our list.
-			UploadPartResult result = s3Client.uploadPart(uploadRequest);
-
-			partETags.add(result.getPartETag());
-
-			filePosition += partSize;
-		}
-	}
-
-	protected File convertFileDataToFile(String fileName, byte[] fileData) throws IOException {
-		File convertedFile = new File(Objects.requireNonNull(fileName));
-		FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
-		fileOutputStream.write(fileData);
-		fileOutputStream.close();
-		return convertedFile;
 	}
 
 	public byte[] getFileObject(String keyName) throws IOException {
