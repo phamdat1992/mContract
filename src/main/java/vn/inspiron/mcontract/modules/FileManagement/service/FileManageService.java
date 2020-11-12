@@ -22,6 +22,8 @@ import java.util.*;
 
 @Service
 public class FileManageService {
+	private final String AUTHOR = "author";
+	private final String PHONE = "phone";
 	private final static long MAX_PART_SIZE = 5242880;
 
 	@Value("${s3.Properties.endpointUrl}")
@@ -62,13 +64,13 @@ public class FileManageService {
 		return s3Client;
 	}
 
-	public void uploadFile(String fileName, byte[] fileData, UserEntity userEntity) throws Exception {
+	public void uploadFile(String fileName, byte[] fileData) throws Exception {
 		try {
 			InputStream uploadStream = new ByteArrayInputStream(fileData);
 			ObjectMetadata metadata = new ObjectMetadata();
-			metadata.addUserMetadata("name", "");
 			this.s3Client.putObject(this.bucketName, fileName, uploadStream, metadata);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("upload fail");
 		}
 	}
@@ -119,15 +121,14 @@ public class FileManageService {
 			}
 
 			// version 1.7
-			if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35 &&
+			// EOL
+			return data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35 &&
 					data[data.length - 6] == 0x25 && // %
 					data[data.length - 5] == 0x25 && // %
 					data[data.length - 4] == 0x45 && // E
 					data[data.length - 3] == 0x4F && // O
 					data[data.length - 2] == 0x46 && // F
-					data[data.length - 1] == 0x0A) { // EOL
-				return true;
-			}
+					data[data.length - 1] == 0x0A;
 		}
 		return false;
 	}

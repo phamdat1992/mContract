@@ -30,14 +30,14 @@ public class NewContractService {
     @Autowired
     private FileManageService fileManageService;
 
-    protected FileEntity uploadFile(NewContractDTO newContractDTO, UserEntity userEntity) throws Exception {
+    protected FileEntity uploadFile(NewContractDTO newContractDTO) throws Exception {
         byte[] fileData = Base64.getDecoder().decode(newContractDTO.getFileData());
         String newFileName = UUID.randomUUID().toString();
         if (!this.fileManageService.isPDF(fileData)) {
             throw new Exception("invalid PDF format");
         }
 
-        this.fileManageService.uploadFile(newFileName, fileData, userEntity);
+        this.fileManageService.uploadFile(newFileName, fileData);
 
         FileEntity fileEntity = new FileEntity();
         fileEntity.setFileName(newContractDTO.getFileName());
@@ -121,7 +121,7 @@ public class NewContractService {
             NewContractDTO newContractDTO,
             UserEntity userEntity
     ) throws Exception {
-        FileEntity fileEntity = this.uploadFile(newContractDTO, userEntity);
+        FileEntity fileEntity = this.uploadFile(newContractDTO);
         ContractEntity contract = this.addNewContract(newContractDTO, userEntity, fileEntity);
         this.addInvolvedGuysContract(newContractDTO, contract);
     }
