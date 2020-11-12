@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.0.19)
 # Database: mcontract
-# Generation Time: 2020-11-10 08:39:27 +0000
+# Generation Time: 2020-11-12 07:58:47 +0000
 # ************************************************************
 
 
@@ -101,7 +101,6 @@ CREATE TABLE `contract` (
   `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `description` varchar(10000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `fk_user` int unsigned NOT NULL,
-  `fk_mst` int unsigned NOT NULL,
   `fk_file` int unsigned NOT NULL,
   `fk_contract_status` int unsigned NOT NULL,
   `fk_contract_message` int unsigned DEFAULT NULL,
@@ -111,15 +110,13 @@ CREATE TABLE `contract` (
   PRIMARY KEY (`id`),
   KEY `contract_fk_user` (`fk_user`),
   KEY `contract_fk_contract_status` (`fk_contract_status`),
-  KEY `contract_fk` (`fk_mst`),
   KEY `contract_fk_1` (`fk_file`),
   KEY `fk_contract_message` (`fk_contract_message`),
-  CONSTRAINT `contract_fk` FOREIGN KEY (`fk_mst`) REFERENCES `mst` (`id`),
   CONSTRAINT `contract_fk_1` FOREIGN KEY (`fk_file`) REFERENCES `files` (`id`),
   CONSTRAINT `contract_fk_contract_status` FOREIGN KEY (`fk_contract_status`) REFERENCES `contract_status` (`id`),
   CONSTRAINT `contract_fk_user` FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`),
   CONSTRAINT `contract_ibfk_1` FOREIGN KEY (`fk_contract_message`) REFERENCES `contract_message` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -232,6 +229,57 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table dvhc_cities
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `dvhc_cities`;
+
+CREATE TABLE `dvhc_cities` (
+  `id` int unsigned NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `prefix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+# Dump of table dvhc_districts
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `dvhc_districts`;
+
+CREATE TABLE `dvhc_districts` (
+  `id` int unsigned NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `prefix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `fk_dvhc_city` int unsigned NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `dvhc_districts_fk_cities` (`fk_dvhc_city`),
+  CONSTRAINT `dvhc_districts_fk_cities` FOREIGN KEY (`fk_dvhc_city`) REFERENCES `dvhc_cities` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+# Dump of table dvhc_wards
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `dvhc_wards`;
+
+CREATE TABLE `dvhc_wards` (
+  `id` int unsigned NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `prefix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `fk_dvhc_district` int unsigned NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `dvhc_wards_fk_districts` (`fk_dvhc_district`),
+  CONSTRAINT `dvhc_wards_fk_districts` FOREIGN KEY (`fk_dvhc_district`) REFERENCES `dvhc_districts` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
 # Dump of table email
 # ------------------------------------------------------------
 
@@ -247,7 +295,7 @@ CREATE TABLE `email` (
   UNIQUE KEY `unique_email` (`email`),
   KEY `email_fk_user` (`fk_user`),
   CONSTRAINT `email_fk_user` FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -263,7 +311,7 @@ CREATE TABLE `email_verify_token` (
   `fk_user` int unsigned NOT NULL,
   `is_active` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -281,7 +329,7 @@ CREATE TABLE `files` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `files_upload_path_uindex` (`key_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -333,45 +381,9 @@ CREATE TABLE `user` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- DVHCVN
 
-DROP TABLE IF EXISTS `dvhc_cities`;
-DROP TABLE IF EXISTS `dvhc_districts`;
-DROP TABLE IF EXISTS `dvhc_wards`;
-
-CREATE TABLE `dvhc_cities` (
-  `id` int unsigned NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `prefix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `dvhc_districts` (
-  `id` int unsigned NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `prefix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `fk_dvhc_city` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `dvhc_districts_fk_cities` (`fk_dvhc_city`),
-  CONSTRAINT `dvhc_districts_fk_cities` FOREIGN KEY (`fk_dvhc_city`) REFERENCES `dvhc_cities` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `dvhc_wards` (
-  `id` int unsigned NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `prefix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `fk_dvhc_district` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `dvhc_wards_fk_districts` (`fk_dvhc_district`),
-  CONSTRAINT `dvhc_wards_fk_districts` FOREIGN KEY (`fk_dvhc_district`) REFERENCES `dvhc_districts` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- For data dump of dvhc, refer to file ./dvhcvn.sql
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
