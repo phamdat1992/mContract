@@ -89,7 +89,7 @@ public class PdfSigningController {
         }
 
         // Stop user from signing other users' document
-        if (!fileEntity.getUploadedBy().equals(ownerId)) {
+        /*if (!fileEntity.getUploadedBy().equals(ownerId)) {
             throw new NotFound();
         }
 
@@ -105,10 +105,11 @@ public class PdfSigningController {
         signaturePdfForm.setBase64Certificate(dataToSignDTO.getSigningCertificate());
         signaturePdfForm.setBase64CertificateChain(dataToSignDTO.getCertificateChain());
         signaturePdfForm.setEncryptionAlgorithm(dataToSignDTO.getEncryptionAlgorithm());
-        signaturePdfForm.setSigningDate(fileEntity.getUploadedAt());
+        //signaturePdfForm.setSigningDate(fileEntity.getUploadedAt());
         signaturePdfForm.setDocumentToSign(document);
 
-        return signaturePdfForm;
+        return signaturePdfForm;*/
+        return null;
     }
 
 }

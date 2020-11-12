@@ -35,7 +35,7 @@ public class FileStorageService {
     public Long storeFile(MultipartFile file, Long userId, String directory) {
         // Generate new filename
         String originalFilename = file.getOriginalFilename();
-        String newFilename = Util.randomFilename(originalFilename);
+        String newFilename = originalFilename;
 
         Path relativePath = Paths.get(directory).resolve(newFilename);
         Path absolutePath = Paths.get(ROOT_DIR).toAbsolutePath().normalize().resolve(directory);
@@ -54,10 +54,10 @@ public class FileStorageService {
 
         // Save in database
         FileEntity fileEntity = new FileEntity();
-        fileEntity.setContentType(file.getContentType());
+        /*fileEntity.setContentType(file.getContentType());
         fileEntity.setOriginalFilename(originalFilename);
         fileEntity.setUploadPath(relativePath.toString());
-        fileEntity.setUploadedBy(userId);
+        fileEntity.setUploadedBy(userId);*/
 
         filesRepository.save(fileEntity);
 
@@ -85,10 +85,10 @@ public class FileStorageService {
 
         // Save in database
         FileEntity fileEntity = new FileEntity();
-        fileEntity.setContentType("signed-document");
+        /*fileEntity.setContentType("signed-document");
         fileEntity.setOriginalFilename(document.getName());
         fileEntity.setUploadPath(relativePath.toString());
-        fileEntity.setUploadedBy(userId);
+        fileEntity.setUploadedBy(userId);*/
 
         filesRepository.save(fileEntity);
         return fileEntity.getId();

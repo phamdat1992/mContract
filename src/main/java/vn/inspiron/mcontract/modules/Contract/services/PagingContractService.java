@@ -1,11 +1,17 @@
 package vn.inspiron.mcontract.modules.Contract.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Common.data.type.ContractSearchType;
 import vn.inspiron.mcontract.modules.Common.data.type.ContractStatusEnum;
 import vn.inspiron.mcontract.modules.Common.util.MContractResponseBody;
 import vn.inspiron.mcontract.modules.Contract.dto.ContractResponse;
 import vn.inspiron.mcontract.modules.Entity.*;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
+import vn.inspiron.mcontract.modules.Repository.*;
 import vn.inspiron.mcontract.modules.User.dto.UserResponse;
 
 import java.util.Arrays;
@@ -15,6 +21,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class PagingContractService {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ContractUserRepository contractUserRepository;
+    @Autowired
+    private ContractMessageRepository contractMessageRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
+    private ContractStatusRepository contractStatusRepository;
+    @Autowired
+    private ContractRepository contractRepository;
+    @Autowired
+    private EmailRepository emailRepository;
+
     public void getAllContract() {
 
     }
@@ -25,42 +46,42 @@ public class PagingContractService {
         Long contractStatusId;
         switch (contractSearchType) {
             case ALL_CONTRACT: // 1
-                EmailEntity emailEntity = emailRepository.findByFkUser(userEntity.getId()).orElseThrow(() -> new BadRequest("Don't exist user with mail"));
+                EmailEntity emailEntity = this.emailRepository.findByFkUser(userEntity.getId()).orElseThrow(() -> new BadRequest("Don't exist user with mail"));
                 Long emailId = emailEntity.getId();
-                contractPage = contractRepository.getAllContract(emailId, pageable);
+                contractPage = this.contractRepository.getAllContract(emailId, pageable);
                 break;
             case SEND: // 3
-                contractPage = contractRepository.getContractByCondition(null, userEntity.getId(), pageable, null);
+                contractPage = this.contractRepository.getContractByCondition(null, userEntity.getId(), pageable, null);
                 break;
             case DRAFT: // 5
-                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.DRAFT.getValue()).getId();
-                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
+                contractStatusId = this.contractStatusRepository.getByName(ContractStatusEnum.DRAFT.getValue()).getId();
+                contractPage = this.contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             case BOOKMARK_STAR: // 7
-                contractPage = contractRepository.getContractByCondition(null, userEntity.getId(), pageable, bookmarkStar);
+                contractPage = this.contractRepository.getContractByCondition(null, userEntity.getId(), pageable, bookmarkStar);
                 break;
             case CANCEL: // 9
-                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.CANCELLED.getValue()).getId();
-                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
+                contractStatusId = this.contractStatusRepository.getByName(ContractStatusEnum.CANCELLED.getValue()).getId();
+                contractPage = this.contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             case WAIT_APPROVE: // 11
-                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_APPROVAL.getValue()).getId();
-                contractPage = contractRepository.getAllContractByContractStatus(userEntity.getId(), Arrays.asList(contractStatusId), pageable);
+                contractStatusId = this.contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_APPROVAL.getValue()).getId();
+                contractPage = this.contractRepository.getAllContractByContractStatus(userEntity.getId(), Arrays.asList(contractStatusId), pageable);
                 break;
             case EXPIRY: // 13
-                contractPage =  contractRepository.getContractExpire30(0.3F, userEntity.getId(), pageable);
+                contractPage =  this.contractRepository.getContractExpire30(0.3F, userEntity.getId(), pageable);
                 break;
             case SIGNED: // 15
-                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.SIGNED.getValue()).getId();
-                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
+                contractStatusId = this.contractStatusRepository.getByName(ContractStatusEnum.SIGNED.getValue()).getId();
+                contractPage = this.contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             case INVALID_CERTIFICATE: //17
-                List<ContractStatusEntity> contractStatusEntities = contractStatusRepository.findAll();
-                contractPage = contractRepository.getAllContractByContractStatus(userEntity.getId(), getListContractStatusIdByInvalidCer(contractStatusEntities), pageable);
+                List<ContractStatusEntity> contractStatusEntities = this.contractStatusRepository.findAll();
+                contractPage = this.contractRepository.getAllContractByContractStatus(userEntity.getId(), getListContractStatusIdByInvalidCer(contractStatusEntities), pageable);
                 break;
             case NEED_SIGN: // 19
-                contractStatusId = contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_SIGNATURE.getValue()).getId();
-                contractPage = contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
+                contractStatusId = this.contractStatusRepository.getByName(ContractStatusEnum.WAITING_FOR_SIGNATURE.getValue()).getId();
+                contractPage = this.contractRepository.getContractByCondition(contractStatusId, userEntity.getId(), pageable, null);
                 break;
             default:
                 throw new BadRequest("Unsupport condition type search");
@@ -77,23 +98,23 @@ public class PagingContractService {
                     : contractEntity.getDescription().substring(0, 100));
             contractResponse.setFileName(contractEntity.getFileName());
 
-            CompanyEntity companyEntity = companyRepository.getFirstByFkMst(contractEntity.getFkMst());
+            CompanyEntity companyEntity = this.companyRepository.getFirstByFkMst(contractEntity.getFkMst());
 
             contractResponse.setCompanyName(companyEntity.getName());
             contractResponse.setCompanyAddress(companyEntity.getAddress());
 
             if (Objects.nonNull(contractEntity.getFkContractMessage())) {
-                ContractMessageEntity contractMessageEntity = contractMessageRepository.findById(contractEntity.getFkContractMessage()).get();
+                ContractMessageEntity contractMessageEntity = this.contractMessageRepository.findById(contractEntity.getFkContractMessage()).get();
                 contractResponse.setLatestContentMessage(contractMessageEntity.getMessage());
             }
 
-            List<UserResponse> userResponses = contractUserRepository.getAllByFkContract(contractEntity.getId()).stream()
+            List<UserResponse> userResponses = this.contractUserRepository.getAllByFkContract(contractEntity.getId()).stream()
                     .map(contractUserEntity -> {
                         UserResponse userResponse = new UserResponse();
-                        EmailEntity emailEntity = emailRepository.findById(contractUserEntity.getFkEmail()).get();
+                        EmailEntity emailEntity = this.emailRepository.findById(contractUserEntity.getFkEmail()).get();
 
                         if (Objects.nonNull(emailEntity.getFkUser())) {
-                            UserEntity userEntity1 = userRepository.findById(emailEntity.getFkUser()).get();
+                            UserEntity userEntity1 = this.userRepository.findById(emailEntity.getFkUser()).get();
 
                             userResponse.setFullname(userEntity1.getFullname());
                             userResponse.setPhone(userEntity1.getPhone());

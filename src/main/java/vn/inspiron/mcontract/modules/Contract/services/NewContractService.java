@@ -1,5 +1,7 @@
 package vn.inspiron.mcontract.modules.Contract.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
 import vn.inspiron.mcontract.modules.Contract.model.ContractStatus;
 import vn.inspiron.mcontract.modules.Entity.ContractEntity;
@@ -36,7 +38,7 @@ public class NewContractService {
         fileEntity.setFileName(newContractDTO.getFileName());
         fileEntity.setKeyName(newFileName);
         fileEntity.setToken(UUID.randomUUID().toString());
-        return FilesRepository.save(fileEntity);
+        return filesRepository.save(fileEntity);
     }
 
     protected ContractEntity addNewContract(

@@ -13,6 +13,8 @@ import vn.inspiron.mcontract.modules.Contract.dto.ContractMessageResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.ContractResponse;
 import vn.inspiron.mcontract.modules.Contract.dto.NewContractDTO;
 import vn.inspiron.mcontract.modules.Contract.services.ContractService;
+import vn.inspiron.mcontract.modules.Contract.services.NewContractService;
+import vn.inspiron.mcontract.modules.Contract.services.PagingContractService;
 import vn.inspiron.mcontract.modules.Entity.UserEntity;
 import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 
@@ -23,6 +25,10 @@ import java.util.Objects;
 @Slf4j
 public class ContractController {
     @Autowired
+    private PagingContractService pagingContractService;
+    @Autowired
+    private NewContractService newContractService;
+    @Autowired
     private ContractService contractService;
 
     @PostMapping("/create-contract")
@@ -32,7 +38,7 @@ public class ContractController {
     ) {
         try {
             UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
-            contractService.createContract(newContractDTO, userEntity);
+            this.newContractService.createContract(newContractDTO, userEntity);
         } catch (Exception e) {
 
         }
@@ -48,7 +54,7 @@ public class ContractController {
         UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
         MContractResponseBody<List<ContractResponse>> responseBody = new MContractResponseBody<>();
         try {
-            responseBody = contractService.getContractByCondition(userEntity, searchType, pageNumber, pageSize, bookmarkStar);
+            responseBody = this.pagingContractService.getContractByCondition(userEntity, searchType, pageNumber, pageSize, bookmarkStar);
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
             responseBody.setMsg(e.getMessage());
@@ -66,7 +72,7 @@ public class ContractController {
         UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
         MContractResponseBody<ContractResponse> responseBody = new MContractResponseBody<>();
         try {
-            responseBody = contractService.bookmarkContract(Long.parseLong(id), bookmarkStar, userEntity.getId()); // wait Khai supply service decode id
+            responseBody = this.contractService.bookmarkContract(Long.parseLong(id), bookmarkStar, userEntity.getId()); // wait Khai supply service decode id
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
             responseBody.setMsg(e.getMessage());
@@ -82,7 +88,7 @@ public class ContractController {
                                                                                             @RequestParam(value = "mail", required = false) String mail,
                                                                                     Authentication authentication) {
         UserEntity userEntity = Objects.nonNull(authentication) ? ((UserAuth) authentication.getPrincipal()).getUserEntity() : null;
-        MContractResponseBody<ContractResponse> responseBody = contractService.getDetailContractForUser(Long.parseLong(id), Objects.nonNull(userEntity) ? userEntity.getId() : null, mail); // wait Khai supply service decode id
+        MContractResponseBody<ContractResponse> responseBody = this.contractService.getDetailContractForUser(Long.parseLong(id), Objects.nonNull(userEntity) ? userEntity.getId() : null, mail); // wait Khai supply service decode id
         try {
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
@@ -101,7 +107,7 @@ public class ContractController {
         UserEntity userEntity = Objects.nonNull(authentication) ? ((UserAuth) authentication.getPrincipal()).getUserEntity() : null;
         MContractResponseBody<Boolean> responseBody = new MContractResponseBody<>();
         try {
-            responseBody = contractService.updateContractMessage(contractMessageResponse, Objects.isNull(userEntity) ? null : userEntity.getId(), Long.parseLong(id)); // wait Khai supply service decode id
+            responseBody = this.contractService.updateContractMessage(contractMessageResponse, Objects.isNull(userEntity) ? null : userEntity.getId(), Long.parseLong(id)); // wait Khai supply service decode id
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
             responseBody.setMsg(e.getMessage());
@@ -118,7 +124,7 @@ public class ContractController {
         UserEntity userEntity = ((UserAuth) authentication.getPrincipal()).getUserEntity();
         MContractResponseBody<Boolean> responseBody = new MContractResponseBody<>();
         try {
-            responseBody = contractService.cancelContractByUser(userEntity.getId(), Long.parseLong(id)); // wait Khai supply service decode id
+            responseBody = this.contractService.cancelContractByUser(userEntity.getId(), Long.parseLong(id)); // wait Khai supply service decode id
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
             responseBody.setData(false);
@@ -136,7 +142,7 @@ public class ContractController {
                                                                          @RequestParam(value = "mail") String mail) {
         MContractResponseBody<Boolean> responseBody = new MContractResponseBody<>();
         try {
-            responseBody = contractService.cancelContractByGuest(mail, Long.parseLong(id));
+            responseBody = this.contractService.cancelContractByGuest(mail, Long.parseLong(id));
             return ResponseEntity.ok(responseBody);
         } catch (BadRequest e) {
             responseBody.setData(false);

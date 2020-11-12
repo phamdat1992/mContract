@@ -47,7 +47,7 @@ public class ContractService {
     public MContractResponseBody<ContractResponse> bookmarkContract(Long contractId, boolean bookmark, Long userId) {
         ContractEntity contractEntity = contractRepository.findByIdAndFkUser(contractId, userId).orElseThrow(() -> new BadRequest("Contract ID: " + contractId + " not exist with user"));
         contractEntity.setBookmarkStar(bookmark);
-        contractEntity = contractRepository.save(contractEntity);
+        contractEntity = this.contractRepository.save(contractEntity);
         MContractResponseBody responseBody = new MContractResponseBody();
         ContractResponse contractResponse = new ContractResponse();
         contractResponse.setId(contractEntity.getId().toString());
@@ -119,7 +119,7 @@ public class ContractService {
         contractResponse.setCompanyAddress(companyEntity.getAddress());
         contractResponse.setUserResponse(userResponses);
         contractResponse.setContractMessageResponses(contractMessageResponses);
-        contractResponse.setUrlFile(filesRepository.findById(contractEntity.getFkFile()).get().getUploadPath()); // generate url temp
+        //contractResponse.setUrlFile(filesRepository.findById(contractEntity.getFkFile()).get().getUploadPath()); // generate url temp
         
         MContractResponseBody<ContractResponse> responseBody = new MContractResponseBody<>();
         responseBody.setData(contractResponse);
