@@ -122,13 +122,17 @@ public class FileManageService {
 
 			// version 1.7
 			// EOL
-			return data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35 &&
+			if (data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35 &&
 					data[data.length - 6] == 0x25 && // %
 					data[data.length - 5] == 0x25 && // %
 					data[data.length - 4] == 0x45 && // E
 					data[data.length - 3] == 0x4F && // O
 					data[data.length - 2] == 0x46 && // F
-					data[data.length - 1] == 0x0A;
+					data[data.length - 1] == 0x0A) {
+				return true;
+			}
+
+			return data[5] == 0x31 && data[6] == 0x2E && data[7] == 0x35;
 		}
 		return false;
 	}
