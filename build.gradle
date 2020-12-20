@@ -53,9 +53,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	
-	// s3
+
 	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.842'
+	compile 'org.apache.poi:poi-ooxml:4.1.2'
+	compile 'org.apache.poi:poi:4.1.2'
+	compile 'fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.pdf:1.0.6'
 }
 
 test {

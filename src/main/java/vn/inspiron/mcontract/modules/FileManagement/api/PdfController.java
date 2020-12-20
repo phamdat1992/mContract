@@ -7,13 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import vn.inspiron.mcontract.modules.Authentication.dto.JwtTokenRequestDTO;
+import vn.inspiron.mcontract.modules.Exceptions.BadRequest;
 import vn.inspiron.mcontract.modules.Exceptions.ExpiredUrlException;
+import vn.inspiron.mcontract.modules.FileManagement.dto.FileBase64DTO;
 import vn.inspiron.mcontract.modules.FileManagement.service.FileManageService;
 import vn.inspiron.mcontract.modules.FileManagement.service.UrlService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -27,7 +32,18 @@ public class PdfController {
     @Autowired
     private FileManageService fileManageService;
 
-    @PostMapping(value = "/generate_pdf_url")
+    @PostMapping("/convert-to-pdf")
+    public ResponseEntity<FileBase64DTO> convertWordToPDF(@RequestBody FileBase64DTO file, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            FileBase64DTO base64PDF = fileManageService.convertBase64WordToPDF(file);
+            return ResponseEntity.ok(base64PDF);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequest();
+        }
+    }
+
+    @PostMapping(value = "/generate-pdf-url")
     public ResponseEntity<Object> getPdfFile(@RequestParam(value = "key")  String key) {
     	HashMap<String, Object> responseBody = new HashMap<String, Object>();
         String url = "localhost:9293/pdf/" + urlService.generateExpirationCode(key);
@@ -55,11 +71,5 @@ public class PdfController {
         return ResponseEntity.ok()
         		.contentType(MediaType.APPLICATION_PDF)
         		.body(content);
-    }
-    
-    @DeleteMapping("/delete_pdf")
-    public ResponseEntity<String> deleteFile(@RequestParam(value = "key")  String key) {
-        fileManageService.deleteFileOnS3(key);
-        return ResponseEntity.ok().body(key);
     }
 }

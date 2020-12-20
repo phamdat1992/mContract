@@ -76,7 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/districts/*/wards"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST,
-                        "/upload", "/get-data-to-sign", "/sign-document",
+                        "/upload", "/get-data-to-sign",
+                        "/convert-to-pdf", "/sign-document",
                         "/cancel-contract-by-guest",
                         "/delete_pdf", "/get-list-contract-by-condition",
                         "/bookmark", "/get-detail-contract-for-user",
@@ -88,8 +89,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).authenticated()
                 .antMatchers(HttpMethod.POST, "/transfer",
                         "/account/create", "/upload", "/get-user",
-                        "/sign-document", "/pdf/*", "/upload_pdf",
-                        "/generate_pdf_url", "/create-contract"
+                        "/sign-document", "/pdf/*", "/upload-pdf",
+                        "/generate-pdf-url", "/create-contract"
                 ).authenticated()
                 .anyRequest().denyAll()
                 .and()
