@@ -9,19 +9,19 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
-import org.apache.poi.xwpf.converter.pdf.PdfConverter;
-import org.apache.poi.xwpf.converter.pdf.PdfOptions;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
-import vn.inspiron.mcontract.modules.Entity.*;
 import vn.inspiron.mcontract.modules.FileManagement.dto.FileBase64DTO;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.*;
 
 @Service
@@ -98,11 +98,13 @@ public class FileManageService {
 		InputStream inFile = new ByteArrayInputStream(fileData);
 		XWPFDocument doc = new XWPFDocument(inFile);
 		PdfOptions pdfOptions = PdfOptions.create();
-		ByteArrayOutputStream binaryPDF = new ByteArrayOutputStream();
+		OutputStream binaryPDF = new ByteArrayOutputStream();
 		PdfConverter.getInstance().convert(doc, binaryPDF, pdfOptions);
-		String base64PDF = Base64.getEncoder().encodeToString(binaryPDF.toByteArray());
 
-		return new FileBase64DTO(base64PDF);
+		try (ByteArrayOutputStream outData = (ByteArrayOutputStream) binaryPDF) {
+			String base64PDF = Base64.getEncoder().encodeToString(outData.toByteArray());
+			return new FileBase64DTO(base64PDF);
+		}
 	}
 
 	public boolean isPDF(byte[] data) {
