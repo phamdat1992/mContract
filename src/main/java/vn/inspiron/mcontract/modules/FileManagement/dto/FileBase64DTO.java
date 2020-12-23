@@ -1,4 +1,4 @@
-package vn.inspiron.mcontract.modules.Authentication.dto;
+package vn.inspiron.mcontract.modules.FileManagement.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +10,8 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountRequestDTO {
+public class FileBase64DTO {
     @NotNull
     @NotEmpty
-    private String email;
-
-    @NotNull
-    @NotEmpty
-    private String username;
+    private String data;
 }

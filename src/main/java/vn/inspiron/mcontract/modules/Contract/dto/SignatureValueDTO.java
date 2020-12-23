@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class SignatureValueDTO extends DataToSignDTO {
