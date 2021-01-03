@@ -87,3 +87,12 @@ server.ssl.key-store=classpath:cert.p12
 server.ssl.key-store-password=123456
 trust.store=classpath:cert.p12
 trust.store.password=123456
+
+# ===============================
+# GOOGLE AUTHENTICATION
+# ===============================
+google.app.id=652677307707-9q68e8nu6b9s3kuchulebqh98bp9lrjn.apps.googleusercontent.com
+google.app.secret=UttOp7W1FsMgp_HrDx8szwq_
+google.redirect.uri=https://localhost:9293
+google.link.get.token=https://accounts.google.com/o/oauth2/token
+google.link.get.user_info=https://www.googleapis.com/oauth2/v1/userinfo?access_token=
