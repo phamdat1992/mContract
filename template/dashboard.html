@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Dashboard</title>
+	<link href="public/css/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+	<link href="public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="public/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+	<link href="public/css/dashboard.css" rel="stylesheet" type="text/css" />
+	<script src="public/js/jquery-3.5.1.min.js"></script>
+	<script src="public/js/popper.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script src="public/js/perfect-scrollbar.min.js"></script>
+	<script src="public/js/bootstrap-datepicker.min.js"></script>
+	<script src="public/js/bootstrap-datepicker.vi.min.js"></script>
+</head>
+<body>
+<header id="page_header" class="position-relative">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-auto order-0 pr-0 pr-md-3">
+				<a href="#" class="logo_wrap d-flex align-items-center h-100">
+					<img class="header_logo img-fluid" src="public/images/logo_w.webp" alt="" />
+				</a>
+			</div>
+			<div class="col-12 col-md order-2 order-md-1 search_wrapper">
+				<div class="filter_input">
+					<button data-toggle="tooltip" data-placement="top" data-original-title="Tìm kiếm" class="btn btn-light position-absolute" type="button" id="gosearch_btn">
+						<svg style="font-size: 16px" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+							<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+						</svg>
+					</button>
+					<input type="text" class="general_search form-control" placeholder="Tìm kiếm hợp đồng" aria-label="Recipient's username" aria-describedby="button-addon2" />
+					<div class="right_gs">
+						<button data-toggle="tooltip" data-placement="top" data-original-title="Tìm kiếm nâng cao" class="btn btn_more" id="extend_filter">&#9660;</button>
+					</div>
+
+					<!-- Advanced Filter -->
+					<div id="advanced_filter" class="shadow animated-grow-in">
+						<form>
+							<div class="form-group row">
+								<label for="partnerInput" class="col-auto col-form-label">Đối tác</label>
+								<div class="col-sm">
+									<input type="text" class="form-control" id="partnerInput" value="" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="subjectInput" class="col-auto col-form-label">Chủ đề</label>
+								<div class="col-sm">
+									<input type="text" class="form-control" id="subjectInput" value="" />
+								</div>
+							</div>
+							<div class="form-group row input-daterange">
+								<label for="subjectInput" class="col-auto col-form-label pr-0">Thời gian</label>
+								<div class="col-sm pr-3 pr-sm-1 pr-md-3 mb-2 mb-sm-0">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Từ ngày" aria-label="Từ ngày" aria-describedby="button-addon2" />
+										<div class="input-group-append">
+											<span class="input-group-text bg-transparent" id="basic-addon2">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+												</svg>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm pl-3 pl-sm-1 pl-md-3">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Đến ngày" aria-label="Đến ngày" aria-describedby="button-addon2" />
+										<div class="input-group-append">
+											<span class="input-group-text bg-transparent" id="basic-addon2">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+												</svg>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="custom-control custom-checkbox custom-control-inline mb-2 mb-sm-0" style="margin-right: 30px">
+										<input type="checkbox" class="custom-control-input" id="customCheckFrom" />
+										<label class="custom-control-label" for="customCheckFrom">Hợp đồng đến</label>
+									</div>
+									<div class="custom-control custom-checkbox custom-control-inline">
+										<input type="checkbox" class="custom-control-input" id="customCheckTo" />
+										<label class="custom-control-label" for="customCheckTo">Hợp đồng đi</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col text-right">
+									<button class="btn btn_new mt-2">Tìm kiếm</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<script>
+	                    $('#extend_filter').click(function (){
+                            $('#page_header').css('z-index', '7');
+	                        $('#advanced_filter').addClass('af_show');
+	                        $(this).hide();
+	                    });
+	                    $(document).mouseup(function(e){
+	                        var container = $("#advanced_filter");
+	                        var dp = $(".datepicker-dropdown");
+	                        if (!container.is(e.target) && container.has(e.target).length === 0 && !dp.is(e.target) && dp.has(e.target).length === 0) {
+	                            container.removeClass('af_show');
+	                            $('#extend_filter').show();
+	                        }
+	                    });
+					</script>
+					<!-- End Advanced Filter -->
+				</div>
+			</div>
+			<div class="col-auto order-1 order-md-2 ml-auto d-flex align-items-center">
+				<div class="noti_icon">
+					<a href="#" id="notification_center" aria-haspopup="true" aria-expanded="false">
+						<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#fff" class="bi bi-bell" viewBox="0 0 16 16">
+							<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+						</svg>
+						<span class="mobi_count">9</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right shadow p-0 animated-grow-in" role="menu" aria-label="notification_center">
+						<div class="notification_body">
+							<ul class="nav nav-fill" id="notiTab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="newctr-tab" data-toggle="tab" href="#newctr" role="tab" aria-controls="home" aria-selected="true">
+										Hợp đồng mới (<span>3</span>)
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="responses-tab" data-toggle="tab" href="#responses" role="tab" aria-controls="profile" aria-selected="false">
+										Phản hồi (<span>1</span>)
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="expiry-tab" data-toggle="tab" href="#expiry" role="tab" aria-controls="contact" aria-selected="false">
+										Sắp hết hạn (<span>5</span>)
+									</a>
+								</li>
+							</ul>
+							<div class="tab-content" id="notiTabContent">
+								<div class="tab-pane fade show active" id="newctr" role="tabpanel" aria-labelledby="newctr-tab">
+									<div id="newctrnoti_wrapper" class="scrollnoti_wrapper">
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+															<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã gửi:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<div class="pimg_alt">N</div>
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+															<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã gửi:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+															<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã gửi:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+															<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã gửi:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item ">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+															<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã gửi:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item ">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+															<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã gửi:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+									</div>
+									<a href="#" class="markread">Đánh dấu tất cả là đã đọc</a>
+								</div>
+
+								<div class="tab-pane fade" id="responses" role="tabpanel" aria-labelledby="responses-tab">
+									<div id="responsenoti_wrapper" class="scrollnoti_wrapper">
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<div class="pimg_alt">N</div>
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+															<path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã ký:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+															<path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã phản hổi:</span> <span class="time">3 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+															<path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã ký:</span> <span class="time">1 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+															<path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Đã phản hổi:</span> <span class="time">3 giờ trước</span>
+													</div>
+												</div>
+											</div>
+										</a>
+									</div>
+									<a href="#" class="markread">Đánh dấu tất cả là đã đọc</a>
+								</div>
+
+								<div class="tab-pane fade" id="expiry" role="tabpanel" aria-labelledby="expiry-tab">
+									<div id="expirynoti_wrapper" class="scrollnoti_wrapper">
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+															<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+															<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+															<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Hết hạn vào:</span> <span class="time">15/1/2021</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item unread">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+															<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+															<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+															<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Hết hạn vào:</span> <span class="time">15/1/2021</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+															<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+															<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+															<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Hết hạn vào:</span> <span class="time">15/1/2021</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+															<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+															<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+															<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Hết hạn vào:</span> <span class="time">15/1/2021</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+															<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+															<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+															<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Hết hạn vào:</span> <span class="time">15/1/2021</span>
+													</div>
+												</div>
+											</div>
+										</a>
+										<a href="#" class="noti_item">
+											<div class="row mx-0 px-1">
+												<div class="col-auto pr-0 pl-2">
+													<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+													<div class="noti_sicon">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+															<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+															<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+															<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+														</svg>
+													</div>
+												</div>
+												<div class="col noti_text">
+													<div>
+														<div class="noti_name">Ánh Hồng - Hợp đồng thiết kế website A</div>
+														<div class="noti_content">Bên mình muốn thêm 1 gói hợp đồng nữa ở trang 1 nhé</div>
+													</div>
+													<div class="noti_meta">
+														<span>Hết hạn vào:</span> <span class="time">15/1/2021</span>
+													</div>
+												</div>
+											</div>
+										</a>
+									</div>
+									<a href="#" class="markread">Đánh dấu tất cả là đã đọc</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<script>
+                        $('#notification_center').click(function (event) {
+                            $('#page_header').css('z-index', '7');
+                            $(this).parent().toggleClass('show');
+                            $('.noti_icon .dropdown-menu').toggleClass('show');
+                        });
+
+                        $(document).mouseup(function (e) {
+                            if (!$('.noti_icon').is(e.target)
+                                && $('.noti_icon').has(e.target).length === 0
+                                //&& $('.show').has(e.target).length === 0
+                            ) {
+                                $('.noti_icon').removeClass('show');
+                                $('.noti_icon .dropdown-menu').removeClass('show');
+                            }
+                        });
+					</script>
+				</div>
+				<div class="account_area ml-2">
+					<a href="#">
+						<span class="mr-1 d-none d-lg-inline">Nguyễn Phương</span>
+						<img src="temp/person.png" class="rounded-circle account_img">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<main id="site_content">
+	<aside id="left_sidebar">
+		<div class="text-center">
+			<button class="btn btn_new">
+				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+					<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+				</svg>
+				<span>Tạo hợp đồng</span>
+			</button>
+		</div>
+		<div id="scrollsb_wrapper">
+			<ul class="list-unstyled">
+				<li class="sidebar_item">
+					<a href="#" class="active">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16"><path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+					</svg>
+						</span>
+						<span class="si_name">Trang chủ</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+							  <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z"/>
+							</svg>
+						</span>
+						<span class="si_name">Tất cả hợp đồng</span>
+						<span class="si_count">100</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+							  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+							  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+							</svg>
+						</span>
+						<span class="si_name">Chờ xử lí</span>
+						<span class="si_count">12</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
+							  <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
+							</svg>
+						</span>
+						<span class="si_name">Chờ đối tác</span>
+						<span class="si_count">17</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-shield-x" viewBox="0 0 16 16">
+							  <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+							  <path d="M6.146 5.146a.5.5 0 0 1 .708 0L8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 0 1 0-.708z"/>
+							</svg>
+						</span>
+						<span class="si_name">Sai xác thực</span>
+						<span class="si_count">1</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16">
+							  <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+							  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+							</svg>
+						</span>
+						<span class="si_name">Hoàn thành</span>
+						<span class="si_count">25</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar2-x" viewBox="0 0 16 16">
+							  <path d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708z"/>
+							  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+							  <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+							</svg>
+						</span>
+						<span class="si_name">Hết hạn</span>
+						<span class="si_count">5</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
+							  <path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
+							  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+							</svg>
+						</span>
+						<span class="si_name">Hủy bỏ</span>
+						<span class="si_count">7</span>
+					</a>
+				</li>
+			</ul>
+			<hr />
+			<h4>DANH SÁCH THẺ</h4>
+			<ul class="list-unstyled tags_list">
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg viewBox="0 0 24 24" fill="#d70606" width="20px" height="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</span>
+						<span class="si_name">CT Ánh Hồng</span>
+						<span class="si_count">9</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg viewBox="0 0 24 24" fill="#067cd7" width="20px" height="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</span>
+						<span class="si_name">CT Ánh Minh Cường Ngân</span>
+						<span class="si_count">5</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg viewBox="0 0 24 24" fill="#00b011" width="20px" height="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</span>
+						<span class="si_name">Website</span>
+						<span class="si_count">1</span>
+					</a>
+				</li>
+				<li class="sidebar_item">
+					<a href="#">
+						<span class="si_icon">
+							<svg viewBox="0 0 24 24" fill="#ff7900" width="20px" height="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</span>
+						<span class="si_name">Design</span>
+						<span class="si_count">3</span>
+					</a>
+				</li>
+				<li class="sidebar_item tag_add">
+					<a href="#">
+						<span class="si_icon">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+							</svg>
+						</span>
+						<span class="si_name">Thêm thẻ mới</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</aside>
+
+	<div id="page_wrapper">
+		<div id="page_content" class="container-fluid px-24px">
+			<!-- Dashboard Area -->
+			<div class="dashboard_area py-4">
+				<div class="db_top shadow-sm">
+					<div class="row">
+						<div class="col-md-5 d-flex align-items-center">
+							<div class="p-3 text-center w-100">
+								<button class="btn btn_new">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+									</svg>
+									<span>Tạo hợp đồng</span>
+								</button>
+								<p class="mb-2">Kết nối không khoảng cách, an toàn theo tiêu chuẩn ký số châu Âu</p>
+							</div>
+						</div>
+						<hr class="d-block d-md-none" />
+						<div class="col-md-7">
+							<div class="db_tr d-flex align-items-center">
+								<div class="row">
+								<div class="col-auto">
+									<div class="com_img_wrap">
+										<img src="temp/dell_logo.png" class="rounded-circle company_logo" onerror="this.onerror=null; this.remove();" alt="">
+										<div class="img_alt"><span>D</span></div>
+									</div>
+									<a href="#" class="change_icon" title="Thay đổi logo">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+											<path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
+											<path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="col overflow-hidden pl-0">
+									<div class="com_meta com_name text-uppercase">Công ty đầu tư công nghệ Dell</div>
+									<div class="com_meta">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+											<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+											<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+										</svg>
+										<span title="Số 1, Thanh Bình, Hà Đông, Hà Nội">Số 1, Thanh Bình, Hà Đông, Hà Nội</span>
+									</div>
+									<div class="com_meta">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+											<path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+										</svg>
+										<span>0915468790</span>
+									</div>
+									<div class="com_meta">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+											<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+										</svg>
+										<span title="nguyentranquynhhuong01012001@gmail.com">nguyentranquynhhuong01012001@gmail.com</span>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row count_card">
+					<div class="col-12 col-sm-6 col-md-4 mt-4 ">
+						<div class= "card-title completed">
+							<p>
+								50
+								<br/>
+								HOÀN THÀNH
+							</p>
+						</div>
+					</div>
+					<div class="col-4 col-sm-6 col-md mt-4 ">
+						<div class="card-title expire">
+							<p>
+								03
+								<br/>
+								HẾT HẠN
+							</p>
+						</div>
+					</div>
+					<div class="col-4 col-sm-6 col-md mt-4">
+						<div class="card-title wait">
+							<p>
+								10
+								<br/>
+								CHỜ XỬ LÝ
+							</p>
+						</div>
+					</div>
+					<div class="col-4 col-sm-6 col-md mt-4">
+						<div class="card-title wait">
+							<p>
+								12
+								<br/>
+								CHỜ ĐỐI TÁC
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="contract_overview mt-4 shadow-sm">
+					<div class="co_header p-3">
+						<h4 class="mb-0">HỢP ĐỒNG MỚI</h4>
+					</div>
+
+					<div class="contract_area">
+						<div class="contract_item ci_unread row mx-0" data-url="https://www.google.com.vn"><!-- data-url: link to contract detail page -->
+							<div class="ci_img go_cell col-auto pl-2 pr-3 order-0 d-none d-xl-block">
+								<div class="ci_img_wrap">
+									<img src="temp/person.png" class="rounded-circle" onerror="this.onerror=null; this.remove();" alt="">
+									<div class="img_alt"><span>D</span></div>
+								</div>
+							</div>
+							<div class="ci_people go_cell col pl-2 pl-xl-0 pr-0 order-4 order-sm-1 order-lg-1">
+								<div>Nguyễn Thị Hồng Nhung, (3)</div>
+								<div class="sign_status d-none d-lg-block">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-left-square" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.096 3.146a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+									</svg>
+									<span class="ss_icon completed">
+										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+										  <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+										</svg>
+									</span><span class="completed">5/5</span>
+								</div>
+								<div class="people_list shadow d-none d-md-block">
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div class="person_name">Lê Nguyệt Hà</div>
+											<div class="person_email text-secondary">lenguyetha@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+											</svg>
+										</div>
+									</div>
+
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div>Phạm Huyền Anh</div>
+											<div class="person_email text-secondary">phamhuyenanh@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<div class="d-none">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ci_title go_cell col order-4 order-lg-2 pl-2 pl-lg-3 pr-2 pr-lg-3">
+								<div class="ci_name">
+									<span>Hợp đồng thiết kế website Ánh Hồng</span> - Xin chào quý công ty, chúng tôi kính gửi quý công ty bản hợp đồng này, chúng tôi đã xây dựng dựa trên
+								</div>
+								<div class="attachment align-items-center">
+									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+										<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+									</svg>
+									<span class="attachment_name">hop-dong-thiet-ke-website-Anh-Hong.pdf</span>
+								</div>
+							</div>
+							<div class="ci_responses ci_response_unread go_cell col-auto pl-0 order-2 order-lg-3 ml-auto">
+								<div class="text-center">
+									<div class="ci_responses_count">15</div>
+									<div class="ci_responses_text">PHẢN HỒI</div>
+								</div>
+							</div>
+							<div class="ci_status go_cell col-auto text-center pl-0 pr-2 order-5 order-lg-4 ml-auto ml-lg-0">
+								<div class="status_text wait">Chờ xử lý</div>
+								<div class="">25/01/2021</div>
+							</div>
+						</div>
+						<div class="contract_item row mx-0" data-url="https://www.google.com.vn"><!-- data-url: link to contract detail page -->
+							<div class="ci_img go_cell col-auto pl-2 pr-3 order-0 d-none d-xl-block">
+								<div class="ci_img_wrap">
+									<img src="temp/person.png" class="rounded-circle" onerror="this.onerror=null; this.remove();" alt="">
+									<div class="img_alt"><span>D</span></div>
+								</div>
+							</div>
+							<div class="ci_people go_cell col pl-2 pl-xl-0 pr-0 order-4 order-sm-1 order-lg-1">
+								<div>Nguyễn Thị Hồng Nhung, (3)</div>
+								<div class="sign_status d-none d-lg-block">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-left-square" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.096 3.146a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+									</svg>
+									<span class="ss_icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+										  <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+										</svg>
+									</span><span class="">3/5</span>
+								</div>
+								<div class="people_list shadow d-none d-md-block">
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div class="person_name">Lê Nguyệt Hà</div>
+											<div class="person_email text-secondary">lenguyetha@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+											</svg>
+										</div>
+									</div>
+
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div>Phạm Huyền Anh</div>
+											<div class="person_email text-secondary">phamhuyenanh@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<div class="d-none">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ci_title go_cell col order-4 order-lg-2 pl-2 pl-lg-3 pr-2 pr-lg-3">
+								<div class="ci_name">
+									<span>Hợp đồng thiết kế website Ánh Hồng</span> - Xin chào quý công ty, chúng tôi kính gửi quý công ty bản hợp đồng này, chúng tôi đã xây dựng dựa trên
+								</div>
+								<div class="attachment align-items-center">
+									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+										<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+									</svg>
+									<span class="attachment_name">hop-dong-thiet-ke-website-Anh-Hong.pdf</span>
+								</div>
+							</div>
+							<div class="ci_responses go_cell col-auto pl-0 order-2 order-lg-3 ml-auto">
+								<div class="text-center">
+									<div class="ci_responses_count">7</div>
+									<div class="ci_responses_text">PHẢN HỒI</div>
+								</div>
+							</div>
+							<div class="ci_status go_cell col-auto text-center pl-0 pr-2 order-5 order-lg-4 ml-auto ml-lg-0">
+								<div class="status_text expire">Quá hạn</div>
+								<div class="text-danger">26/12/2020</div>
+							</div>
+						</div>
+						<div class="contract_item row mx-0" data-url="https://www.google.com.vn"><!-- data-url: link to contract detail page -->
+							<div class="ci_img go_cell col-auto pl-2 pr-3 order-0 d-none d-xl-block">
+								<div class="ci_img_wrap">
+									<img src="temp/person.png" class="rounded-circle" onerror="this.onerror=null; this.remove();" alt="">
+									<div class="img_alt"><span>D</span></div>
+								</div>
+							</div>
+							<div class="ci_people go_cell col pl-2 pl-xl-0 pr-0 order-4 order-sm-1 order-lg-1">
+								<div>Nguyễn Thị Hồng Nhung, (3)</div>
+								<div class="sign_status d-none d-lg-block">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-left-square" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.096 3.146a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+									</svg>
+									<span class="ss_icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+										  <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+										</svg>
+									</span><span class="">3/5</span>
+								</div>
+								<div class="people_list shadow d-none d-md-block">
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div class="person_name">Lê Nguyệt Hà</div>
+											<div class="person_email text-secondary">lenguyetha@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+											</svg>
+										</div>
+									</div>
+
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div>Phạm Huyền Anh</div>
+											<div class="person_email text-secondary">phamhuyenanh@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<div class="d-none">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ci_title go_cell col order-4 order-lg-2 pl-2 pl-lg-3 pr-2 pr-lg-3">
+								<div class="ci_name">
+									<span>Hợp đồng thiết kế website Ánh Hồng</span> - Xin chào quý công ty, chúng tôi kính gửi quý công ty bản hợp đồng này, chúng tôi đã xây dựng dựa trên
+								</div>
+								<div class="attachment align-items-center">
+									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+										<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+									</svg>
+									<span class="attachment_name">hop-dong-thiet-ke-website-Anh-Hong.pdf</span>
+								</div>
+							</div>
+							<div class="ci_responses ci_response_unread go_cell col-auto pl-0 order-2 order-lg-3 ml-auto">
+								<div class="text-center">
+									<div class="ci_responses_count">3</div>
+									<div class="ci_responses_text">PHẢN HỒI</div>
+								</div>
+							</div>
+							<div class="ci_status go_cell col-auto text-center pl-0 pr-2 order-5 order-lg-4 ml-auto ml-lg-0">
+								<div class="status_text complete">Hoàn thành</div>
+								<div class="">12/01/2021</div>
+							</div>
+						</div>
+						<div class="contract_item ci_unread row mx-0" data-url="https://www.google.com.vn"><!-- data-url: link to contract detail page -->
+							<div class="ci_img go_cell col-auto pl-2 pr-3 order-0 d-none d-xl-block">
+								<div class="ci_img_wrap">
+									<img src="temp/person.png" class="rounded-circle" onerror="this.onerror=null; this.remove();" alt="">
+									<div class="img_alt"><span>D</span></div>
+								</div>
+							</div>
+							<div class="ci_people go_cell col pl-2 pl-xl-0 pr-0 order-4 order-sm-1 order-lg-1">
+								<div>Nguyễn Thị Hồng Nhung, (3)</div>
+								<div class="sign_status d-none d-lg-block">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-left-square" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.096 3.146a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+									</svg>
+									<span class="ss_icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+										  <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+										</svg>
+									</span><span class="">3/5</span>
+								</div>
+								<div class="people_list shadow d-none d-md-block">
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div class="person_name">Lê Nguyệt Hà</div>
+											<div class="person_email text-secondary">lenguyetha@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+											</svg>
+										</div>
+									</div>
+
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div>Phạm Huyền Anh</div>
+											<div class="person_email text-secondary">phamhuyenanh@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<div class="d-none">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ci_title go_cell col order-4 order-lg-2 pl-2 pl-lg-3 pr-2 pr-lg-3">
+								<div class="ci_name">
+									<span>Hợp đồng thiết kế website Ánh Hồng</span> - Xin chào quý công ty, chúng tôi kính gửi quý công ty bản hợp đồng này, chúng tôi đã xây dựng dựa trên
+								</div>
+								<div class="attachment align-items-center">
+									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+										<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+									</svg>
+									<span class="attachment_name">hop-dong-thiet-ke-website-Anh-Hong.pdf</span>
+								</div>
+							</div>
+							<div class="ci_responses go_cell col-auto pl-0 order-2 order-lg-3 ml-auto">
+								<div class="text-center">
+									<div class="ci_responses_count">0</div>
+									<div class="ci_responses_text">PHẢN HỒI</div>
+								</div>
+							</div>
+							<div class="ci_status go_cell col-auto text-center pl-0 pr-2 order-5 order-lg-4 ml-auto ml-lg-0">
+								<div class="status_text wrong">Sai xác thực</div>
+								<div class="">03/11/2020</div>
+							</div>
+						</div>
+						<div class="contract_item ci_cancel row mx-0" data-url="https://www.google.com.vn"><!-- data-url: link to contract detail page -->
+							<div class="ci_img go_cell col-auto pl-2 pr-3 order-0 d-none d-xl-block">
+								<div class="ci_img_wrap">
+									<img src="temp/person.png" class="rounded-circle" onerror="this.onerror=null; this.remove();" alt="">
+									<div class="img_alt"><span>D</span></div>
+								</div>
+							</div>
+							<div class="ci_people go_cell col pl-2 pl-xl-0 pr-0 order-4 order-sm-1 order-lg-1">
+								<div>Nguyễn Thị Hồng Nhung, (3)</div>
+								<div class="sign_status d-none d-lg-block">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-left-square" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.096 3.146a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+									</svg>
+									<span class="ss_icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+										  <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+										</svg>
+									</span><span class="">3/5</span>
+								</div>
+								<div class="people_list shadow d-none d-md-block">
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div class="person_name">Lê Nguyệt Hà</div>
+											<div class="person_email text-secondary">lenguyetha@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+											</svg>
+										</div>
+									</div>
+
+									<div class="row person_item">
+										<div class="col-auto pr-0">
+											<img src="temp/person.png" class="rounded-circle person_img" alt="" />
+										</div>
+										<div class="col pr-0 person_text">
+											<div>Phạm Huyền Anh</div>
+											<div class="person_email text-secondary">phamhuyenanh@gmail.com</div>
+										</div>
+										<div class="col-auto ml-auto completed d-flex align-items-center">
+											<div class="d-none">
+												<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ci_title go_cell col order-4 order-lg-2 pl-2 pl-lg-3 pr-2 pr-lg-3">
+								<div class="ci_name">
+									<span>Hợp đồng thiết kế website Ánh Hồng</span> - Xin chào quý công ty, chúng tôi kính gửi quý công ty bản hợp đồng này, chúng tôi đã xây dựng dựa trên
+								</div>
+								<div class="attachment align-items-center">
+									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+										<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+									</svg>
+									<span class="attachment_name">hop-dong-thiet-ke-website-Anh-Hong.pdf</span>
+								</div>
+							</div>
+							<div class="ci_responses go_cell col-auto pl-0 order-2 order-lg-3 ml-auto">
+								<div class="text-center">
+									<div class="ci_responses_count">6</div>
+									<div class="ci_responses_text">PHẢN HỒI</div>
+								</div>
+							</div>
+							<div class="ci_status go_cell col-auto text-center pl-0 pr-2 order-5 order-lg-4 ml-auto ml-lg-0">
+								<div class="status_text cancel">Hủy bỏ</div>
+								<div class="">19/01/2021</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row contact-policy">
+					<div class="col-12 col-sm mt-4">
+						<div class="policy shadow-sm">
+							<h4>CHÍNH SÁCH</h4>
+							<hr/>
+							<div class="com_meta">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-journal-medical" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5A.5.5 0 0 1 8 4zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+									<path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+									<path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+								</svg>
+								<span title="Phạm vi áp dụng">Phạm vi áp dụng</span>
+							</div>
+							<hr/>
+							<div class="com_meta">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
+									<path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+									<path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+								</svg>
+								<span title="Phạm vi áp dụng">Quyền tiếp cận chỉnh sửa thông tin của người dùng</span>
+							</div>
+							<hr/>
+							<div class="com_meta">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+									<path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+									<path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299l.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+									<path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884l-12-12 .708-.708 12 12-.708.708z"/>
+								</svg>
+								<span title="Phạm vi áp dụng">Các biện pháp đảm bảo an toàn bảo mật thông tin</span>
+							</div>
+							<hr>
+							<a href="" class="d-block text-center">Xem chi tiết >></a>
+						</div>
+					</div>
+					<div class="col-12 col-sm mt-4">
+						<div class="contact shadow-sm">
+							<h4>LIÊN HỆ</h4>
+							<hr/>
+							<div class="com_meta">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+									<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+									<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+								</svg>
+								<span title="Phạm vi áp dụng">01 Nguyễn Văn Trỗi - Quận 2 - TP Hồ Chí Minh</span>
+							</div>
+							<hr/>
+							<div class="com_meta">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+									<path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+								</svg>
+								<span title="Phạm vi áp dụng">mcontrac_support@gmail.com</span>
+							</div>
+							<hr/>
+							<div class="com_meta">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+									<path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+								</svg>
+								<span title="Phạm vi áp dụng">098 387 8766</span>
+							</div>
+							<hr>
+							<a href="#" class="d-block text-center">Xem chi tiết >></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="standard mt-4 shadow-sm">
+					<div>
+						<h4>
+							TIÊU CHUẨN KÝ SỐ CHÂU ÂU
+						</h4>
+						<p>
+							Giới thiệu và quy chuẩn ký số Châu Âu,  tiêu chuẩn ký số không
+							khoảng cách, không giới hạn
+						</p>
+
+					</div>
+				</div>
+			</div>
+			<!-- End Dashboard Area -->
+
+
+			<div id="site_footer">
+				<span>&copy; 2021 Công ty cổ phần ABC</span>
+			</div>
+		</div>
+	</div>
+</main>
+
+
+<!-- Tags List modal -->
+<div class="modal fade modal_site" id="tagsModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="newcontractModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header d-block text-center">
+				<h5 class="modal-title" id="signersModalLabel">Thẻ: Hợp đồng thiết kế website Ánh Hồng</h5>
+			</div>
+
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col px-1">
+							<input class="tag_search form-control form-control-sm mb-2" placeholder="Tìm kiếm thẻ" />
+						</div>
+					</div>
+					<div class="row checktag_item">
+						<div class="col-auto px-2 d-flex align-items-center">
+							<div class="checkbox">
+								<div class="custom-control custom-checkbox d-inline-block">
+									<input type="checkbox" class="custom-control-input" id="checktag1" />
+									<label class="custom-control-label" for="checktag1"></label>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto p-0 d-flex align-items-center">
+							<svg class="flip_hor" viewBox="0 0 24 24" fill="#d70606" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</div>
+						<div class="col pl-2 d-flex align-items-center"><span>Công ty Ánh Hồng</span></div>
+						<div class="col-auto pr-1">
+							<a class="tagedit_btn" href="#" title="Sửa thẻ">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+
+					<div class="row checktag_item">
+						<div class="col-auto px-2 d-flex align-items-center">
+							<div class="checkbox">
+								<div class="custom-control custom-checkbox d-inline-block">
+									<input type="checkbox" class="custom-control-input" id="checktag2" />
+									<label class="custom-control-label" for="checktag2"></label>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto p-0 d-flex align-items-center">
+							<svg class="flip_hor" viewBox="0 0 24 24" fill="#067CD7" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</div>
+						<div class="col pl-2 d-flex align-items-center"><span>Công ty Trường Sơn</span></div>
+						<div class="col-auto pr-1">
+							<a class="tagedit_btn" href="#" title="Sửa thẻ">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+
+					<div class="row checktag_item">
+						<div class="col-auto px-2 d-flex align-items-center">
+							<div class="checkbox">
+								<div class="custom-control custom-checkbox d-inline-block">
+									<input type="checkbox" class="custom-control-input" id="checktag3" />
+									<label class="custom-control-label" for="checktag3"></label>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto p-0 d-flex align-items-center">
+							<svg class="flip_hor" viewBox="0 0 24 24" fill="#00b011" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+						</div>
+						<div class="col pl-2 d-flex align-items-center"><span>Công ty Toàn Thắng</span></div>
+						<div class="col-auto pr-1">
+							<a class="tagedit_btn" href="#" title="Sửa thẻ">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+
+					<div class="row checktag_item">
+						<div class="col-auto px-2 d-flex align-items-center">
+							<div class="checkbox">
+								<div class="custom-control custom-checkbox d-inline-block">
+									<input type="checkbox" class="custom-control-input" id="checktag3" />
+									<label class="custom-control-label" for="checktag3"></label>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto p-0 d-flex align-items-center color_select">
+							<svg class="flip_hor" viewBox="0 0 24 24" fill="#ddd" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+							<div class="color_palette shadow">
+								<span style="background: #d70606"></span>
+								<span style="background: #066bd7"></span>
+								<span style="background: #00a334"></span>
+								<span style="background: #a41c99"></span>
+								<span style="background: #ffc900"></span>
+								<span style="background: #ff7900"></span>
+								<span style="background: #ff0d9b"></span>
+								<span style="background: #78be00"></span>
+								<span style="background: #af5700"></span>
+								<span style="background: #00bac4"></span>
+							</div>
+						</div>
+						<div class="col pl-2 d-flex align-items-center"><input class="newtag_name form-control form-control-sm" placeholder="Tên thẻ" /></div>
+						<div class="col-auto pr-1">
+							<a class="tagedit_btn" href="#" title="Sửa thẻ" style="visibility: hidden; opacity: 0">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+
+					<div class="row checktag_item quick_addtag">
+						<div class="col-auto px-2 d-flex align-items-center">
+							<div class="checkbox" style="visibility: hidden; opacity: 0">
+								<div class="custom-control custom-checkbox d-inline-block">
+									<input type="checkbox" class="custom-control-input" id="checktag1" />
+									<label class="custom-control-label" for="checktag1"></label>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto p-0 d-flex align-items-center">
+							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+							</svg>
+						</div>
+						<div class="col pl-2 d-flex align-items-center"><span>Thêm thẻ</span></div>
+						<div class="col-auto pr-1">
+							<a class="tagedit_btn" href="#" title="Sửa thẻ" style="visibility: hidden; opacity: 0">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer new_contract_nav d-block text-center">
+				<button class="btn btn_outline_main mx-2 mx-sm-3" data-dismiss="modal">HỦY BỎ</button>
+				<button class="btn btn_new mx-2 mx-sm-3">LƯU LẠI</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Tags list modal -->
+
+
+<!-- Mobile New Contract Button -->
+<button class="btn btn_site mnc_btn d-block d-lg-none">
+	<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+	</svg>
+</button>
+<!-- End Mobile New Contract Button -->
+
+
+<!-- Nav Filter in Mobile -->
+<div id="nav_mobi" class="container-fluid d-block d-lg-none">
+	<div class="row">
+		<div class="col p-0">
+			<a href="#" class="text-center nm_item active">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-task" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
+					<path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+					<path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
+				</svg>
+				<span class="mobi_count">88</span><br />
+				<span>Chờ xử lý</span>
+			</a>
+		</div>
+		<div class="col p-0">
+			<a href="#" class="text-center nm_item">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-task" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
+					<path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+					<path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
+				</svg>
+				<span class="mobi_count">3</span><br />
+				<span>Chờ đối tác</span>
+			</a>
+		</div>
+		<div class="col p-0">
+			<a href="#" class="text-center nm_item">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-shield-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M5.443 1.991a60.17 60.17 0 0 0-2.725.802.454.454 0 0 0-.315.366C1.87 7.056 3.1 9.9 4.567 11.773c.736.94 1.533 1.636 2.197 2.093.333.228.626.394.857.5.116.053.21.089.282.11A.73.73 0 0 0 8 14.5c.007-.001.038-.005.097-.023.072-.022.166-.058.282-.111.23-.106.525-.272.857-.5a10.197 10.197 0 0 0 2.197-2.093C12.9 9.9 14.13 7.056 13.597 3.159a.454.454 0 0 0-.315-.366c-.626-.2-1.682-.526-2.725-.802C9.491 1.71 8.51 1.5 8 1.5c-.51 0-1.49.21-2.557.491zm-.256-.966C6.23.749 7.337.5 8 .5c.662 0 1.77.249 2.813.525a61.09 61.09 0 0 1 2.772.815c.528.168.926.623 1.003 1.184.573 4.197-.756 7.307-2.367 9.365a11.191 11.191 0 0 1-2.418 2.3 6.942 6.942 0 0 1-1.007.586c-.27.124-.558.225-.796.225s-.526-.101-.796-.225a6.908 6.908 0 0 1-1.007-.586 11.192 11.192 0 0 1-2.417-2.3C2.167 10.331.839 7.221 1.412 3.024A1.454 1.454 0 0 1 2.415 1.84a61.11 61.11 0 0 1 2.772-.815z"/>
+					<path fill-rule="evenodd" d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z"/>
+				</svg>
+				<span class="mobi_count">1</span><br />
+				<span>Sai xác nhận</span>
+			</a>
+		</div>
+		<div class="col p-0">
+			<a href="#" class="text-center nm_item">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+					<path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
+					<path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+				</svg>
+				<span class="mobi_count">19</span><br />
+				<span>Hoàn thành</span>
+			</a>
+		</div>
+		<div class="col p-0">
+			<a href="#" class="text-center nm_item" id="otherDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+				</svg>
+				<span class="mobi_count">5</span><br />
+				<span>Khác</span>
+			</a>
+
+			<div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="otherDropdown">
+				<a class="dropdown-item" href="#">
+					<svg class="flip_hor" viewBox="0 0 24 24" fill="#d70606" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+					<span>Công ty Ánh Hồng</span>
+				</a>
+				<a class="dropdown-item" href="#">
+					<svg class="flip_hor" viewBox="0 0 24 24" fill="#067CD7" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+					<span>Công ty Trường Sơn</span>
+				</a>
+				<a class="dropdown-item" href="#">
+					<svg class="flip_hor" viewBox="0 0 24 24" fill="#00b011" width="22px" height="22px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+					<span>Công ty Toàn Thắng</span>
+				</a>
+				<a class="dropdown-item" href="#">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar2-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+						<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+						<path fill-rule="evenodd" d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708z"/>
+					</svg>
+					<span>Hết hạn (1)</span>
+				</a>
+				<a class="dropdown-item" href="#">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+						<path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
+						<path fill-rule="evenodd" d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z"/>
+					</svg>
+					<span>Hủy bỏ (4)</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Nav Filter in Mobile -->
+
+
+<script>
+	$('#checkAll').prop('indeterminate', true);
+	$('#checktag2').prop('indeterminate', true);
+    $('[data-toggle=tooltip]').tooltip();
+
+    $('.go_cell').click(function (){
+        window.location = $(this).parent().data('url');
+    });
+
+    $('#otherDropdown').click(function (){
+        $('#page_header').css('z-index', '6');
+    });
+
+    $('.input-daterange').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        weekStart: 1,
+        language: "vi",
+        todayHighlight: true
+    });
+
+    const pssb = new
+    PerfectScrollbar('#scrollsb_wrapper', {
+        wheelSpeed: 1.1,
+        wheelPropagation: false,
+        suppressScrollX: true,
+        //minScrollbarLength: 20
+    });
+
+    const psn1 = new
+    PerfectScrollbar('#newctrnoti_wrapper', {
+        wheelSpeed: 1.1,
+        wheelPropagation: false,
+        suppressScrollX: true,
+	    //handlers: ['click-rail', 'drag-thumb', 'keyboard', 'wheel']
+    });
+
+    const psn2 = new
+    PerfectScrollbar('#responsenoti_wrapper', {
+        wheelSpeed: 1.1,
+        wheelPropagation: false,
+        suppressScrollX: true
+    });
+
+    const psn3 = new
+    PerfectScrollbar('#expirynoti_wrapper', {
+        wheelSpeed: 1.1,
+        wheelPropagation: false,
+        suppressScrollX: true
+    });
+
+    //var scrollbarWidth = (window.innerWidth - document.body.clientWidth) + 'px';
+    //console.log(scrollbarWidth);
+</script>
+</body>
+</html>

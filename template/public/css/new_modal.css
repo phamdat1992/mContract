@@ -1,0 +1,181 @@
+/* Account Pages */
+b,th{font-weight: 600}
+.text-site{color: #0d7aca}
+body{color: #353f4d}
+
+.btn_pri1{
+    background: #3a9bff;
+    transition: all .3s ease-in-out;
+    color: #fff;
+    border-color: #3a9bff;
+    font-size: 16px;
+    padding: 7px 12px;
+    border-radius: 6px;
+}
+
+.btn_pri1:hover{
+    color: #fff;
+    background: #1480f2;
+    border-color: #1480f2;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn_sec1{
+    transition: all .3s ease-in-out;
+    color: #6c757d;
+    border-color: #6c757d;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.btn_sec1:hover{
+    color: #0d7aca;
+    border-color: #0d7aca;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn_sec2{
+    transition: all .3s ease-in-out;
+    color: #fff;
+    border-color: #fff;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.btn_sec2:hover{
+    color: #0d7aca;
+    border-color: #fff;
+    background: #fff;
+}
+
+.link_site{
+    color: #0d7aca;
+}
+
+.link_site:hover{
+    color: #005b9d;
+}
+
+.bg_site{
+    background: #3a9bff;
+}
+.border_top_site{
+    border-top-color: #3a9bff !important;
+}
+.bg_site_cancel{
+    background: #71747C;
+}
+.border_top_site_cancel{
+    border-top-color: #71747C !important;
+}
+.box_img{
+    height: 300px;
+}
+.box_img img{
+    height: auto;
+    width: 100%;
+}
+
+/* For new modal */
+.modal_site{
+    border: none;
+    border-radius: 6px;
+}
+
+.modal_site .modal-header{
+    color: #fff;
+    text-align: center;
+    border-bottom: 0;
+}
+
+.modal_site .modal-title{
+    margin: auto;
+}
+
+.modal_site .modal-header .close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    opacity: 1;
+    text-shadow: none;
+    font-weight: 400;
+    font-size: 32px;
+    padding: 11px 20px 5px 5px;
+}
+
+.modal_site .header_arrow{
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid;
+    position: absolute;
+    top: 65px;
+    left: calc(50% - 10px);
+}
+
+.modal_site .head_title{
+    margin: 5px auto 10px;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.modal_site .btn{
+    padding: 7px 30px;
+    margin: 0 10px !important;
+}
+/* End for new modal */
+
+/* For Toast */
+.toast_site{
+    width: 400px;
+    position: fixed;
+    top: 0;
+    left: calc(50vw - 200px);
+    background: #fff;
+    border-radius: 0 0 6px 6px;
+}
+
+.toast_icon{
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: #fff;
+    margin: 15px auto;
+    border-radius: 50%;
+}
+
+.toast_footer{
+    height: 50px;
+    border-radius: 0 0 6px 6px;
+    position: relative;
+}
+
+.toast_site .footer_arrow{
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid #fff;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 10px);
+}
+
+.bg_site_code{
+    background: #8950FC;
+}
+.bg_site_bug{
+    background: #D04D31;
+}
+.bg_site_contract{
+    background: #27C9C1;
+}
+a:hover {
+    text-decoration: none;
+    color: #007bff;
+}
+/* End for Toast */

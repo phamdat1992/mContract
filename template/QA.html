@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hỏi đáp</title>
+    <link href="public/css/perfect-scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="public/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
+    <link href="public/css/intro.css" rel="stylesheet" type="text/css" />
+    <link href="public/css/qa.css" rel="stylesheet" type="text/css"/>
+    <script src="public/js/jquery-3.5.1.min.js"></script>
+    <script src="public/js/popper.min.js"></script>
+    <script src="public/js/bootstrap.min.js"></script>
+    <script src="public/js/perfect-scrollbar.min.js"></script>
+    <script src="public/js/bootstrap-datepicker.min.js"></script>
+    <script src="public/js/bootstrap-datepicker.vi.min.js"></script>
+</head>
+<body>
+<div id="header_bg"></div>
+<header class="header-area">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="public/images/logo.webp" alt="" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Giới thiệu <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Quy trình ký số</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Công cụ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Liên hệ</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Hỗ trợ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Đăng ký</a>
+                    </li>
+                    <li>
+                        <button class="btn btn_new ml-2">Đăng nhập</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+<div>
+    <div class="info pt-4 pb-2">
+        <div class="container">
+            <div class="row info" data-aos="fade-up">
+                <div class="col-12 col-lg-8">
+                    <div class="text_info">
+                        <div class="title mb-2">
+                            <p>Hỏi đáp</p>
+                            <h2>hệ thống mcontract cung cấp tới khách hàng</h2>
+                        </div>
+                        <p>
+                            - Video hướng dẫn sử dụng hệ thống Mcontract
+                            <br/>
+                            - Các câu hỏi thường gặp khi sử dụng hệ thống Mcontract
+                            <br/>
+                            - Form liên hệ gửi câu hỏi cho hệ thống
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg">
+                    <div class="img_info mt-3 mt-lg-0 text-center">
+                        <img class="img-fluid" src="public/images/QA/QA.svg" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="page_wrapper ">
+    <div class="container px-24px" id="page_content">
+        <nav id="navbar-example2" class="navbar navbar-light bg-light">
+            <ul class="nav nav-pills mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#policy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-journal-check" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                        </svg>
+                        Video hướng dẫn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-question-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                        </svg>
+                        Câu hỏi thường gặp</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor" viewBox="0 0 16 16">
+                            <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
+                        </svg>
+                        Gửi câu hỏi</a>
+                </li>
+            </ul>
+        </nav>
+        <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+            <h4 id="policy">VIDEO HƯỚNG DẪN SỬ DỤNG</h4>
+            <div class="row video">
+                <div class="col-12 col-lg-3 col-md-6 col-md-6 mb-3 mb-sm-0">
+                    <div class="h-100 body-video">
+                        <div class="img-video">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                        <img src="public/images/QA/login.webp" class="card-img-top rounded-circle shadow" alt="...">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Đăng ký, đăng nhập tài khoản Mcontract</h5>
+                            <p class="card-text">Hướng dẫn các bước tạo tài khoản, xác nhận, khôi phục mật khẩu, đăng nhập hệ thống...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 mb-3 mb-sm-0">
+                    <div class=" h-100 body-video">
+                        <div class="img-video">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        <img src="public/images/QA/step.webp" class="card-img-top rounded-circle shadow" alt="...">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Các bước tạo hợp đồng điện tử trên hệ thống Mcontract</h5>
+                            <p class="card-text">Hướng dẫn chi tiết từng bước ký hợp đồng điện tử...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 mb-3 mb-sm-0">
+                    <div class="h-100 body-video">
+                        <div class="img-video">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        <img src="public/images/QA/tool.webp" class="card-img-top rounded-circle shadow" alt="...">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Tải, cài đặt tool ký số điện tử Mcontract</h5>
+                            <p class="card-text">Chi tiết các bước tải và cài đặt tool ký số...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 mb-3 mb-sm-0">
+                    <div class="h-100 body-video">
+                        <div class="img-video">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-caret-right-fill " viewBox="0 0 16 16">
+                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                            </svg>
+                        <img src="public/images/QA/sign.webp" class="card-img-top rounded-circle shadow" alt="...">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Ký số điện tử bằng USB Token trên hệ thống Mcontract</h5>
+                            <p class="card-text">Chi tiết các bước ký số bằng USB Token...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <h4 id="info">CÂU HỎI THƯỜNG GẶP</h4>
+            <div class="fqa pb-5 text-justify">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button"
+                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                    <div class="circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                             fill="currentColor" class="bi bi-question" viewBox="0 0 16 16">
+                                            <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                        </svg>
+                                    </div>
+                                    <span>Tính pháp lý của hợp đồng ký số điện tử?</span>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <p>
+                                    Tính pháp lý của Hợp đồng điện tử được căn cứ vào các văn bản pháp luật dưới
+                                    đây:
+                                </p>
+                                <p>
+
+                                    <b>Căn vứ vào Luật mẫu của UNCITRAL</b> (Ủy ban Luật Thương mại quốc tế của Liên
+                                    hợp quốc) về Thương mại điện tử năm 1996 (sửa đổi năm 1998)
+                                    Luật Giao dịch điện tử 2005:</p>
+
+                                <p>Thừa nhận tính pháp lý của Hợp đồng điện tử</p>
+
+                                <p><b>Căn cứ vào Nghị định 130/2018/NĐ-CP</b> Quy định chi tiết thi hành Luật giao
+                                    dịch điện tử về chữ ký số và dịch vụ chứng thực chữ ký số</p>
+
+                                <p>Giá trị của chữ ký số trên thông điệp dữ liệu là tương đương với chữ ký trên văn
+                                    bản giấy</p>
+
+                                <p>Giá trị của chữ ký số của cơ quan/tổ chức trên thông điệp dữ liệu là tương đương
+                                    với con dấu.</p>
+
+                                <p><b>Căn cứ vào Luật mẫu về Chữ ký điện tử năm 2001</b>: Ngày 05 tháng 7 năm 2001,
+                                    UNCITRAL đã thông qua Luật mẫu về Chữ ký điện tử và sách huớng dẫn về việc áp
+                                    dụng.
+                                <p>
+                                <p><b>Căn cứ Công ước Liên hợp quốc về sử dụng các giao dịch điện tử trong các hợp
+                                    đồng quốc tế năm 2005</b>:</p>
+                                <p>Đuợc bắt đầu từ năm 2001, ngay sau Luật mẫu về Chữ ký điện tử được ban hành. Việc
+                                    xây dựng Công ước quốc tế về sử dụng các giao dịch điện tử trong các hợp đồng
+                                    quốc tế đã hoàn tất vào ngày 23/11/2005 sau khi được Đại hội đồng Liên hợp quốc
+                                    thông qua. Công ước này bao gồm các điều khoản quy định về những vấn đề liên
+                                    quan đến hợp đồng điện tử nhằm mục đích tăng cuờng tính an toàn pháp lý và khả
+                                    năng tiên lượng trong thương mại khi mà các giao dịch hợp đồng quốc tế được thực
+                                    hiện thông qua các phương tiện điện tử.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">
+                                    <div class="circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                             fill="currentColor" class="bi bi-hdd" viewBox="0 0 16 16">
+                                            <path d="M4.5 11a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM3 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                                            <path d="M16 11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.51c0-.418.105-.83.305-1.197l2.472-4.531A1.5 1.5 0 0 1 4.094 3h7.812a1.5 1.5 0 0 1 1.317.782l2.472 4.53c.2.368.305.78.305 1.198V11zM3.655 4.26 1.592 8.043C1.724 8.014 1.86 8 2 8h12c.14 0 .276.014.408.042L12.345 4.26a.5.5 0 0 0-.439-.26H4.094a.5.5 0 0 0-.44.26zM1 10v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z"/>
+                                        </svg>
+                                    </div>
+                                    <span>USB Token là gì? Nó được cung cấp ở đâu?</span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <p>
+                                    <b>Thiết bị USB Token</b> còn được gọi là Chữ ký số hay Chứng thư số, là một
+                                    thiết bị chứa các dữ liệu mã hóa và thông tin của một doanh nghiệp, dùng để xác
+                                    nhận hay cho chữ ký của doanh nghiệp đó trên các loại văn bản và tài liệu số
+                                    được thực hiện trong các giao dịch điện tử qua mạng internet.
+                                </p>
+                                <p>
+                                    <b>Thông tin có trong USB Token dành cho doanh nghiệp bao gồm: </b></p>
+
+                                <p>Tên của Doanh nghiệp bao gồm: Mã số thuế, Tên Công ty….</p>
+
+                                <p> - Số hiệu của chứng thư số (số seri)</p>
+
+                                <p> - Thời hạn có hiệu lực của chứng thư số</p>
+
+                                <p>- Tên của tổ chức chứng thực chữ ký số (Ví du: VNPT-CA)</p>
+
+                                <p> - Chữ ký số của tổ chức chứng thực chữ ký số.</p>
+
+                                <p> - Các thư hạn chế về mục đích, phạm vi sử dụng của chứng số.</p>
+
+                                <p> - Các hạn chế về trách nhiệm của tổ chức cung cấp dịch vụ chứng thực chữ ký
+                                    số.</p>
+
+                                <p> - Các nội dung cần thiết khác theo quy định của Bộ Thông Tin Truyền Thông.</p>
+
+                                <p> Như vậy, chữ kí số có giá trị pháp lý tương đương với chữ ký tay và con dấu.</p>
+                                <p>
+                                    Hiện nay, doanh nghiệp có thể mua chữ kí số của các doanh nghiệp sau: <b>TẬP
+                                    ĐOÀN VIETTEL, FPT, BKAV, CK, VINA, NEWTEL, NACENCOMM. SAFE… </b>Các nhà cung cấp
+                                    này được phép cung cấp token cho doanh nghiệp theo quy định của pháp luật.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                    <div class="circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                             fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
+                                            <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0zM2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5v-1zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1z"/>
+                                        </svg>
+                                    </div>
+                                    <span>Các bước ký số điện tử với hệ thống Mcontract?</span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                             data-parent="#accordionExample">
+                            <div class="card-body step">
+                                <p>Để thực hiện ký số điện tử với hệ thống Mcontract khách hàng cần thực hiện lần
+                                    lượt <b>4</b> đơn giản như sau:</p>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 pt-3">
+                                        <p><b>Bước 1: Tải lên hợp đồng</b></p>
+                                        <img src="public/images/step_1.png"/>
+                                    </div>
+                                    <div class="col-12 col-md-4 pt-3">
+                                        <p><b>Hợp đồng đã được tải lên</b></p>
+                                        <img src="public/images/step_2.png"/>
+                                    </div>
+                                    <div class="col-12 col-md-4 pt-3">
+                                        <p><b>Bước 2: Chọn đối tác</b></p>
+                                        <img src="public/images/step_3.png"/>
+                                    </div>
+                                    <div class="col-12 col-md-4 pt-3">
+                                        <p><b>Bước 3: Thiết kế hợp đồng</b></p>
+                                        <img src="public/images/step_4.png"/>
+                                    </div>
+                                    <div class="col-12 col-md-4 pt-3">
+                                        <p><b>Bước 4: Gửi đi</b></p>
+                                        <img src="public/images/step-5.png"/>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingfour">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapsefour" aria-expanded="false"
+                                        aria-controls="collapsefour">
+                                    <div class="circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                             fill="currentColor" class="bi bi-file-earmark-check"
+                                             viewBox="0 0 16 16">
+                                            <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                        </svg>
+                                    </div>
+                                    <span>Các định dạng hợp đồng hỗ trợ tải lên hệ thống Mcontract?</span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapsefour" class="collapse" aria-labelledby="headingfour"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <p>Hiện tại hệ thống Mcontract đang hỗ trợ hợp đồng tải lên theo các định dạng
+                                    sau:</p>
+                                <p>- Định dạng đuôi <b>.doc, docx.</b></p>
+                                <p>- Định dạng đuôi <b>.pdf.</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 id="contact">Gửi câu hỏi cho chúng tôi</h4>
+            <div class="box mb-5">
+                <div class="row">
+                    <div class="col-12 col-md">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="name">Họ và tên</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="phone">Số điện thoại</label>
+                                    <input type="tel" class="form-control" id="phone">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Địa chỉ email</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="company_name">Tên công ty</label>
+                                    <input type="text" class="form-control" id="company_name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content">Nội dung câu hỏi</label>
+                            <textarea class="form-control" id="content"></textarea>
+                        </div>
+
+                        <button class="btn btn_new">Gửi đi</button>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <div class="foot_logo">
+                            <img class="img-fluid" src="public/images/QA/contact.webp" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</main>
+<footer>
+    <div class="footer_info py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md">
+                    <h5>Giới thiệu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md">
+                    <h5>Sản phẩm</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Giới thiệu về hệ thống</a></li>
+                        <li><a href="#">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#">Tool cài đặt</a></li>
+                        <li><a href="#">Hướng dẫn cài đặt</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-6 col-md">
+                    <h5>Chính sách</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản và điều kiện</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="foot_logo">
+                        <img class="img-fluid" src="public/images/logo_v.webp" alt="" />
+                    </div>
+                    <div class="row fi_item">
+                        <div class="col-auto pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                        </div>
+                        <div class="col pl-2">
+                            <span>119 Nguyễn Tuân, Thanh Xuân, Hà Nội</span>
+                        </div>
+                    </div>
+                    <div class="row fi_item">
+                        <div class="col-auto pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>
+                        </div>
+                        <div class="col pl-2">
+                            <span>0915468790</span>
+                        </div>
+                    </div>
+                    <div class="row fi_item">
+                        <div class="col-auto pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+                            </svg>
+                        </div>
+                        <div class="col pl-2">
+                            <span>contact@mcontract.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer_bottom">
+        <p class="mb-0 py-2 text-center text-white">&copy; 2021 Mcontract Group</p>
+    </div>
+</footer>
+</body>
+</html>

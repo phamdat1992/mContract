@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New Modal</title>
+	<link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/new_modal.css" rel="stylesheet" type="text/css" />
+	<script src="../public/js/jquery-3.5.1.min.js"></script>
+	<script src="../public/js/popper.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script src="../public/js/bootstrap-datepicker.min.js"></script>
+	<script src="../public/js/bootstrap-datepicker.vi.min.js"></script>
+</head>
+<body>
+
+<div class="toast_site shadow">
+	<div class="toast_icon bg_site_bug">
+		<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+			<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+		</svg>
+	</div>
+	<div class="p-3">
+		<p>Trong quá trình ký kết <b>“Hợp đồng thiết kế website A”</b> đã phát sinh lỗi.</p>
+		<p>Quý khách vui lòng thử lại!</p>
+	</div>
+	<div class="toast_footer bg_site_bug">
+		<div class="footer_arrow"></div>
+	</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('.toast_site').fadeOut(350);
+        }, 3000);
+    });
+</script>
+</body>
+</html>

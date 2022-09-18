@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bước 2: Chọn đối tác - Tạo hợp đồng</title>
+	<link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/newctr_steps.css" rel="stylesheet" type="text/css" />
+	<script src="../public/js/jquery-3.5.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+</head>
+<body>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newcontractModal">
+	Bước 2
+</button>
+
+<!-- New Contract Modal -->
+<div class="modal fade" id="newcontractModal" tabindex="-1" aria-labelledby="newcontractModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal_full m-0 my-sm-0 mx-sm-auto">
+		<div class="modal-content">
+			<div class="modal-body p-0">
+				<div class="new_contract">
+					<div class="row new_contract_header mx-0">
+						<div class="close_btn"><a href="#" data-dismiss="modal">&times;</a></div>
+
+						<div class="col-auto d-none d-lg-block">
+							<img class="img-fluid py-3 py-lg-3 pl-3 pl-lg-3 pr-0" src="../public/images/logo.webp" alt="">
+						</div>
+
+						<div class="col">
+							<h1 class="m-3 text-uppercase text-center">Tạo hợp đồng</h1>
+
+							<div class="mb-3 large_steps sw sw-theme-arrows sw-justified">
+								<ul class="nav">
+									<li class="nav-item">
+										<a class="nav-link inactive done" href="#step-1">
+											<b>Bước 1</b>
+											<p class="m-0">Tải lên hợp đồng</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link inactive active" href="#step-2">
+											<b>Bước 2</b>
+											<p class="m-0">Chọn đối tác</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link inactive" href="#step-3">
+											<b>Bước 3</b>
+											<p class="m-0">Thiết kế hợp đồng</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link inactive" href="#step-4">
+											<b>Bước 4</b>
+											<p class="m-0">Hoàn tất và gửi</p>
+										</a>
+									</li>
+								</ul>
+							</div>
+
+							<div class="small_steps">
+								<div class="progress">
+									<div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<h3>Bước 2: Chọn đối tác</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="new_contract_body">
+						<div class="ncbody_wrap m-3 my-4 m-md-5 text-center has_ncnav">
+							<div class="top_border"></div>
+
+							<div class="nc_body_content">
+								<!-- Different content between steps (Step 2) -->
+								<div class="partner_wrap p-4">
+									<div class="container-fluid">
+										<div class="partner_area row border rounded py-3 mb-3">
+											<div class="col pr-3">
+												<input type="text" class="form-control mb-3" placeholder="Họ và tên">
+												<div class="row">
+												<div class="col-12 col-sm pr-sm-0 mb-3 mb-sm-0">
+													<input type="text" class="form-control" placeholder="Địa chỉ email">
+												</div>
+												<div class="col-12 col-sm pl-sm-3">
+													<input type="text" class="form-control" placeholder="Mã số thuế">
+												</div>
+												</div>
+											</div>
+											<div class="col-auto pl-0 d-flex align-items-center">
+												<a class="remove_partner_btn" href="#" data-toggle="tooltip" data-placement="top" title="Xóa đối tác này">
+													<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zm1.146-7.85a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+													</svg>
+												</a>
+											</div>
+										</div>
+										<div class="partner_area row border rounded py-3 mb-3">
+											<div class="col pr-3">
+												<input type="text" class="form-control mb-3" placeholder="Họ và tên">
+												<div class="row">
+													<div class="col-12 col-sm pr-sm-0 mb-3 mb-sm-0">
+														<input type="text" class="form-control" placeholder="Địa chỉ email">
+													</div>
+													<div class="col-12 col-sm pl-sm-3">
+														<input type="text" class="form-control" placeholder="Mã số thuế">
+													</div>
+												</div>
+											</div>
+											<div class="col-auto pl-0 d-flex align-items-center">
+												<a class="remove_partner_btn" href="#" data-toggle="tooltip" data-placement="top" title="Xóa đối tác này">
+													<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zm1.146-7.85a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+													</svg>
+												</a>
+											</div>
+										</div>
+										<div class="partner_area row border rounded py-3 mb-3">
+											<div class="col pr-3">
+												<input type="text" class="form-control mb-3" placeholder="Họ và tên">
+												<div class="row">
+													<div class="col-12 col-sm pr-sm-0 mb-3 mb-sm-0">
+														<input type="text" class="form-control" placeholder="Địa chỉ email">
+													</div>
+													<div class="col-12 col-sm pl-sm-3">
+														<input type="text" class="form-control" placeholder="Mã số thuế">
+													</div>
+												</div>
+											</div>
+											<div class="col-auto pl-0 d-flex align-items-center">
+												<a class="remove_partner_btn" href="#" data-toggle="tooltip" data-placement="top" title="Xóa đối tác này">
+													<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zm1.146-7.85a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+													</svg>
+												</a>
+											</div>
+										</div>
+										<div class="partner_area row border rounded py-3 mb-3">
+											<div class="col pr-3">
+												<input type="text" class="form-control mb-3" placeholder="Họ và tên">
+												<div class="row">
+													<div class="col-12 col-sm pr-sm-0 mb-3 mb-sm-0">
+														<input type="text" class="form-control" placeholder="Địa chỉ email">
+													</div>
+													<div class="col-12 col-sm pl-sm-3">
+														<input type="text" class="form-control" placeholder="Mã số thuế">
+													</div>
+												</div>
+											</div>
+											<div class="col-auto pl-0 d-flex align-items-center">
+												<a class="remove_partner_btn" href="#" data-toggle="tooltip" data-placement="top" title="Xóa đối tác này">
+													<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zm1.146-7.85a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+													</svg>
+												</a>
+											</div>
+										</div>
+
+										<div class="text-center">
+											<a href="#" class="btn btn_outline_site add_partner">
+												<svg style="font-size: 27px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zM13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+												</svg>&nbsp;
+												<span>THÊM NGƯỜI KÝ</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<!-- End Different content between steps -->
+							</div>
+
+							<div class="lefttop_corner"></div>
+							<div class="leftbottom_corner"></div>
+							<div class="righttop_corner"></div>
+							<div class="rightbottom_corner"></div>
+						</div>
+					</div>
+
+					<div class="new_contract_nav text-center py-3">
+						<button class="btn btn_outline_site mx-2 mx-sm-3">QUAY LẠI</button>
+						<button class="btn btn_site mx-2 mx-sm-3">TIẾP TỤC</button>
+					</div>
+
+					<div class="row new_contract_footer py-2 mx-auto">
+						<div class="col-md-auto col-lg text-center text-md-right">HỖ TRỢ KỸ THUẬT</div>
+						<div class="col-md col-lg text-center">Email: <a href="mailto:supportmcontract@gmail.com">supportmcontract@gmail.com</a></div>
+						<div class="col-md-auto col-lg text-center text-md-left">Hotline: <a href="tel:19001111">19001111</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

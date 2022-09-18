@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New Modal</title>
+	<link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/new_modal.css" rel="stylesheet" type="text/css" />
+	<script src="../public/js/jquery-3.5.1.min.js"></script>
+	<script src="../public/js/popper.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script src="../public/js/bootstrap-datepicker.min.js"></script>
+	<script src="../public/js/bootstrap-datepicker.vi.min.js"></script>
+</head>
+<body>
+<button type="button" class="btn btn_pri1" data-toggle="modal" data-target="#install_tool_user">Cài đặt tool khách hàng</button>
+<button type="button" class="btn btn_pri1" data-toggle="modal" data-target="#install_tool_partner">Cài đặt tool đối tác</button>
+<button type="button" class="btn btn_pri1" data-toggle="modal" data-target="#cancel">Xác nhận hủy hợp đồng</button>
+<button type="button" class="btn btn_pri1" data-toggle="modal" data-target="#img_user">Ảnh đại diện khách hàng</button>
+<button type="button" class="btn btn_pri1" data-toggle="modal" data-target="#img_company">Logo công ty</button>
+
+
+<div class="modal fade" id="install_tool_partner" tabindex="-1" aria-labelledby="exampleModalLabel_partner" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content modal_site">
+			<div class="modal-header bg_site">
+				<h5 class="modal-title" id="exampleModalLabel_partner">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+						<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+						<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+					</svg>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="header_arrow border_top_site"></div>
+			</div>
+			<div class="modal-body">
+				<div class="text-center">
+					<h3 class="head_title">Cài đặt tool kí số</h3>
+				</div>
+				<p>Kính chào Quý khách hàng: <b>Nguyễn Văn A</b>.</p>
+				<p>Quý khách vui lòng <b>cài đặt tool ký số</b>  và <b>cắm USB Token</b> để hoàn tất quá trình ký số.</p>
+				<div class="text-center">
+					<button type="button" class="btn btn-primary btn_pri1 mx-auto">Tải tool ký số</button>
+					<i class="d-block mt-3">Đăng ký tài khoản <b class="text-site"><a  href="/">MContract</a></b> hoàn toàn miễn phí <b><a href="#">tại đây</a></b>.</i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="install_tool_user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content modal_site">
+			<div class="modal-header bg_site">
+				<h5 class="modal-title" id="exampleModalLabel">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+						<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+						<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+					</svg>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="header_arrow border_top_site"></div>
+			</div>
+			<div class="modal-body">
+				<div class="text-center">
+					<h3 class="head_title">Cài đặt tool kí số</h3>
+				</div>
+				<p>Kính chào Quý khách hàng: <b>Nguyễn Văn A</b>.</p>
+				<p>Quý khách vui lòng <b>cài đặt tool ký số</b>  và <b>cắm USB Token</b>  để hoàn tất đăng ký toàn khoản <b><a href="#">MContract</a></b>.</p>
+				<div class="text-center">
+					<button type="button" class="btn btn-primary btn_pri1 mx-auto">Tải tool ký số</button>
+					<i class="d-block mt-3">Cảm ơn quý khách đã sử dụng dịch vụ <b class="text-site"><a href="/">MContract</a></b>.</i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="cancel" tabindex="-1" aria-labelledby="exampleModalLabel_cancel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content modal_site">
+			<div class="modal-header bg_site_cancel">
+				<h5 class="modal-title" id="exampleModalLabel_cancel">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+						<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+					</svg>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="header_arrow border_top_site_cancel"></div>
+			</div>
+			<div class="modal-body">
+				<div class="text-center">
+					<h3 class="head_title">Xác nhận hủy Hợp đồng</h3>
+				</div>
+				<p>Kính chào Quý khách hàng: <b>Nguyễn Văn A</b>.</p>
+				<p>Để xác nhận hủy <b>“Hợp đồng thiết kế website A”</b>.
+					 Quý khách vui lòng ấn nút hủy Hợp đồng.</p>
+				<div class="text-center">
+					<button type="button" class="btn btn-primary btn_pri1 mx-auto">Hủy Hợp đồng</button>
+					<i class="d-block mt-3">Cảm ơn quý khách đã sử dụng dịch vụ <b class="text-site"><a href="/">MContract</a></b>.</i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="img_user" tabindex="-1" aria-labelledby="exampleModalLabel_img_user" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content modal_site">
+			<div class="modal-header bg_site">
+				<h5 class="modal-title" id="exampleModalLabel_img_user">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-file-image" viewBox="0 0 16 16">
+						<path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+						<path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8l-2.083-2.083a.5.5 0 0 0-.76.063L8 11 5.835 9.7a.5.5 0 0 0-.611.076L3 12V2z"/>
+					</svg>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="header_arrow border_top_site"></div>
+			</div>
+			<div class="modal-body">
+				<div class="text-center">
+					<h3 class="head_title">Chỉnh sửa ảnh đại diện</h3>
+				</div>
+				<div class="box_img">
+					<img src="../public/images/Anh.png" alt="">
+				</div>
+				<div class="text-center">
+					<button type="button" class="btn btn-secondary mx-auto">Hủy bỏ</button>
+					<button type="button" class="btn btn-primary btn_pri1 mx-auto">Lưu ảnh</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="img_company" tabindex="-1" aria-labelledby="exampleModalLabel_img_company" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content modal_site">
+			<div class="modal-header bg_site">
+				<h5 class="modal-title" id="exampleModalLabel_img_company">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-file-image" viewBox="0 0 16 16">
+						<path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+						<path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8l-2.083-2.083a.5.5 0 0 0-.76.063L8 11 5.835 9.7a.5.5 0 0 0-.611.076L3 12V2z"/>
+					</svg>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="header_arrow border_top_site"></div>
+			</div>
+			<div class="modal-body">
+				<div class="text-center">
+					<h3 class="head_title">Chỉnh sửa logo công ty</h3>
+				</div>
+				<div class="box_img">
+					<img src="../public/images/Anh.png" alt=""/>
+				</div>
+				<div class="text-center">
+					<button type="button" class="btn btn-secondary mx-auto">Hủy bỏ</button>
+					<button type="button" class="btn btn-primary btn_pri1 mx-auto">Lưu ảnh</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

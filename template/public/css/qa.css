@@ -1,0 +1,92 @@
+/* Search Page */
+b,th{font-weight: 600}
+.text-site{color: #0d7aca}
+
+body{
+    font-size: 15px;
+    color: #353f4d;
+}
+
+
+/*Trang*/
+.nav-item{
+    padding-right: 10px;
+}
+#page_content h4::after {
+    content: "";
+    display: inline-block;
+    height: 4px;
+    vertical-align: middle;
+    width: 100%;
+    margin-right: -100%;
+    margin-left: 14px;
+    border-top: 2px solid #3a9bff;
+}
+#page_content h4{
+    font-size: 20px;
+    overflow: hidden;
+    padding: 20px 0 10px 0;
+    font-weight: 600;
+}
+.cotact_icon {
+    width: 40px;
+    height: 37px;
+}
+.contact-text {
+    font-size: 15px;
+    padding-left: 5px;
+}
+#page_content .circle{
+    width: 60px;
+    height: 60px;
+    background-color: #d7eeff;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+    float: left;
+}
+#page_content .circle svg{
+    color: #3a9bff;
+    height: 60px;
+}
+.card-body h5{
+    min-height: 48px;
+}
+
+.fqa a{
+    color: #555;
+    text-align: center;
+}
+.fqa span{
+    vertical-align: middle;
+    line-height: 60px;
+    padding-left: 5px;
+}
+.step img{
+    width: 100%;
+}
+.img-video{
+   position: relative;
+    z-index: 1;
+}
+.img-video svg{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    color:#3a9bff ;
+}
+.body-video:hover .img-video img{
+    box-shadow: 0 .5rem 1rem rgb(58, 155, 255) !important;
+}
+.body-video:hover svg{
+    color: #c3c3c3;
+}
+.box{
+    border: 2px dotted #3a9bff;
+    padding: 20px;
+}
+
+/* End Document Page */

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New Modal</title>
+	<link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/new_modal.css" rel="stylesheet" type="text/css" />
+	<script src="../public/js/jquery-3.5.1.min.js"></script>
+	<script src="../public/js/popper.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script src="../public/js/bootstrap-datepicker.min.js"></script>
+	<script src="../public/js/bootstrap-datepicker.vi.min.js"></script>
+</head>
+<body>
+
+<div class="toast_site shadow">
+	<div class="toast_icon bg_site_contract">
+		<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+			<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" fill="#fff"/>
+		</svg>
+	</div>
+	<div class="p-3">
+		<p>Ký kết thành công <b>“Hợp đồng thiết kế website A”</b>.</p>
+	</div>
+	<div class="toast_footer bg_site_contract">
+		<div class="footer_arrow"></div>
+	</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('.toast_site').fadeOut(350);
+        }, 3000);
+    });
+</script>
+</body>
+</html>

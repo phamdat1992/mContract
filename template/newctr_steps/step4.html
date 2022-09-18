@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bước 4: Hoàn tất và gửi</title>
+	<link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../public/css/newctr_steps.css" rel="stylesheet" type="text/css" />
+	<script src="../public/js/jquery-3.5.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+</head>
+<body>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newcontractModal">
+	Bước 4
+</button>
+
+<!-- New Contract Modal -->
+<div class="modal fade" id="newcontractModal" tabindex="-1" aria-labelledby="newcontractModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal_full m-0 my-sm-0 mx-sm-auto">
+		<div class="modal-content">
+			<div class="modal-body p-0">
+				<div class="new_contract">
+					<div class="row new_contract_header mx-0">
+						<div class="close_btn"><a href="#" data-dismiss="modal">&times;</a></div>
+
+						<div class="col-auto d-none d-lg-block">
+							<img class="img-fluid py-3 py-lg-3 pl-3 pl-lg-3 pr-0" src="../public/images/logo.webp" alt="">
+						</div>
+
+						<div class="col">
+							<h1 class="m-3 text-uppercase text-center">Tạo hợp đồng</h1>
+
+							<div class="mb-3 large_steps sw sw-theme-arrows sw-justified">
+								<ul class="nav">
+									<li class="nav-item">
+										<a class="nav-link inactive done" href="#step-1">
+											<b>Bước 1</b>
+											<p class="m-0">Tải lên hợp đồng</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link inactive done" href="#step-2">
+											<b>Bước 2</b>
+											<p class="m-0">Chọn đối tác</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link inactive done" href="#step-3">
+											<b>Bước 3</b>
+											<p class="m-0">Thiết kế hợp đồng</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link inactive active" href="#step-4">
+											<b>Bước 4</b>
+											<p class="m-0">Hoàn tất và gửi</p>
+										</a>
+									</li>
+								</ul>
+							</div>
+
+							<div class="small_steps">
+								<div class="progress">
+									<div class="progress-bar w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<h3>Bước 4: Hoàn tất và gửi</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="new_contract_body">
+						<div class="ncbody_wrap m-3 my-4 m-md-5 text-center has_ncnav">
+							<div class="top_border"></div>
+
+							<div class="nc_body_content">
+								<!-- Different content between steps (Step 3 & 3.2) -->
+								<div class="container-fluid sending py-4 px-3 px-md-4">
+									<div class="form-inline">
+										<input type="text" class="form-control col-12 col-md-8 col-lg-9 mr-md-3 mb-3" placeholder="Tiêu đề" title="Tiêu đề">
+										<select class="custom-select col mb-3" required title="Thời hạn ký">
+											<option value="" disabled selected hidden>Thời hạn ký</option>
+											<option value="1">1 ngày</option>
+											<option value="7">1 tuần</option>
+											<option value="30">1 tháng</option>
+											<option value="90">3 tháng</option>
+											<option value="0">Vô thời hạn</option>
+										</select>
+									</div>
+
+									<textarea class="form-control" placeholder="Nội dung tin nhắn" title="Nội dung tin nhắn"></textarea>
+									<hr>
+									<p class="text-left mb-2">Hợp đồng: <span class="text-site">Hợp đồng thiết kế mẫu.pdf</span></p>
+									<hr style="margin-top: 12px">
+									<p class="text-left mb-0">Người nhận: <b>Nguyễn Văn Tuấn </b><span class="text-secondary">(nguyenvantuan123@gmail.com)</span>, <b>Lê Thị Hồng Nhung </b><span class="text-secondary">(lehongnhung@gmail.com)</span></p>
+								</div>
+								<!-- End Different content between steps -->
+							</div>
+
+							<div class="lefttop_corner"></div>
+							<div class="leftbottom_corner"></div>
+							<div class="righttop_corner"></div>
+							<div class="rightbottom_corner"></div>
+						</div>
+					</div>
+
+					<div class="new_contract_nav text-center py-3">
+						<button class="btn btn_outline_site mx-2 mx-sm-3">QUAY LẠI</button>
+						<button class="btn btn_site mx-2 mx-sm-3">GỬI ĐI</button>
+					</div>
+
+					<div class="row new_contract_footer py-2 mx-auto">
+						<div class="col-md-auto col-lg text-center text-md-right">HỖ TRỢ KỸ THUẬT</div>
+						<div class="col-md col-lg text-center">Email: <a href="mailto:supportmcontract@gmail.com">supportmcontract@gmail.com</a></div>
+						<div class="col-md-auto col-lg text-center text-md-left">Hotline: <a href="tel:19001111">19001111</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
