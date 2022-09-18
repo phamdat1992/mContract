@@ -1,0 +1,45 @@
+{
+    "name": "amit-react-next-example",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@react-pdf/renderer": "^2.0.16",
+        "@reduxjs/toolkit": "^1.6.0",
+        "@types/react-youtube": "^7.10.0",
+        "aos": "^2.3.4",
+        "axios": "^0.21.1",
+        "bootstrap": "^4.6.0",
+        "formik": "^2.2.9",
+        "interactjs": "^1.10.11",
+        "jquery": "^3.6.0",
+        "next": "11.0.0",
+        "next-redux-wrapper": "^7.0.2",
+        "nprogress": "^0.2.0",
+        "react": "17.0.2",
+        "react-bootstrap": "^1.6.1",
+        "react-custom-scroll": "^4.3.0",
+        "react-custom-scrollbars": "^4.2.1",
+        "react-dom": "17.0.2",
+        "react-interactjs": "^0.1.2",
+        "react-pdf": "^5.3.2",
+        "react-redux": "^7.2.4",
+        "react-youtube": "^7.13.1",
+        "sass": "^1.35.1",
+        "simplebar-react": "^2.3.5",
+        "styled-jsx": "^3.4.4",
+        "yup": "^0.32.9"
+    },
+    "devDependencies": {
+        "@types/aos": "^3.0.4",
+        "@types/gtag.js": "0.0.8",
+        "@types/nprogress": "^0.2.0",
+        "@types/react": "17.0.11",
+        "@types/react-pdf": "^5.0.5",
+        "typescript": "4.3.4"
+    }
+}

@@ -1,0 +1,22 @@
+.Layout {
+    // color: #333;
+}
+.BackToTop {
+    position: fixed;
+    bottom: 100px;
+    right: 35px;
+    z-index: 99;
+    cursor: pointer;
+    transform: rotate(90deg);
+}
+.BtnBacck {
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #0d7aca;
+    color: #0d7aca;
+    background: rgba(255,255,255,.9);
+    border-radius: 18px;
+    transition: all .3s ease-in-out;
+}
+

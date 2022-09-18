@@ -1,0 +1,19 @@
+.colorItem {
+  position: relative;
+  display: inline-block;
+  svg {
+      position: absolute;
+      top: 9px;
+      left: 8px;
+      color:  white;
+  }
+}
+.max_height_tags {
+	max-height: calc(100vh - 119px - 1rem);
+  overflow-y: auto;
+}
+@media (min-width: 576px) {
+	.max_height_tags {
+		max-height: calc(100vh - 119px - 4rem);
+	}
+}

@@ -1,0 +1,10 @@
+.colorItem {
+  position: relative;
+  display: inline-block;
+  svg {
+      position: absolute;
+      top: 9px;
+      left: 8px;
+      color:  white;
+  }
+}

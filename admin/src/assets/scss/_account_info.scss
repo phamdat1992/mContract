@@ -1,0 +1,248 @@
+.account {
+    .custom-control-label::before,
+    .custom-control-label::after {
+        width: 1rem;
+        height: 1rem;
+        top: 0.25rem;
+        left: -1.5rem;
+    }
+    #advanced_filter input,
+    .account_info_area input,
+    .account_info_area .custom-select,
+    #pwModal input {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+        height: 30px;
+        line-height: 30px;
+        font-size: 15px;
+        text-align: left;
+        &:disabled {
+            background: none;
+            cursor: not-allowed;
+        }
+    }
+    .account_info_area .form-group,
+    #pwModal .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input_icon {
+        position: absolute;
+        right: 0;
+        // bottom: 8px;
+        top: 22px;
+        color: #888;
+    }
+
+    .gender_area {
+        margin: 6px 0 0;
+    }
+    .custom-control-input.is-valid:checked ~ .custom-control-label::before,
+    .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before {
+        border-color: #007bff;
+        background-color: #007bff;
+    }
+    
+    .account_area > a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 15px;
+        border-radius: 4px;
+        transition: ease 0.3s;
+        display: block;
+        padding: 4px;
+    }
+
+    .account_area > a:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    #page_content {
+        background: #fff;
+    }
+    @media (max-width: 991px) {
+        #left_sidebar {
+            display: none;
+        }
+
+        #page_wrapper {
+            padding-left: 0;
+        }
+
+        #page_content {
+            height: auto;
+        }
+    }
+    .db_top .company_logo,
+    .account_info_area .company_logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: relative;
+        z-index: 1;
+        background: #fff;
+    }
+    .com_img_wrap {
+        width: 120px;
+        height: 120px;
+    }
+    .db_top .change_icon,
+    .account_info_area .change_icon {
+        width: 28px;
+        height: 28px;
+        background: #eee;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        color: #555;
+        text-align: center;
+        line-height: 24px;
+        z-index: 2;
+        overflow: hidden;
+    }
+    .db_top .change_icon:hover,
+    .account_info_area .change_icon:hover {
+        background: #ccc;
+    }
+    .account_area .dropdown-item svg {
+        margin-top: -4px;
+        margin-right: 7px;
+    }
+
+    .account_section {
+        font-size: 16px;
+    }
+
+    .account_info_area input:focus,
+    #pwModal input:focus {
+        border-color: #3a9bff;
+        box-shadow: none;
+    }
+
+    .account_info_area .form-control.is-invalid:focus, .form-control:invalid:focus {
+        border-color: #dc3545;
+    }
+
+    .form-control.is-invalid,
+    .was-validated .form-control:invalid {
+        background-image: none;
+    }
+
+    .form-control.is-invalid + .input_icon {
+        color: #dc3545;
+    }
+
+    .form-control.is-invalid:focus,
+    .was-validated .form-control:invalid:focus {
+        box-shadow: none;
+    }
+
+    .account_info_area .custom-select {
+        background: url("../images/chevron-down.svg") right no-repeat;
+    }
+
+    .account_info_area input,
+    .account_info_area .custom-select {
+        font-size: 16px;
+    }
+
+    .as_header h4 {
+        text-transform: uppercase;
+        color: #0d7aca;
+        font-weight: 600;
+        font-size: 19px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .as_header h4:after {
+        content: "";
+        display: inline-block;
+        height: 4px;
+        vertical-align: bottom;
+        width: 100%;
+        margin-right: -100%;
+        margin-left: 14px;
+        border-top: 1px solid #ddd;
+    }
+
+    .as_img_wrap {
+        position: relative;
+        width: 120px;
+        margin: auto;
+        label{
+            margin: 0;
+            cursor: pointer;
+        }
+    }
+
+    .as_noti h5 {
+        font-size: 18px;
+    }
+
+    .as_noti p {
+        color: #666;
+        font-size: 15px;
+    }
+
+    .custom-switch.custom-switch-md .custom-control-label {
+        padding-left: 2rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .custom-switch.custom-switch-md .custom-control-label::before {
+        height: 1.5rem;
+        width: calc(2rem + 0.75rem);
+        border-radius: 3rem;
+    }
+
+    .custom-switch.custom-switch-md .custom-control-label::after {
+        width: calc(1.5rem - 4px);
+        height: calc(1.5rem - 4px);
+        border-radius: calc(2rem - (1.5rem / 2));
+    }
+
+    .custom-switch.custom-switch-md .custom-control-input:checked ~ .custom-control-label::after {
+        transform: translateX(calc(1.5rem - 0.25rem));
+    }
+    @media (min-width: 992px) {
+        #page_content {
+            padding: 20px 40px 0;
+        }
+    }
+    .custom-switch .custom-control-label::before {
+        left: -2.25rem;
+        top: 0.25rem;
+    }
+    .custom-switch .custom-control-label::after {
+        top: calc(0.25rem + 2px);
+        left: calc(-2.25rem + 2px);
+    }
+    input[type="file"] {
+        z-index: 0 !important;
+    }
+    ::-webkit-file-upload-button {
+        cursor: pointer;
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+}
+.account .account_info_area input{
+    padding-right: 24px;
+}
+
+// .account_area .dropdown-menu.show {
+//     animation-name: growIn;
+//     animation-duration: 0.2s;
+//     animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
+// }

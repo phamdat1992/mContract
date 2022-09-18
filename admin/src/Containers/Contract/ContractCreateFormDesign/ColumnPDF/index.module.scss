@@ -1,0 +1,21 @@
+
+.btnControlPage {
+   text-decoration: none;
+   color: #212529;
+   padding: 7px 9px;
+   font-size: 18px;
+   line-height: 18px;
+   box-shadow: none;
+   outline: 0;
+   border: none;
+   height: 27px;
+   &:hover {
+      color: #2c62d6;
+   }
+   &:focus {
+      box-shadow: none;
+   }
+   svg {
+      margin-top: -10px;
+   }
+}

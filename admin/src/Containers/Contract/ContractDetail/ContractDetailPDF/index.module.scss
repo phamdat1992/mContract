@@ -1,0 +1,51 @@
+.btnControlPage {
+  text-decoration: none;
+  color: #212529;
+  padding: 6px;
+  font-size: 18px;
+  line-height: 18px;
+  box-shadow: none;
+  outline: 0;
+  border: none;
+  height: 28px;
+  &:hover {
+    color: #2c62d6;
+  }
+  &:focus {
+    box-shadow: none;
+  }
+  svg {
+    margin-top: -8px;
+  }
+}
+
+.preview-pdf-overlay {
+  .pdf-page-container:not(:last-child) {
+    .pdfPage {
+          margin-bottom: 10px;
+      }
+  }
+}
+.max_height_tags {
+	max-height: calc(100vh - 65px - 1rem);
+  overflow-y: auto;
+}
+@media (min-width: 576px) {
+	.max_height_tags {
+		max-height: calc(100vh - 65px - 4rem);
+	}
+}
+
+//  .detail_pdf {
+//    min-height: calc(100vh - 254px);
+//    max-height: calc(100vh - 254px);
+
+//  }
+//  .show_pdf {
+//    // min-height: calc(100vh - 254px);
+//    height: 100%;
+//    background: #ededf0;
+//    border: 1px solid #e1e1e1;
+//    position: relative;
+
+//  }

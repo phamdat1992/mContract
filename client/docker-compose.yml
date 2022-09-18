@@ -1,0 +1,33 @@
+version: "3"
+services:
+   client:
+      build:
+         context: ./
+         dockerfile: Dockerfile
+      volumes:
+         - ./:/var/www/html
+      container_name: digital-signature-client
+      restart: always
+      environment:
+         - NODE_ENV=development
+         - API_URL="https://mcontract.vn/api/"
+         - PORT=3000
+      working_dir: /var/www/html
+      networks:
+         - digital-signature-client-network
+
+   webserver:
+      image: nginx:alpine
+      container_name: digital-signature-client-nginx
+      restart: unless-stopped
+      volumes:
+         - ./:/var/www/html
+         - ./nginx:/etc/nginx/conf.d
+         - ./log:/var/log/nginx
+      ports:
+         - "20002:80"
+      networks:
+         - digital-signature-client-network
+networks:
+   digital-signature-client-network:
+      driver: bridge

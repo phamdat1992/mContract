@@ -1,0 +1,19 @@
+.spliterPage {
+    border: 1px solid #e1e1e1;
+    cursor: default;
+ }
+//  .react-pdf {
+//     .pdf-page-container:not(:last-child) {
+//         .spliterPage {
+//             margin-bottom: 1rem;
+//         }
+//      }
+//  }
+ 
+ .page_active {
+    border: 1px solid #2c62d6;
+  }
+  .detail_preview{
+      max-height: calc(100vh - 226px);
+      padding-right: 16px;
+  }

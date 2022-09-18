@@ -1,0 +1,42 @@
+.contract{
+    .contract_item{
+        border: 1px solid #d9d9d9;
+        border-bottom: none;
+        &_sending {
+            min-height: 76px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    .contract_item:hover .ci_status, .contract_item:hover .ci_responses{
+        display: none;
+    }
+    .contract_item:hover .ci_action{
+        display: block;
+    }
+    .contract_area{
+        padding-bottom: 18px;
+    }
+    #left_sidebar .btn_new{
+        margin: 12px 0;
+        position: relative;
+        height: 40px;
+        padding: 0 17px 0 40px;
+        font-weight: 600;
+        border-radius: 22px;
+    }
+    @media (min-width: 992px) {
+        #page_content {
+            height: calc(100vh - 122px);
+            overflow-y: auto;
+        }
+    }
+    .sign_status span:first-child{
+        border-radius: 20px 0 0 20px;
+        border-right: 1px solid #CFD0D4;
+        padding-left: 4px;
+    }
+
+}

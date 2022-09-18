@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a7cca572.chunk.css",
+    "main.js": "/static/js/main.910f81df.chunk.js",
+    "main.js.map": "/static/js/main.910f81df.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.fb29d6b3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.fb29d6b3.js.map",
+    "static/css/2.319fd1ee.chunk.css": "/static/css/2.319fd1ee.chunk.css",
+    "static/js/2.5f08f084.chunk.js": "/static/js/2.5f08f084.chunk.js",
+    "static/js/2.5f08f084.chunk.js.map": "/static/js/2.5f08f084.chunk.js.map",
+    "static/js/3.5acd7fed.chunk.js": "/static/js/3.5acd7fed.chunk.js",
+    "static/js/3.5acd7fed.chunk.js.map": "/static/js/3.5acd7fed.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.319fd1ee.chunk.css.map": "/static/css/2.319fd1ee.chunk.css.map",
+    "static/css/main.a7cca572.chunk.css.map": "/static/css/main.a7cca572.chunk.css.map",
+    "static/js/2.5f08f084.chunk.js.LICENSE.txt": "/static/js/2.5f08f084.chunk.js.LICENSE.txt",
+    "static/media/ap.3efb7435.webp": "/static/media/ap.3efb7435.webp",
+    "static/media/index.scss": "/static/media/wait.0c019066.svg",
+    "static/media/english.654ff673.webp": "/static/media/english.654ff673.webp",
+    "static/media/infomation.5fa61d05.webp": "/static/media/infomation.5fa61d05.webp",
+    "static/media/login.f17fd677.svg": "/static/media/login.f17fd677.svg",
+    "static/media/logo.3db27ed4.svg": "/static/media/logo.3db27ed4.svg",
+    "static/media/logo_v.09dcd009.webp": "/static/media/logo_v.09dcd009.webp",
+    "static/media/logo_w.d504d50c.webp": "/static/media/logo_w.d504d50c.webp",
+    "static/media/pdf.a1559afc.svg": "/static/media/pdf.a1559afc.svg",
+    "static/media/signup.f7d45d47.svg": "/static/media/signup.f7d45d47.svg",
+    "static/media/step_1.cef88020.webp": "/static/media/step_1.cef88020.webp",
+    "static/media/step_2.a055d792.webp": "/static/media/step_2.a055d792.webp",
+    "static/media/step_3.ba272722.webp": "/static/media/step_3.ba272722.webp",
+    "static/media/step_4.c00a9eb9.webp": "/static/media/step_4.c00a9eb9.webp",
+    "static/media/step_5.61c88a90.webp": "/static/media/step_5.61c88a90.webp",
+    "static/media/vietnam.fb04a4c0.webp": "/static/media/vietnam.fb04a4c0.webp",
+    "static/media/word.53e4d051.webp": "/static/media/word.53e4d051.webp"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fb29d6b3.js",
+    "static/css/2.319fd1ee.chunk.css",
+    "static/js/2.5f08f084.chunk.js",
+    "static/css/main.a7cca572.chunk.css",
+    "static/js/main.910f81df.chunk.js"
+  ]
+}

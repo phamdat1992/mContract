@@ -1,0 +1,29 @@
+.spliterPage {
+   border: 1px solid #e1e1e1;
+   cursor: default;
+}
+.listSigner {
+   position: absolute;
+   top: 0;
+   left: 1px;
+}
+.signature_icon {
+  cursor: pointer;
+   width: 35px;
+   height: 27px;
+   text-align: center;
+   background: rgba(255, 255, 255, 1);
+   border: 1px dashed #ffc232;
+   border-radius: 4px;
+   margin-top: 1px;
+   color: #888;
+ }
+
+ .signature_icon_me {
+   background: rgba(255, 255, 255, 1);
+   border: 1px dashed #1d95ff;
+ }
+
+ .page_active {
+   border: 1px solid #2c62d6;
+ }

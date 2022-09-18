@@ -1,0 +1,18 @@
+.author_signature {
+	border:  1px solid #ffc232 !important;
+	&:hover {
+		border:  1px dashed #ffc232 !important;
+	}
+}
+
+.max_height_signers {
+	max-height: calc(100vh - 144px - 3rem);
+	margin-top: 1rem !important;
+	margin-bottom: 1rem !important;
+	overflow-y: auto;
+}
+@media (min-width: 576px) {
+	.max_height_signers {
+		max-height: calc(100vh - 144px - 6rem);
+	}
+}

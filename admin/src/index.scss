@@ -1,0 +1,62 @@
+/** VERSION 1.0 */
+@import "react-perfect-scrollbar/dist/css/styles.css";
+@import "react-pdf/dist/umd/Page/AnnotationLayer.css";
+@import "simplebar/src/simplebar.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
+@import "./assets/scss/index.scss";
+// @import "react-datepicker/dist/react-datepicker.css";
+// @import 'react-toastify/dist/ReactToastify.css';
+html,
+body {
+   padding: 0;
+   margin: 0;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+      "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+a {
+   text-decoration: none;
+}
+
+* {
+   box-sizing: border-box;
+}
+
+.new_contract_header,
+.new_contract_body,
+.new_contract_nav,
+.new_contract_footer {
+   width: 100%;
+}
+
+.new_contract_body .ncbody_wrap {
+   min-height: calc(100vh - 284px);
+}
+.zIndex-1050 {
+   z-index: 1050 !important;
+}
+
+#page_content {
+   .contract_overview {
+      .contract_area {
+         height: auto;
+      }
+   }
+}
+@media screen and (max-width: 991px) {
+   #page_content {
+      .contract_area {
+         height: auto;
+      }
+   }
+}
+.modal {
+   max-width: 100vw;
+   z-index: 9999;
+}
+.scrollbar-container.ps--active-x {
+   .ps__rail-x {
+      display: none;
+   }
+}

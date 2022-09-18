@@ -1,0 +1,348 @@
+/* Account Pages */
+b,
+th {
+	font-weight: 600;
+}
+.text-site {
+	color: #0d7aca;
+}
+body {
+	// color: #353f4d;
+}
+
+.btn_pri1 {
+	background: #3a9bff;
+	transition: all 0.3s ease-in-out;
+	color: #fff;
+	border-color: #3a9bff;
+	font-size: 16px;
+	padding: 7px 12px;
+	border-radius: 6px;
+	&:focus{
+		box-shadow: none;
+	}
+}
+
+.btn_pri1:hover {
+	color: #fff;
+	background: #1480f2;
+	border-color: #1480f2;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+}
+.spinner-grow{
+	margin-bottom: 2px;
+}
+.btn_sec1 {
+	transition: all 0.3s ease-in-out;
+	color: #6c757d;
+	border-color: #6c757d;
+	padding: 7px 12px;
+	border-radius: 6px;
+	font-size: 16px;
+}
+
+.btn_sec1:hover {
+	color: #0d7aca;
+	border-color: #0d7aca;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn_sec2 {
+	transition: all 0.3s ease-in-out;
+	color: #fff;
+	border-color: #fff;
+	padding: 7px 12px;
+	border-radius: 6px;
+	font-size: 16px;
+}
+
+.btn_sec2:hover {
+	color: #0d7aca;
+	border-color: #fff;
+	background: #fff;
+}
+
+.link_site {
+	color: #0d7aca;
+}
+
+.link_site:hover {
+	color: #005b9d;
+}
+
+@media (min-width: 992px) {
+	.site_right {
+		min-height: 100vh;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+	}
+}
+
+.site_form {
+	padding: 40px 65px;
+	width: 100%;
+	max-width: 570px;
+	font-size: 1rem;
+	color: #353f4d;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.site_form {
+		padding: 40px 35px 40px 20px;
+	}
+}
+
+@media (max-width: 991px) {
+	.site_form {
+		margin: auto;
+	}
+}
+
+@media (max-width: 575px) {
+	.site_form {
+		padding: 20px 16px;
+	}
+}
+
+.site_logo {
+	width: 300px;
+	margin-bottom: 40px;
+}
+
+.site_title {
+	font-size: 22px;
+	font-weight: 600;
+	color: #555;
+	margin-bottom: 30px;
+}
+
+.site_title span {
+	color: #0d7aca;
+}
+
+.site_left {
+	height: 100%;
+	background: url("../images/blue.svg") right no-repeat;
+	background-size: auto 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.site_left_wrapper {
+	padding-right: 135px;
+}
+
+.site_left_content {
+	max-width: 350px;
+	margin: auto;
+}
+
+@media (min-width: 1441px) {
+	.site_left_content {
+		max-width: 375px;
+	}
+}
+
+.slbtn_area {
+	color: #fff;
+	margin-bottom: 45px;
+}
+
+.slbtn_area h4 {
+	font-size: 22px;
+	font-weight: 600;
+	margin-bottom: 15px;
+}
+
+.form_btn .btn,
+.slbtn_area .btn {
+	min-width: 135px;
+}
+
+.form_btn .back_btn {
+	margin-right: 15px;
+}
+
+.form_btn .submit_btn {
+	margin-left: 15px;
+}
+
+@media (max-width: 428px) {
+	.form_btn .btn {
+		width: calc(50% - 12px);
+		min-width: calc(50% - 12px);
+	}
+
+	.form_btn .back_btn {
+		margin-right: 8px;
+	}
+
+	.form_btn .submit_btn {
+		margin-left: 8px;
+	}
+}
+
+.site_form .form-group {
+	position: relative;
+	padding-bottom: 25px;
+}
+.site_form label {
+	color: #353f4d;
+	font-weight: 500;
+}
+
+.site_form input,
+.site_form .custom-select {
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0 30px 0 0;
+}
+
+.site_form input:focus {
+	border-color: #3a9bff;
+	box-shadow: none;
+}
+
+.input_icon {
+	position: absolute;
+	right: 0;
+	// bottom: 8px;
+	top: 30px;
+	color: #888;
+}
+.message-errors {
+	color: #dc3545;
+	font-size: 13px;
+}
+.bl_area {
+	margin-top: 32px;
+}
+
+.email_link {
+	padding: 4px 12px;
+	border-color: #ccc;
+	color: #555;
+	font-weight: 600;
+	border-width: 2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.email_link img {
+	display: inline;
+	max-width: 20px;
+	max-height: 15px;
+	margin-right: 8px;
+	margin-top: -4px;
+}
+
+.info_form {
+	max-width: 770px;
+	padding: 25px 15px;
+}
+
+.info_form .site_title,
+.info_form .site_logo {
+	margin-bottom: 25px;
+}
+
+.info_form .form-group {
+	margin-bottom: 16px;
+}
+
+.info_form .custom-select {
+	background: url("../images/chevron-down.svg") right no-repeat;
+}
+
+.info_form .gender_area {
+	margin: 8px 0 22px;
+}
+
+.gender_area label {
+	font-weight: 400;
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+	background-image: none;
+}
+
+.form-control.is-invalid + .input_icon {
+	color: #dc3545;
+}
+
+.form-control.is-invalid:focus,
+.was-validated .form-control:invalid:focus {
+	box-shadow: none;
+}
+/*Custom datepicker*/
+.datepicker table {
+	font-size: 14px;
+}
+.datepicker table tr .prev,
+.datepicker table tr .next,
+.datepicker table tr .datepicker-switch {
+	padding: 10px 0 14px 0;
+}
+.datepicker table tr .prev,
+.datepicker table tr .next {
+	color: #999;
+}
+.datepicker table tr td {
+	width: 40px;
+	height: 35px;
+}
+.datepicker table tr .dow {
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	color: #999;
+}
+.label-signup {
+	&::before,
+	&::after {
+		content: "";
+		width: 1rem;
+		height: 1rem;
+		top: 0.25rem;
+		left: -1.5rem;
+	}
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	background-clip: text;
+	-webkit-background-clip: text;
+}
+.btn_company-info{
+	width: 288px !important;
+	// margin-left: 30px !important;
+}
+@media (max-width: 1340px) {
+	.btn_company-info{
+		display: flex;
+		align-self: center;
+		justify-content: center;
+		margin: 0 auto !important;
+		margin-top: 15px !important;
+		.spinner-grow{
+			align-self: center;
+			margin-bottom: 0;
+		}
+	}
+	
+}
+@media (max-width: 345px) {
+	.btn_company-info{
+		width: auto !important;
+	}
+	
+}
+/* End Account Pages */

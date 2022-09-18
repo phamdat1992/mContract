@@ -1,0 +1,132 @@
+.search-policy {
+    font-size: 15px;
+    color: #353f4d;
+    .contract_item {
+        border: 1px solid #d9d9d9;
+    }
+    .contract_item:hover .ci_status,
+    .contract_item:hover .ci_responses {
+        display: none;
+    }
+    .contract_item:hover .ci_action {
+        display: block;
+    }
+    @media (max-width: 767px) {
+        .botton-icon {
+            padding-bottom: 50px;
+        }
+    }
+    .contract_area {
+        padding-bottom: 18px;
+    }
+    #page_content {
+        background: #fff;
+    }
+    @media (min-width: 992px) {
+        #page_content {
+            height: calc(100vh - 122px);
+            padding-top: 20px;
+        }
+    }
+    .sign_status span:first-child {
+        border-radius: 20px 0 0 20px;
+        border-right: 1px solid #cfd0d4;
+        padding-left: 4px;
+    }
+    /*Trang*/
+    #page_content h4::after {
+        content: "";
+        display: inline-block;
+        height: 4px;
+        vertical-align: middle;
+        width: 100%;
+        margin-right: -100%;
+        margin-left: 14px;
+        border-top: 2px solid #3a9bff;
+    }
+    #page_content h4 {
+        font-size: 20px;
+        overflow: hidden;
+        padding: 20px 0 10px 0;
+        font-weight: 600;
+    }
+    .cotact_icon {
+        width: 40px;
+        height: 37px;
+    }
+    .contact-text {
+        font-size: 15px;
+        padding-left: 5px;
+    }
+    #page_content .circle {
+        width: 60px;
+        height: 60px;
+        background-color: #d7eeff;
+        border-radius: 50%;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto;
+        float: left;
+    }
+    #page_content .circle svg {
+        color: #3a9bff;
+        height: 60px;
+    }
+    .card-body h5 {
+        min-height: 48px;
+    }
+
+    .fqa a {
+        color: #555;
+        text-align: center;
+    }
+    .fqa span {
+        vertical-align: middle;
+        line-height: 60px;
+        padding-left: 5px;
+    }
+    .step img {
+        width: 100%;
+    }
+    p {
+        text-indent: 30px;
+        text-align: justify;
+    }
+    .plus {
+        text-indent: 50px;
+    }
+
+    h3 {
+        font-size: 20px !important;
+    }
+    .language {
+        position: fixed;
+        top: 50%;
+        right: 0;
+        font-size: 13px;
+        z-index: 1;
+    }
+    .language img {
+        height: 20px;
+        width: 20px;
+    }
+    .language #vi,
+    .content_en {
+        display: none;
+    }
+    @media (max-width: 767px) {
+        .name_language {
+            display: none;
+        }
+    }
+    .na_end {
+        color: #333;
+    }
+    .nav-end {
+        padding: 0 !important;
+    }
+    .nav-pills .nav-link.active {
+        color: #007bff;
+        background-color: transparent;
+    }
+}
