@@ -1,0 +1,15 @@
+.form-info {
+    height: 100%;
+
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0;
+        height: 100%;
+    }
+
+    .form-frame {
+        max-width: 450px;
+    }
+}

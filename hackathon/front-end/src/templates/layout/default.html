@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Icontract - Demo UI</title>
+    <link rel="stylesheet" href="./assets/fonts/style.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <script defer src="{{'./js/app.min.js' if PRODUCTION else 'http://localhost:3000/app.js'}}"></script>
+</head>
+
+<body class="{{configBody.class}}" id="{{configBody.id}}">
+    {% block content %}{% endblock %}
+</body>
+
+</html>

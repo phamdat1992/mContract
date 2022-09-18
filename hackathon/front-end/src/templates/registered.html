@@ -1,0 +1,95 @@
+{% extends 'layout/default.html' %}
+
+{% block content %}
+<main class='form-registerd container'>
+    <div class="row mb-2">
+        <div class="form-frame col-sm">
+            <h4>Thông tin doanh nghiệp</h4>
+            <div class="registered-info">
+                <div> <span>Tên doanh nghiệp:</span> Công ty TNHH Thanh Dat</div>
+                <div> <span>Mã số doanh nghiệp:</span> 4108036796 </div>
+                <div> <span>Mã số thuế:</span> 101024198123 </div>
+                <div> <span>Địa chỉ:</span> Chấn Hưng, Phường 06, Quận Tân Bình, TP. HCM</div>
+                <div> <span>Số điện thoại doanh nghiệp:</span> 028.322.332</div>
+            </div>
+        </div>
+
+        <div class="form-frame col-sm">
+            <h4>Thông tin người đại diện</h4>
+            <div class="registered-info">
+                <div> <span>Họ tên:</span> Nguyễn Văn A</div>
+                <div> <span>CMND:</span> 241563388</div>
+                <div> <span>Ngày sinh:</span> 02/03/1989</div>
+                <div> <span>Ngày sinh:</span> 02/03/1989</div>
+                <div> <span>Nơi cấp:</span> DakLak</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-2 mt-4">
+        <div class="form-frame col-sm">
+            <div class="electric-sign">
+                <h4>Chữ ký số</h4>
+                <div>
+                    <img src="./assets/images/electric-sign.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-2 mt-4">
+        <div class="col-sm form-frame">
+            <div class="qr-code-google">
+                <h4> Kích hoạt Google Authenticator </h4>
+
+                <div class="qr-code-gooogle-inner">
+                    <p>
+                        <strong>Để kích hoạt Google Authenticator vui lòng thực hiện các bước sau:</strong>
+                    </p>
+                    <ul class="steps">
+                        <li>Bước 1: Mở ứng dụng Google Authenticator </li>
+                        <li>
+                            Bước 2: Tạo trình xác thực mới bằng 2 cách:
+                            <ul class="child-steps">
+                                <li>Cách 1: Quét mã QR</li>
+                                <li>Cách 2: Nhập tên tài khoản (email) và khoá (secret key).</li>
+                            </ul>
+                        </li>
+                        <li>Bước 3: Nhập 6 số trên ứng dụng vào ô OTP. Click "Active" </li>
+                    </ul>
+
+                    <div class="qr-code-img">
+                        <strong>QR Code:</strong>
+                        <img src="./assets/images/qrcode.png" alt="">
+                    </div>
+
+                    <div class="form-active">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" readonly value="dathtp@gmail.com" class="form-control" id="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="secret-key">Secret key</label>
+                            <input type="text" readonly value="7DDF-B236-7023-82A6-F70F-0001" class="form-control"
+                                id="secret-key">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="required" for="otp">OTP</label>
+                            <input type="password" class="form-control" id="otp">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons text-center">
+        <a href="./dashboard.html" class="btn btn-yellow">
+            Kích hoạt
+            <i class="icontract-arrow-right"></i>
+        </a>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'layout/default.html' %}
+{% import './macros/content-header.html' as ContentHeader %}
+
+{% set configBody = {
+    class: "",
+    id: "create-new-contract-page"
+}%}
+
+{% block content %}
+<main class="dashboard">
+    {% include 'components/sidebar.html' %}
+
+    <div class="content">
+        {{ ContentHeader.render("Tạo mới hợp đồng") }}
+
+        <div class="content-main">
+            <div class="create-new">
+                <div class='form-group-custom form-group-custom--file mb-4' id='upload-contract'>
+                    <label>
+                        <input hidden type='file' accept="" />
+                        <div>
+                            <strong>Upload hợp đồng của bạn</strong>
+                            <p class="file-name"></p>
+                            <p>Hỗ trợ định dạng: PDF, DOC, DOCX - Dung lượng tối đa: 4 MB</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="add-receiver mb-3">
+                    <div class="form-group">
+                        <label for="name">Tên</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name-contract">Tiêu đề</label>
+                    <input type="text" class="form-control" id="name-contract">
+                </div>
+
+                <div class="form-group">
+                    <label for="content-contract">Nội dung</label>
+                    <textarea class="form-control" id="content-contract" rows="4"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <a href="./review-contract.html" class="btn btn-yellow">
+                        Tiếp tục
+                        <i class="icontract-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block review %}{% endblock %}
+</main>
+{% endblock %}

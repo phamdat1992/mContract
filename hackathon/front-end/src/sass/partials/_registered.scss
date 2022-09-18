@@ -1,0 +1,89 @@
+.form-registerd {
+    padding: 50px 0;
+
+    .registered-info {
+        >div {
+            margin-bottom: 7px;
+
+            span {
+                color: #aaa;
+                margin-right: 10px;
+                display: inline-block;
+            }
+        }
+    }
+
+    .electric-sign {
+        display: flex;
+
+        div {
+            flex-grow: 1;
+
+            img {
+                max-width: 500px;
+                width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+                transform: translateX(-20px);
+            }
+        }
+    }
+
+    .qr-code-google {
+        h5 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+            list-style-type: disc;
+            list-style-position: inside;
+            margin-top: 10px;
+
+            li {
+                padding: 5px 10px;
+            }
+        }
+
+        .qr-code-img {
+            display: flex;
+            margin: 20px 0;
+
+            img {
+                margin-left: 50px;
+            }
+        }
+
+        .form-active {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+
+            .form-group {
+                display: flex;
+
+                label {
+                    min-width: 100px;
+                    margin-bottom: 0;
+                    padding-top: 5px;
+                }
+
+                input {
+                    max-width: 300px;
+                }
+            }
+        }
+
+        .qr-code-gooogle-inner {
+            max-width: 700px;
+            margin: 0 auto;
+
+            .qr-code-img {
+                img {
+                    width: 120px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{% extends 'layout/default.html' %}
+
+{% set configBody = {
+    class: "",
+    id: "review-contract"
+}%}
+
+{% block content %}
+<div class="review-contract">
+    <div class="review-wrapper">
+        <embed src="./assets/hopdong.pdf" type="application/pdf" />
+    </div>
+    <div class="buttons text-center">
+        <a href="./dashboard.html" type="button" class="btn btn-light">
+            Huỷ
+        </a>
+        <button class="btn btn-yellow btn-sign">
+            Ký hợp đồng
+        </button>
+    </div>
+</div>
+
+<div class="modal-otp modal" tabindex="-1" role="dialog" hidden>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nhập mã OTP</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm"></div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="otp">
+                            <div class="invalid-feedback">Vui lòng nhập mã OTP</div>
+                        </div>
+                    </div>
+                    <div class="col-sm"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-2 btn-cancel-sign" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-yellow btn-confirm-sign">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-otp-backdrop modal-backdrop" hidden></div>
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends 'layout/default.html' %}
+
+{% set configBody = {
+    class: "",
+    id: "info-page"
+}%}
+
+{%  set zoneList = [
+        'Hà Nội',
+        'Tp. Hồ Chí Minh',
+        'Đà Nẵng',
+        'An Giang',
+        'Bắc Giang',
+        'Bắc Kạn',
+        'Bạc Liêu',
+        'Bắc Ninh',
+        'Bến Tre',
+        'Bình Định',
+        'Bình Dương',
+        'Bình Phước',
+        'Bình Thuận',
+        'Cà Mau',
+        'Cần Thơ',
+        'Cao Bằng',
+        'Đắk Lắk',
+        'Đắk Nông',
+        'Điện Biên',
+        'Đồng Nai',
+        'Đồng Tháp',
+        'Gia Lai',
+        'Hà Giang',
+        'Hà Nam',
+        'Hà Tĩnh',
+        'Hải Dương',
+        'Hải Phòng',
+        'Hậu Giang',
+        'Hòa Bình',
+        'Hưng Yên',
+        'Khánh Hòa',
+        'Kiên Giang',
+        'Kon Tum',
+        'Lai Châu',
+        'Lâm Đồng',
+        'Lạng Sơn',
+        'Lào Cai',
+        'Long An',
+        'Nam Định',
+        'Nghệ An',
+        'Ninh Bình',
+        'Ninh Thuận',
+        'Phú Thọ',
+        'Phú Yên',
+        'Quảng Bình',
+        'Quảng Nam',
+        'Quảng Ngãi',
+        'Quảng Ninh',
+        'Quảng Trị',
+        'Sóc Trăng',
+        'Sơn La',
+        'Tây Ninh',
+        'Thái Bình',
+        'Thái Nguyên',
+        'Thanh Hóa',
+        'Thừa Thiên Huế',
+        'Huế',
+        'Tiền Giang',
+        'Trà Vinh',
+        'Tuyên Quang',
+        'Vĩnh Long',
+        'Vĩnh Phúc',
+        'Vũng Tàu',
+        'Bà Rịa Vũng Tàu',
+        'Yên Bái',
+        'Quần Đảo Trường Sa',
+        'Quần Đảo Hoàng Sa',
+        'Đắk Nông'
+    ]
+%}
+
+{% block content %}
+<main class='form-info'>
+    <form>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="form-frame col-sm">
+                    <h4>Thông tin doanh nghiệp</h4>
+
+                    <div class="form-group business-name">
+                        <label class="required" for="business-name">Tên doanh nghiệp</label>
+                        <input type="text" class="form-control" id="business-name">
+                        <div class="invalid-feedback">Vui lòng nhập tên doanh nghiệp</div>
+                    </div>
+
+                    <div class="form-group business-code">
+                        <label class="required" for="business-code">Mã số doanh nghiệp</label>
+                        <input type="number" class="form-control" id="business-code">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="form-group tax-code">
+                        <label class="required" for="tax-code">Mã số thuế</label>
+                        <input type="number" class="form-control" id="tax-code">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="form-group address">
+                        <label class="required" for="address">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address">
+                        <div class="invalid-feedback">Vui lòng nhập địa chỉ</div>
+                    </div>
+
+                    <div class="form-group phone-number">
+                        <label class="required" for="phone-number">Số điện thoại doanh nghiệp</label>
+                        <input type="number" class="form-control" id="phone-number">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="form-frame col-sm">
+                    <h4>Thông tin người đại diện</h4>
+
+                    <div class="form-group full-name">
+                        <label class="required" for="full-name">Họ tên</label>
+                        <input type="text" class="form-control" id="full-name">
+                        <div class="invalid-feedback">Vui lòng nhập họ tên</div>
+                    </div>
+
+                    <div class="form-group cmnd">
+                        <label class="required" for="cmnd">CMND</label>
+                        <input type="number" class="form-control" id="cmnd">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="form-group birth-day">
+                        <label class="required" for="birth-day">Ngày sinh</label>
+                        <input type="date" class="form-control" id="birth-day">
+                        <div class="invalid-feedback">Vui lòng chọn ngày sinh</div>
+                    </div>
+
+                    <div class="form-group day-release">
+                        <label class="required" for="day-release">Ngày cấp</label>
+                        <input type="date" class="form-control" id="day-release">
+                        <div class="invalid-feedback">Vui lòng chọn ngày cấp</div>
+                    </div>
+
+                    <div class="form-group place-release">
+                        <label class="required" for="place-release">Nơi cấp</label>
+                        <select class="form-control" id="place-release">
+                            {% for province in zoneList %}
+                            <option value="{{province}}">{{province}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons text-center">
+                <a href="./registered.html" class="btn btn-yellow btn-register" role="button"
+                    aria-disabled="true">
+                    Đăng ký
+                    <i class="icontract-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,18 @@
+## System and generated files
+.idea
+.DS_Store
+.sass-cache
+.vscode
+
+## Directories
+log/
+dist/
+dest/
+node_modules/
+bower_components/
+
+## Files
+result.xml
+npm-debug.log
+
+webpack-stats\.json

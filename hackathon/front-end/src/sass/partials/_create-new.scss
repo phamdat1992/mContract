@@ -1,0 +1,29 @@
+.content-main {
+    .form-group {
+        display: flex;
+        align-items: center;
+
+        label {
+            flex-shrink: 0;
+            margin-right: 5px;
+            min-width: 70px;
+        }
+    }
+
+    .add-receiver {
+        h4 {
+            font-size: 15px;
+            color: #555;
+        }
+    }
+
+    .create-new {
+        max-width: 600px;
+        margin: 0 auto;
+
+        .form-group-custom--file {
+            width: 300px;
+            height: 150px;
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{% macro render(headerTitle = '') %}
+<div class="content-header">
+    <h3 class="title">{{headerTitle}}</h3>
+    <div class="user">
+        <div class="user-info">
+            <span class="avatar">
+                <i class="icontract-user"></i>
+            </span>
+            Đạt Nguyễn
+        </div>
+    </div>
+    <div class="filter">
+        <div class="filter-by">
+            <span>Được lọc bởi:</span> 01 ngày trước
+        </div>
+        <div class="filter-actions">
+            <div class="input-group">
+                <input type="email" class="form-control" placeholder="Tìm kiếm hợp đồng">
+                <div class="input-group-append">
+                    <button class="btn btn-light-2 border">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
