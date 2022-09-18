@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div style="font-family:'Helvetica Neue','Helvetica','PingFang TC','Microsoft JhengHei','Heiti TC','Arial','sans-serif'!important;">
+    <table style="max-width:560px; border-radius: 16px;border-width:1px;border-style:solid;border-color:rgb(240,240,240);" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+        <tr>
+            <td style="border-radius: 15px" align="center">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                    <tr>
+                        <td>
+                            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-radius: 15px">
+                                <tr>
+                                    <td bgcolor="#0182de" style="border-radius: 15px 15px 0 0; font-size: 0">
+                                        <p style="height: 15px; background: linear-gradient(to right, #00b3e3, #0062da); border-radius: 15px 15px 0 0;">&emsp;</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td height="60" align="center">
+                <p style="font-size: 14px; color: #444; margin: 10px 0 3px;">THÔNG BÁO HỢP ĐỒNG SẮP HẾT HẠN</p>
+                <h1 th:text="${title}" style="color: #0d7aca; font-size: 20px; font-weight:600 ; margin: 7px 0 12px; letter-spacing:1.1px;text-transform: uppercase;"></h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:0;margin:0;border-bottom: 1px solid #f0f0f0">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="padding: 0 16px; color: #353535; font-weight:400;font-size:15px;line-height:1.3;">
+                    <tr>
+                        <td  style="width: 20%" th:if="${logo}" >
+                            <a style="display:inline-block; padding: 12px 6px 12px 0" title="">
+                                <img style="border-radius: 50%" height="85" th:src="${logo}" alt="" title="">
+                            </a>
+                        </td>
+                        <td  style="width: 80%">
+                            <table>
+                                <tr>
+                                    <td th:text="${companyName}" style="color:#444; font-size:18px; font-weight: 600; letter-spacing:1.1px"></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="${taxCode}" style="font-size: 12px; color: #888"></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="${address}" style="font-size: 12px; color: #888"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="padding: 0 16px; color: #353535; font-weight:400;font-size:15px;line-height:1.3;">
+
+                    <tr>
+                        <td style="color: #444">
+                            <p style="margin: 15px 0 5px;color: #444">Kính gửi Quý khách hàng<span th:text="${fullname}" style="font-weight: 600; font-size: 16px"></span>,</p>
+                            <p style="margin: 7px 0 5px;"><span th:text="${title}" style="font-weight:600;font-size: 16px"></span> đang chờ quý khách ký kết.</p>
+                            <p>Thời gian hết hạn hợp đồng: <span th:text="${expiredTime}" style="font-weight:600;font-size: 16px;color:red"></span>. </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="padding: 0 16px; color: #353535; font-weight:400;font-size:15px;line-height:1.3;">
+
+                    <tr>
+                        <td>
+                            <i><p style="margin: 5px 0 20px;">Quý khách hãy nhấn nút <span style="font-weight: 600">"Xem hợp đồng"</span> để ký kết hợp đồng đúng hạn.</p></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td style="font-size:16px;border-radius:5px" bgcolor="#0182de" align="center">
+                                        <a th:href="${urlContract}" style="font-size:15px;color:rgb(255,255,255);text-decoration:none;padding:8px 18px;border-width:0;border-style:solid;display:inline-block;background-image: linear-gradient(to right, #0094e0, #0068e5);border-radius: 5px">Xem hợp đồng</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;border-bottom: 1px solid #f0f0f0"></td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="padding: 0 16px; color: #353535; font-weight:400;font-size:15px;line-height:1.3;">
+                    <tr>
+                        <td>
+                            <p style="margin: 15px 0 7px; font-style: italic">Nếu quý khách chưa có tài khoản <b><a href="http://mcontract.vn/" style="text-decoration: none; color: #0d7aca"> MContract</a></b> hãy "<b><a href="https://mcontract.vn/dang-ki" style="text-decoration: none; color: #0d7aca">Đăng ký ngay</a></b>"
+                                để không bỏ lỡ hợp đồng nào.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style="margin: 5px 0 10px; font-style: italic">Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của <b><a href="http://mcontract.vn/" style="text-decoration: none; color: #0d7aca"> MContract</a></b>.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  height="85" align="center">
+                            <a href="http://mcontract.vn/" style="display:inline-block; padding: 5px 0" title="MCONTRACT">
+                                <img height="70" src="linkLogoEmail" alt="MCONTRACT" title="MCONTRACT">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding:0;margin:0;border-bottom: 1px solid #f0f0f0"></td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" bgcolor="#0182de" style="padding: 9px 16px; border-radius: 0 0 15px 15px; line-height: 1.3">
+                    <tr>
+                        <td align="center" style="color: #fff; font-size: 13px">
+                            <p style="margin: 0">CÔNG TY TNHH DỊCH VỤ CÔNG NGHỆ TRỰC TUYẾN</p>
+                            <p style="margin: 0"><a style="color: #fff; text-decoration: none" href="#">98 Nguyễn Công Trứ, phường Nguyễn Thái Bình, quận 1, thành phố Hồ Chí Minh</a></p>
+                            <p style="margin: 0">Website: <a href="https://mcontract.vn/" style="color: #fff">https://www.mcontract.vn</a></p>
+                            <p style="margin: 0 0 10px">Email: <a href="mailto:support@mcontract.vn" style="color: #fff">support@mcontract.vn</a></p>
+                            <table style="margin: 0" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                <tr>
+                                    <td style="border-top: 1px dashed #6aaad8; font-size: 1px"></td>
+                                </tr>
+                            </table>
+
+                            <p style="margin: 8px 0 0; font-style: italic; font-size: 12px">Mọi thắc mắc quý khách vui lòng liên hệ bộ phận hỗ trợ của chúng tôi: SĐT 086 774 6979</p>
+                            <p style="margin: 2px 0 0; font-style: italic; font-size: 12px">Đây là email tự động, vui lòng không trả lời email này</p>
+                            <p style="margin: 8px 0 0; font-style: italic; font-size: 12px">Technical support: (+84) 86 774 6979</p>
+                            <p style="margin: 2px 0 0; font-style: italic; font-size: 12px">This is an automated message. Please do not reply.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <div style="font-family:'Helvetica Neue','Helvetica','PingFang TC','Microsoft JhengHei','Heiti TC','Arial','sans-serif'!important;">
+      <table style="max-width:560px; border-radius: 16px;border-width:1px;border-style:solid;border-color:rgb(240,240,240);" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+        <tr>
+          <td style="border-radius: 15px" align="center">
+            <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+              <tr>
+                <td>
+                  <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-radius: 15px">
+                    <tr>
+                      <td bgcolor="#0182de" style="border-radius: 15px 15px 0 0; font-size: 0">
+                        <p style="height: 15px; background: linear-gradient(to right, #00b3e3, #0062da); border-radius: 15px 15px 0 0;">&emsp;</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="padding: 0 16px; color: #353535; font-weight:400;font-size:15px;line-height:1.3;">
+              <tr>
+                <td  height="120" align="center" style="border-bottom: 1px solid #f0f0f0">
+                  <a href="http://mcontract.vn/" style="display:inline-block; padding: 5px 0" title="MCONTRACT">
+                    <img height="100" src="linkLogoEmail" alt="MCONTRACT" title="MCONTRACT">
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <td>
+          <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="padding: 0 16px; color: #353535; font-weight:400;font-size:15px;line-height:1.3;">
+            <tr>
+              <td align="center">
+                <h1 style="color: #595959; font-size: 24px; font-weight: 300; margin: 15px 0 0">XÁC THỰC TÀI KHOẢN <b style="color: #0182de; font-weight: 500">MCONTRACT</b></h1>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p style="margin: 15px 0 5px;color: #444">Kính gửi Quý khách hàng<span th:text="${username}" style="font-weight: 600; font-size: 16px"></span>,</p>
+                <p style="margin: 0 0 8px;color: #444">Chúng tôi vừa nhận được yêu cầu xác thực tài khoản <b><a href="http://mcontract.vn/" style="text-decoration: none; color: #0d7aca"> MContract</a></b> của Quý khách.</p>
+                <p style="margin: 0 0 25px;color: #444">Mã xác thực của Quý khách là: </p>
+              </td>
+            <tr>
+              <td align="center">
+                <span th:text="${code}" style="font-size: 28px; font-weight: 500; letter-spacing: 12px; color: #0182de;"></span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <p style="margin: 25px 0 7px;">Mã xác thực này sẽ hết hạn sau 10 phút.</p>
+                <p style="margin: 0 0 7px; font-style: italic;">Nếu quý khách không thực hiện xác thực tài khoản, vui lòng bỏ qua email này.</p>
+                <p style="margin: 5px 0 10px; font-style: italic">Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của <b><a href="http://mcontract.vn/" style="text-decoration: none; color: #0d7aca"> MContract</a></b>.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+
+        <tr>
+          <td style="padding:0;margin:0;border-bottom: 1px solid #f0f0f0"></td>
+        </tr>
+        <tr>
+          <td>
+            <table width="100%" bgcolor="#0182de" style="padding: 9px 16px; border-radius: 0 0 15px 15px; line-height: 1.3">
+
+              <tr>
+                <td align="center" style="color: #fff; font-size: 13px">
+                  <p style="margin: 0">CÔNG TY TNHH DỊCH VỤ CÔNG NGHỆ TRỰC TUYẾN</p>
+                  <p style="margin: 0"><a style="color: #fff; text-decoration: none" href="#">98 Nguyễn Công Trứ, phường Nguyễn Thái Bình, quận 1, thành phố Hồ Chí Minh</a></p>
+                  <p style="margin: 0">Website: <a href="http://mcontract.vn/" style="color: #fff">https://www.mcontract.vn</a></p>
+                  <p style="margin: 0 0 10px">Email: <a href="mailto:support@mcontract.vn" style="color: #fff">support@mcontract.vn</a></p>
+                  <table style="margin: 0" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                    <tr>
+                      <td style="border-top: 1px dashed #6aaad8; font-size: 1px"></td>
+                    </tr>
+                  </table>
+
+                  <p style="margin: 8px 0 0; font-style: italic; font-size: 12px">Mọi thắc mắc quý khách vui lòng liên hệ bộ phận hỗ trợ của chúng tôi: SĐT 086 774 6979</p>
+                  <p style="margin: 2px 0 0; font-style: italic; font-size: 12px">Đây là email tự động, vui lòng không trả lời email này</p>
+                  <p style="margin: 8px 0 0; font-style: italic; font-size: 12px">Technical support: (+84) 86 774 6979</p>
+                  <p style="margin: 2px 0 0; font-style: italic; font-size: 12px">This is an automated message. Please do not reply.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
