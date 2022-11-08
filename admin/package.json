@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "@agney/react-avatar": "^1.1.2",
-        "@craco/craco": "^6.1.2",
+        "@craco/craco": "^7.0.0",
         "@reduxjs/toolkit": "^1.5.1",
         "@stomp/stompjs": "^6.1.1",
         "@testing-library/jest-dom": "^5.11.4",
@@ -49,7 +49,7 @@
         "react-perfect-scrollbar": "^1.5.8",
         "react-redux": "^7.2.4",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "4.0.3",
+        "react-scripts": "5.0.1",
         "react-to-print": "^2.13.0",
         "react-toast": "^1.0.3",
         "simplebar-react": "^2.3.5",
