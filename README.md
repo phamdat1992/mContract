@@ -1,2 +1,2 @@
 # mContract
-my third startup projec.
+my third startup project.
